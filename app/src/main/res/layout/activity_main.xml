@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation = "vertical"
+    android:background="#0c2026"
+    tools:context=".LoginActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cV"
+            android:layout_width="wrap_content"
+            android:layout_height="445dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginBottom="78dp"
+            app:cardCornerRadius="8dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="310dp"
+                    android:layout_height="50dp"
+                    android:layout_above="@+id/password"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="19dp"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="5dp"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:textCursorDrawable="@drawable/cursor_color" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="310dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="208dp"
+                    android:padding="5dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:background="@drawable/edit_text_background"
+                    android:textCursorDrawable="@drawable/cursor_color"/>
+
+                <Button
+                    android:id="@+id/buttonSignIn"
+                    android:layout_width="315dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/post_button_round"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginBottom="127dp"
+                    android:text="Continue" />
+
+                <TextView
+                    android:id="@+id/SignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="100dp"
+                    android:layout_marginRight="100dp"
+                    android:layout_marginBottom="80dp"
+                    android:text="No Account Yet? Sign Up" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginEnd="135dp"
+                    android:layout_marginRight="134dp"
+                    android:text="Log In With Email" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/cV"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginEnd="192dp"
+            android:layout_marginRight="192dp"
+            android:layout_marginBottom="38dp"
+            android:text="TSquared"
+            android:textColor="#94e5ff"
+            android:textSize="40dp"
+            android:typeface="sans"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="82dp"
+            android:layout_height="61dp"
+            android:layout_above="@+id/cV"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="131dp"
+            android:layout_marginRight="131dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/ic_tsquared" />
+    </RelativeLayout>
+</LinearLayout>

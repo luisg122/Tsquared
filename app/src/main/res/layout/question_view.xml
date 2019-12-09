@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    style="@style/CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="0dp"
+    android:id="@+id/QuestionItemView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:paddingEnd="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:divider="@drawable/line_divider">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <ImageView
+                android:id="@+id/closeAnswerWindow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_24dp"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="4" >
+            </Space>
+
+
+            <TextView
+                android:id="@+id/submitAnswer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:text="Submit"
+                android:textColor="#94e5ff"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/questionAnswerPage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:minLines="1"
+                android:maxLines="100"
+                android:ellipsize="end"
+                android:singleLine="false"
+                android:text="What is the idea behind scrum and how is it efficiently applied?"
+                app:fontFamily="sans-serif"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
