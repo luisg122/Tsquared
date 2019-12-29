@@ -41,6 +41,11 @@
             app:tabTextAppearance="@style/TabLayoutStyle"
             app:tabIndicatorColor="#94e5ff"/>
     </com.google.android.material.appbar.AppBarLayout>
+    <FrameLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <com.example.tsquared.CustomViewPager
         android:id="@+id/mainViewPager"

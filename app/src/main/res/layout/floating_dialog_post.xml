@@ -1,97 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:background="@color/mainColor"
     android:padding="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignTop="@+id/postName"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="-2dp"
-        android:src="@drawable/brian" />
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="35dp"
+        android:src="@drawable/blank_profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
 
     <TextView
         android:id="@+id/postName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="84dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginTop="25dp"
-        android:text="Brian Doe" />
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:text="Brian Doe"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toEndOf="@+id/circleImageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/postCollegeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/postName"
-        android:layout_alignLeft="@+id/postName"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="50dp"
-        android:text="Queens College" />
-
-    <EditText
-        android:id="@+id/topic"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/postCollegeName"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="22dp"
-        android:background="@drawable/edit_text_background"
-        android:ellipsize="end"
-        android:ems="10"
-        android:gravity="start|top"
-        android:textCursorDrawable="@drawable/cursor_color"
-        android:hint="Topic"
-        android:inputType="text"
-        android:padding="10dp"
-        android:singleLine="true" />
+        android:layout_below="@+id/postName"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:text="Queens College"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toEndOf="@+id/circleImageView"
+        app:layout_constraintTop_toBottomOf="@+id/postName" />
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignEnd="@+id/submitPostButton"
-        android:layout_alignRight="@+id/submitPostButton"
-
-        android:layout_alignBottom="@+id/postName"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="-20dp"
-        android:src="@drawable/ic_tsquared" />
-
-
-    <EditText
-        android:id="@+id/topicPost"
-        android:layout_width="350dp"
-        android:layout_height="120dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="137dp"
-        android:background="@drawable/edit_text_background"
-        android:ems="10"
-        android:gravity="start|top"
-        android:textCursorDrawable="@drawable/cursor_color"
-        android:hint="Hi Brian, what is your question?"
-        android:inputType="textMultiLine"
-        android:padding="10dp" />
+        android:id="@+id/cancelSubmitButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_close_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/submitPostButton"
@@ -100,27 +70,27 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="270dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginRight="41dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/post_button_round"
         android:text="Post"
-        android:textColor="#ffffff" />
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/cancelSubmitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
+<!--
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="270dp"
-        android:layout_marginBottom="10dp"
-        android:text="Cancel"
-        android:background="@drawable/cancel_button_round"
-        android:textColor="#ffffff"/>
-
-</RelativeLayout>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_tsquared" />
+-->

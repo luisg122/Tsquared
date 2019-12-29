@@ -1,12 +1,14 @@
 package com.example.tsquared;
 
+import android.graphics.drawable.Drawable;
+
 public class AnswerModel {
     String name;
     String dateAnswered;
     String answer;
-    int    profileImage;
+    Drawable profileImage;
 
-    AnswerModel(String name, String dateAnswered, String answer, int profileImage){
+    AnswerModel(String name, String dateAnswered, String answer, Drawable profileImage){
         this.name = name;
         this.dateAnswered = dateAnswered;
         this.answer = answer;
@@ -37,11 +39,11 @@ public class AnswerModel {
         this.answer = answer;
     }
 
-    public int getProfileImage() {
+    public Drawable getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(int profileImage) {
+    public void setProfileImage(Drawable profileImage) {
         this.profileImage = profileImage;
     }
 }

@@ -18,17 +18,17 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cV"
             android:layout_width="wrap_content"
-            android:layout_height="445dp"
+            android:layout_height="450dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginEnd="26dp"
-            android:layout_marginRight="26dp"
-            android:layout_marginBottom="78dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="80dp"
             app:cardCornerRadius="8dp">
 
 
@@ -37,58 +37,85 @@
                 android:layout_height="match_parent">
 
 
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="310dp"
-                    android:layout_height="50dp"
-                    android:layout_above="@+id/password"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView"
+                    android:layout_above="@+id/password_TextInputLayout"
+                    android:layout_marginTop="20dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginBottom="19dp"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="5dp"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:textCursorDrawable="@drawable/cursor_color" />
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:hintTextAppearance="@style/HintText"
+                    style="@style/TextInputLayout">
 
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="310dp"
-                    android:layout_height="50dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_alignTop="@+id/email_TextInputLayout"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:padding="5dp"
+                        android:textCursorDrawable="@drawable/cursor_color" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/buttonSignIn"
+
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginBottom="208dp"
-                    android:padding="5dp"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:background="@drawable/edit_text_background"
-                    android:textCursorDrawable="@drawable/cursor_color"/>
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="40dp"
+                    app:hintTextAppearance="@style/HintText"
+                    style="@style/TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:textCursorDrawable="@drawable/cursor_color" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/buttonSignIn"
-                    android:layout_width="315dp"
+                    android:layout_width="310dp"
                     android:layout_height="wrap_content"
                     android:textColor="#ffffff"
                     android:background="@drawable/post_button_round"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginBottom="127dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="120dp"
+                    android:layout_centerHorizontal="true"
                     android:text="Continue" />
 
                 <TextView
@@ -105,14 +132,19 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginEnd="135dp"
-                    android:layout_marginRight="134dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginTop="27dp"
+
+                    android:layout_marginEnd="120dp"
+                    android:layout_marginRight="120dp"
                     android:text="Log In With Email" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -124,29 +156,76 @@
             android:layout_above="@id/cV"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginEnd="192dp"
-            android:layout_marginRight="192dp"
-            android:layout_marginBottom="38dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="40dp"
             android:text="TSquared"
             android:textColor="#94e5ff"
             android:textSize="40dp"
-            android:typeface="sans"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:typeface="sans" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="82dp"
-            android:layout_height="61dp"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
             android:layout_above="@+id/cV"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="131dp"
-            android:layout_marginRight="131dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginEnd="110dp"
+            android:layout_marginRight="110dp"
+            android:layout_marginBottom="40dp"
+            android:layout_toEndOf="@+id/logo"
+            android:layout_toRightOf="@+id/logo"
             android:src="@drawable/ic_tsquared" />
     </RelativeLayout>
 </LinearLayout>
+
+
+
+
+
+
+
+
+    <!--<EditText
+        android:id="@+id/email"
+        android:layout_width="310dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/password"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="5dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textCursorDrawable="@drawable/cursor_color" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="310dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="208dp"
+        android:padding="5dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_background"
+        android:textCursorDrawable="@drawable/cursor_color"/>-->

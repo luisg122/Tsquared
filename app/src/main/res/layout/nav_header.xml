@@ -20,7 +20,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/brian"
+        android:src="@drawable/blank_profile"
         app:layout_constraintBottom_toTopOf="@+id/profileName"
         app:layout_constraintStart_toStartOf="parent" />
 

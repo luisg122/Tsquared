@@ -8,10 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
@@ -55,7 +57,7 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
         private final TextView  tv_college;
         private final TextView  tv_desc;
 
-        private ConstraintLayout cardViewLayout;
+        private MaterialCardView cardViewLayout;
 
         MyViewHolder(View view){
             super(view);
@@ -67,6 +69,7 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
 
 
             cardViewLayout = view.findViewById(R.id.cardViewLayout1);
+
             cardViewLayout.setOnClickListener(this);
         }
 

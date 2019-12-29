@@ -16,7 +16,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="15dp"
-        android:src="@drawable/brian"
+        android:src="@drawable/blank_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,27 +44,55 @@
 
     <TextView
         android:id="@+id/answer"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="20dp"
-        android:text="Scrum is an agile process framework for managing complex knowledge work in Software Development"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
 
 
-        android:textColor="@color/black"
-        android:textSize="17sp"
+        android:ellipsize="end"
         android:ems="10"
         android:gravity="start|top"
-        android:minLines="1"
         android:maxLines="100"
-        android:ellipsize="end"
+        android:minLines="1"
         android:singleLine="false"
+        android:text="Scrum is an agile process framework for managing complex knowledge work in Software Development"
+        android:textColor="@color/black"
 
+        android:textSize="17sp"
+        app:fontFamily="sans-serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answerSubmitted" />
+
+    <ImageView
+        android:id="@+id/upVote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_upvote"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:fontFamily="sans-serif"/>
+        app:layout_constraintTop_toBottomOf="@+id/answer" />
+
+    <ImageView
+        android:id="@+id/downVote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_downvote"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

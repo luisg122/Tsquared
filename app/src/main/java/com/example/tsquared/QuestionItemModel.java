@@ -1,15 +1,23 @@
 package com.example.tsquared;
 
+import android.graphics.drawable.Drawable;
+
+import com.google.android.gms.games.quest.Quest;
+
 public class QuestionItemModel {
     private String name;
     private String topic;
     private String question;
     private String dateSubmitted;
     private String responseNum;
-    private int profileImage;
+    private Drawable profileImage;
+
+    public QuestionItemModel() {
+
+    }
 
     public QuestionItemModel(String name, String topic, String question,
-                             String dateSubmitted, String responseNum, int profileImage){
+                             String dateSubmitted, String responseNum, Drawable profileImage){
         this.name     = name;
         this.topic    = topic;
         this.question = question;
@@ -59,11 +67,11 @@ public class QuestionItemModel {
         this.dateSubmitted = dateSubmitted;
     }
 
-    public int getProfileImage() {
+    public Drawable getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(int profileImage) {
+    public void setProfileImage(Drawable profileImage) {
         this.profileImage = profileImage;
     }
 }

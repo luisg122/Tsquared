@@ -33,15 +33,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            v<de.hdodenhof.circleimageview.CircleImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/registerImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/blank_profile"
                 android:layout_marginTop="10dp"/>
-
-
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -50,12 +48,12 @@
                 style="@style/TextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
+                    android:id="@+id/registerEmail"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:padding="10dp"
-                    android:hint="Email"
+                    android:hint="Queens College Email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"/>
 
@@ -68,7 +66,7 @@
                 style="@style/TextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
+                    android:id="@+id/registerPassword"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:padding="10dp"

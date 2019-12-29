@@ -68,13 +68,15 @@
 
     <TextView
         android:id="@+id/questionContent"
-        android:layout_width="346dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="68dp"
+
+
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="70dp"
         android:background="@color/transparent"
 
         android:textStyle="bold"
@@ -92,14 +94,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
-        app:fontFamily="sans-serif"/>
+        app:fontFamily="sans-serif"
+        android:padding="3dp" />
 
     <TextView
         android:id="@+id/dateSubmitted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginBottom="20dp"
         android:text="Submitted: April 05 2019"
         app:layout_constraintBottom_toBottomOf="parent"

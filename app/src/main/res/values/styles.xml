@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Switch_style" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- For the Control Switch toggle -->
+        <!-- Active thumb color & Active track color(30% transparency) -->
+        <item name="colorControlActivated">#94e5ff</item>
+        <!-- Inactive thumb color, stick with the default color of the widget -->
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="colorPrimaryDark">@color/mainColor</item>

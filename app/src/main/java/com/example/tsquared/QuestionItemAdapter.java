@@ -1,12 +1,12 @@
 package com.example.tsquared;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,15 +18,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapter.MyViewHolder> {
+public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapter.MyViewHolder> implements Filterable {
 
     private final ArrayList<QuestionItemModel> mArrayList;
     private Context mcontext;
 
+    private ArrayList<QuestionItemModel> mArrayListFull;
+    private Filter exampleFilter;
+
     QuestionItemAdapter(ArrayList<QuestionItemModel> mArrayList, Context mcontext) {
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
+
+        // Want to copy off that object, not point to the same object, or reference its memory address
+        mArrayListFull  = new ArrayList<>(mArrayList);
     }
 
     @NonNull
@@ -55,6 +62,68 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     @Override
     public int getItemCount() {
         return mArrayList.size();
+    }
+
+    public void clear(){
+        mArrayList.clear();
+    }
+
+    public void addQuestions(ArrayList<QuestionItemModel> questionList){
+        questionList.addAll(mArrayList);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+        //return exampleFilter;
+    }
+
+    public interface OnFindQuestionsListener {
+        void onResults(ArrayList<QuestionItemModel> results);
+    }
+
+    public void findQuestions(Context context, String query, final OnFindQuestionsListener listener) {
+        new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+
+                ArrayList<QuestionItemModel> suggestionList = new ArrayList<>();
+
+                if (!(constraint == null || constraint.length() == 0)) {
+
+                    for (QuestionItemModel question : mArrayListFull) {
+                        if (question.getQuestion().toUpperCase()
+                                .startsWith(constraint.toString().toUpperCase())) {
+                            suggestionList.add(question);
+                        }
+                    }
+
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = suggestionList;
+                results.count = suggestionList.size();
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                if (listener != null) {
+                    listener.onResults((ArrayList<QuestionItemModel>) results.values);
+                }
+            }
+        }.filter(query);
+    }
+
+    public void swapData(ArrayList<QuestionItemModel> mNewDataSet) {
+        mArrayList.clear();
+        mArrayList.addAll(mNewDataSet);
+        notifyDataSetChanged();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -86,6 +155,10 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(mcontext, DetailActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            String question = tv_question.getText().toString();
+            intent.putExtra("question", question);
             mcontext.startActivity(intent);
         }
     }
