@@ -1,11 +1,13 @@
 package com.example.tsquared;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.MyViewHolder> {
 
@@ -56,27 +60,31 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
         private final TextView  tv_name;
         private final TextView  tv_college;
         private final TextView  tv_desc;
-
-        private MaterialCardView cardViewLayout;
+        private final MaterialCardView cardViewLayout;
 
         MyViewHolder(View view){
             super(view);
-
-            iv_image = view.findViewById(R.id.profileImageList);
-            tv_name  = view.findViewById(R.id.personName);
+            iv_image    = view.findViewById(R.id.profileImageList);
+            tv_name     = view.findViewById(R.id.personName);
             tv_college  = view.findViewById(R.id.collegeName);
-            tv_desc = view.findViewById(R.id.desc);
-
+            tv_desc     = view.findViewById(R.id.desc);
 
             cardViewLayout = view.findViewById(R.id.cardViewLayout1);
-
             cardViewLayout.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view){
-            //Intent intent = new Intent(mcontext, AppActivity.class);
-            //mcontext.startActivity(intent);
+            Intent intent = new Intent(mcontext, PersonProfile.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            String name    = tv_name.getText().toString();
+            String college = tv_college.getText().toString();
+            String desc    = tv_desc.getText().toString();
+
+            intent.putExtra("name", name);
+            intent.putExtra("college", college);
+            intent.putExtra("desc", desc);
+            mcontext.startActivity(intent);
         }
     }
 }

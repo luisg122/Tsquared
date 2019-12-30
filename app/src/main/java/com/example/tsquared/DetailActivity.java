@@ -72,9 +72,6 @@ public class DetailActivity extends AppCompatActivity {
     private TextView loadQuestion;
     private TextView loadWindowQuestion;
     private SwitchCompat anonymous;
-
-
-
     private String toWhatQuestion;
     private String toWhatQuestion1;
     private String answerTextString;

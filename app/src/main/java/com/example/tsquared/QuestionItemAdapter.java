@@ -133,20 +133,16 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         private final TextView  tv_question;
         private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
-
         private final ConstraintLayout cardViewLayout;
 
         MyViewHolder(View view) {
             super(view);
-
-            iv_image = view.findViewById(R.id.postIV);
-            tv_name  = view.findViewById(R.id.QuestionName);
-            tv_topic = view.findViewById(R.id.topic);
-            tv_question = view.findViewById(R.id.questionContent);
+            iv_image         = view.findViewById(R.id.postIV);
+            tv_name          = view.findViewById(R.id.QuestionName);
+            tv_topic         = view.findViewById(R.id.topic);
+            tv_question      = view.findViewById(R.id.questionContent);
             tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
-            tv_responses = view.findViewById(R.id.responseNum);
-
-
+            tv_responses     = view.findViewById(R.id.responseNum);
 
             cardViewLayout = view.findViewById(R.id.cardViewLayout);
             cardViewLayout.setOnClickListener(this);

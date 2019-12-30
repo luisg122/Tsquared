@@ -39,6 +39,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".PersonProfile"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".QuestionWindow"
             android:screenOrientation="portrait"/>
         <activity

@@ -87,5 +87,4 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|right|end"
         app:backgroundTint="#94e5ff"/>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

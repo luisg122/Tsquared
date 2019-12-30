@@ -48,7 +48,6 @@ public class PeopleFragment extends Fragment {
     String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showPeople";
 
     public PeopleFragment(){
-
     }
 
     @Override
@@ -67,7 +66,6 @@ public class PeopleFragment extends Fragment {
 
         adapter = new PeopleItemAdapter(mArrayList, getContext());
         mainRv.setAdapter(adapter);
-
         return view;
     }
     private void setUpSwipeContainer() {
