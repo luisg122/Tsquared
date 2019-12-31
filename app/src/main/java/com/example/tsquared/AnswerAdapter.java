@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,7 +56,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyViewHold
         private final TextView  answerProfileDate;
         private final TextView  answer;
 
-        private final ConstraintLayout answerProfile;
+        private final CardView answerProfile;
 
         MyViewHolder(View view){
             super(view);
@@ -63,7 +64,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyViewHold
             answerProfileName  = view.findViewById(R.id.answerName);
             answerProfileDate  = view.findViewById(R.id.answerSubmitted);
             answer = view.findViewById(R.id.answer);
-
             answerProfile = view.findViewById(R.id.answersLayout);
         }
     }

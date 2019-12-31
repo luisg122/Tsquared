@@ -70,14 +70,13 @@
        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff">
+            android:background="#F5F5F5">
             <include
                 layout="@layout/activity_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answerButton"
         android:layout_width="wrap_content"

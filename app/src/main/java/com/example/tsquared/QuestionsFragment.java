@@ -217,12 +217,14 @@ public class QuestionsFragment extends Fragment {
                 try {
                     for (int i = 0; i < response.length(); i++){
                         JSONObject object  = response.getJSONObject(i);
+                        int isAnonymous    = object.getInt("isAnonymous");
                         String name        = object.getString("PostedBy");
                         String topic       = object.getString("QuestionDetails");
                         String question    = object.getString("Content");
                         String dateSubmit  = object.getString("DatePosted");
                         String responseNum = object.getString("ResponseNumber");
-                        int    isAnonymous = object.getInt("isAnonymous");
+                        if(responseNum.equals("1")) responseNum = responseNum + " Answer";
+                        else if(!responseNum.equals("1")) responseNum = responseNum + " Answers";
                         Log.d("DATA QUESTION: ", name + " " + topic + " " + question + " " + dateSubmit + " " + isAnonymous);
                         Drawable image     = ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.blank_profile);
 

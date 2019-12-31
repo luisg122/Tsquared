@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,7 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
         private final TextView  tv_name;
         private final TextView  tv_college;
         private final TextView  tv_desc;
+        private final Button    tv_button;
         private final MaterialCardView cardViewLayout;
 
         MyViewHolder(View view){
@@ -68,6 +70,9 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
             tv_name     = view.findViewById(R.id.personName);
             tv_college  = view.findViewById(R.id.collegeName);
             tv_desc     = view.findViewById(R.id.desc);
+
+            tv_button   = view.findViewById(R.id.followButton);
+            //tv_button.setOnClickListener(this);
 
             cardViewLayout = view.findViewById(R.id.cardViewLayout1);
             cardViewLayout.setOnClickListener(this);

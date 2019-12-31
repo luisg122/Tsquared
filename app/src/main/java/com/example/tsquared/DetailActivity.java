@@ -295,12 +295,12 @@ public class DetailActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mainRv.setLayoutManager(layoutManager);
 
-        DividerItemDecoration divider = new
+        /*DividerItemDecoration divider = new
                 DividerItemDecoration(mainRv.getContext(),
                 DividerItemDecoration.VERTICAL);
         divider.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(Objects.requireNonNull(this).getBaseContext(),
                 R.drawable.line_divider)));
-        mainRv.addItemDecoration(divider);
+        mainRv.addItemDecoration(divider);*/
     }
 
     private void loadListOfAnswers(){
