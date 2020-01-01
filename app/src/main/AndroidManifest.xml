@@ -26,10 +26,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-
-
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -38,6 +34,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".NoAnswersOrMore"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".PersonProfile"
             android:screenOrientation="portrait"/>
@@ -71,5 +70,4 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
     </application>
-
 </manifest>

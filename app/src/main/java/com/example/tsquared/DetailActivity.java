@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -77,9 +78,6 @@ public class DetailActivity extends AppCompatActivity {
     private String answerTextString;
     private EditText answerText;
     private String repliedByEmail;
-
-    private Menu menu;
-
     private  boolean isAnon;
 
     RequestParams params;
@@ -94,15 +92,32 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collapsingtoolbar);
         setUpSwipeContainer();
-        setUpRecyclerView();
+        setLayout();
         setUpToolBar();
-        loadQuestionData();
-        setUpSwipeListener();
-
-        adapter = new AnswerAdapter(mArrayList, getApplicationContext());
-        mainRv.setAdapter(adapter);
-
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void setLayout(){
+        Intent intent = getIntent();
+        String responseNum = intent.getStringExtra("responseNumber");
+        if(!responseNum.equals("0 Answers")) {
+            ViewStub stub = (ViewStub) findViewById(R.id.layout_stub);
+            stub.setLayoutResource(R.layout.activity_detail);
+            stub.inflate();
+            setUpRecyclerView();
+            loadQuestionData();
+            loadListOfAnswers();
+            setUpSwipeListener();
+            adapter = new AnswerAdapter(mArrayList, getApplicationContext());
+            mainRv.setAdapter(adapter);
+        }
+        else if(responseNum.equals("0 Answers")) {
+            ViewStub stub = (ViewStub) findViewById(R.id.layout_stub);
+            stub.setLayoutResource(R.layout.no_answers_yet);
+            stub.inflate();
+            loadQuestionData();
+        }
+    }
+
     private void setUpSwipeContainer() {
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer3);
         // Configure the refreshing colors
@@ -118,6 +133,15 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 loadListOfAnswers();
+            }
+        });
+    }
+
+    private void setUpSwipeListener1(){
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
             }
         });
     }
@@ -276,7 +300,6 @@ public class DetailActivity extends AppCompatActivity {
         toWhatQuestion1 = question;
         loadQuestion = findViewById(R.id.questionAnswerPage1);
         loadQuestion.setText(question);
-        loadListOfAnswers();
     }
 
     private void loadWindowQuestion(View view){
@@ -294,13 +317,6 @@ public class DetailActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mainRv.setLayoutManager(layoutManager);
-
-        /*DividerItemDecoration divider = new
-                DividerItemDecoration(mainRv.getContext(),
-                DividerItemDecoration.VERTICAL);
-        divider.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(Objects.requireNonNull(this).getBaseContext(),
-                R.drawable.line_divider)));
-        mainRv.addItemDecoration(divider);*/
     }
 
     private void loadListOfAnswers(){

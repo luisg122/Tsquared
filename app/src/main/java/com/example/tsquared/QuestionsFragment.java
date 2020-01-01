@@ -74,7 +74,6 @@ public class QuestionsFragment extends Fragment {
     private String fullName;
     private String college;
 
-
     RequestParams params, params1;
     AsyncHttpClient client, client1;
     String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";

@@ -152,9 +152,10 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         public void onClick(View view) {
             Intent intent = new Intent(mcontext, DetailActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
             String question = tv_question.getText().toString();
+            String respNum  = tv_responses.getText().toString();
             intent.putExtra("question", question);
+            intent.putExtra("responseNumber", respNum);
             mcontext.startActivity(intent);
         }
     }
