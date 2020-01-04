@@ -110,23 +110,16 @@ public class PeopleFragment extends Fragment {
                     //Log.e("ELEMENT: ", response.getString("Question1"));
                     for (int i = 0; i < response.length(); i++){
                         JSONObject object = response.getJSONObject(i);
-                        String fullName   = object.getString("FullName");
-                        String college    = object.getString("College");
-                        String userDesc   = object.getString("Description");
-                        String userEmail  = object.getString("Email");
-                        Log.d("DATA People: ", fullName + " " + college + " " + userDesc + " " + userEmail);
-                        Drawable image     = ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.blank_profile);
-
-                        fullName = capitalizeFirstCharOfEveryWordInString(fullName);
-                        college  = capitalizeFirstCharOfEveryWordInString(college);
-                        PeopleItemModel data = new PeopleItemModel(fullName,college, userDesc, image);
-                        mArrayList.add(data);
+                        PeopleItemModel people = PeopleItemModel.fromJson(object);
+                        Drawable image = ContextCompat.getDrawable(getContext(), R.drawable.blank_profile);
+                        people.setProfileImage(image);
+                        mArrayList.add(people);
+                        adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 adapter = new PeopleItemAdapter(mArrayList, getContext());
-                adapter.notifyDataSetChanged();
                 mainRv.setAdapter(adapter);
                 swipeContainer.setRefreshing(false);
             }
@@ -142,25 +135,5 @@ public class PeopleFragment extends Fragment {
                 Log.i("ws", "---->>onFailure" + throwable.toString());
             }
         });
-    }
-
-    private String capitalizeFirstCharOfEveryWordInString(String string){
-        char[] ch = string.toCharArray();
-        for(int i = 0; i < string.length(); i++) {
-            // Find first char of a word
-            // Make sure the character does not equal a space
-            if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
-                // If such character is lower-case
-                if (ch[i] >= 'a' && ch[i] <= 'z') {
-                    // simply convert it into upper-case
-                    // refer to the ASCII table to understand this line of code
-                    ch[i] = (char) (ch[i] - 'a' + 'A');
-                }
-            }
-            else if (ch[i] >= 'A' && ch[i] <= 'Z'){
-                ch[i] = (char) (ch[i] + 'a' - 'A');
-            }
-        }
-        return new String(ch);
     }
 }

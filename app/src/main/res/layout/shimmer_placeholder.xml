@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardViewLayout"
+    android:id="@+id/placeHolderQuestion"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/blank_profile"
+        android:background="@color/placeholder"
         app:layout_constraintBottom_toTopOf="@+id/questionContent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,52 +29,40 @@
 
     <TextView
         android:id="@+id/QuestionName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="20dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="28dp"
-        android:text="John Doe"
+        android:background="@color/placeholder"
         app:layout_constraintStart_toEndOf="@+id/postIV"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/bubble"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/topic"
+        android:layout_width="70dp"
+        android:layout_height="20dp"
         android:layout_marginTop="5dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        app:contentPadding="6dp"
-        app:cardBackgroundColor="#94e5ff"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:background="@color/placeholder"
         app:layout_constraintStart_toEndOf="@+id/postIV"
-        app:layout_constraintTop_toBottomOf="@+id/QuestionName"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="0dp">
-        <TextView
-            android:id="@+id/topic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Software Engineering"
-            android:textColor="#ffffff"
-            android:textStyle="bold"/>
-    </com.google.android.material.card.MaterialCardView>
-
+        app:layout_constraintTop_toBottomOf="@+id/QuestionName"/>
 
     <TextView
         android:id="@+id/questionContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:background="@color/transparent"
+        android:background="@color/placeholder"
         android:ellipsize="end"
         android:ems="10"
         android:gravity="start|top"
@@ -82,7 +70,6 @@
         android:minLines="1"
         android:padding="3dp"
         android:singleLine="false"
-        android:text="What is the idea behind scrum and how is it efficiently applied?"
         android:textColor="@color/black"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -90,17 +77,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubble" />
+        app:layout_constraintTop_toBottomOf="@+id/topic" />
 
     <TextView
         android:id="@+id/dateSubmitted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="155dp"
+        android:layout_height="20dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="20dp"
-        android:text="Submitted: April 05 2019"
+        android:background="@color/placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionContent" />
@@ -108,13 +95,13 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/forumImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_forum_24dp"
+        android:background="@color/placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionContent"
@@ -122,13 +109,13 @@
 
     <TextView
         android:id="@+id/responseNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="20dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="20dp"
-        android:text="50 Answers"
+        android:background="@color/placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/forumImage"
         app:layout_constraintTop_toBottomOf="@+id/questionContent" />

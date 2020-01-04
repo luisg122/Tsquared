@@ -2,13 +2,56 @@ package com.example.tsquared;
 
 import android.graphics.drawable.Drawable;
 
-public class PeopleItemModel {
-    private String name;
-    private String desc;
-    private String college;
-    private Drawable profileImage;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    PeopleItemModel(String name, String college, String desc, Drawable profileImage){
+public class PeopleItemModel {
+    public  String name;
+    public  String desc;
+    public  String college;
+    public  Drawable profileImage;
+
+    static PeopleItemModel fromJson(JSONObject jsonObject) throws JSONException {
+        PeopleItemModel people = new PeopleItemModel();
+        people.name            = jsonObject.getString("FullName");
+        people.desc            = jsonObject.getString("Description");
+        people.college         = jsonObject.getString("College");
+
+        people.name            = capitalizeFirstCharOfEveryWordInString(people.name);
+        people.college         = capitalizeFirstCharOfEveryWordInString(people.college);
+        return people;
+    }
+
+    public Drawable getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(Drawable profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    private static String capitalizeFirstCharOfEveryWordInString(String string){
+        char[] ch = string.toCharArray();
+        for(int i = 0; i < string.length(); i++) {
+            // Find first char of a word
+            // Make sure the character does not equal a space
+            if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
+                // If such character is lower-case
+                if (ch[i] >= 'a' && ch[i] <= 'z') {
+                    // simply convert it into upper-case
+                    // refer to the ASCII table to understand this line of code
+                    ch[i] = (char) (ch[i] - 'a' + 'A');
+                }
+            }
+            else if (ch[i] >= 'A' && ch[i] <= 'Z'){
+                ch[i] = (char) (ch[i] + 'a' - 'A');
+            }
+        }
+        return new String(ch);
+    }
+}
+
+    /*PeopleItemModel(String name, String college, String desc, Drawable profileImage){
         this.name    = name;
         this.college = college;
         this.desc    = desc;
@@ -38,12 +81,4 @@ public class PeopleItemModel {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-
-    public Drawable getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(Drawable profileImage) {
-        this.profileImage = profileImage;
-    }
-}
+*/

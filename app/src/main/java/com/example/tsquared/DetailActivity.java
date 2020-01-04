@@ -18,46 +18,32 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Objects;
-
 import cz.msebera.android.httpclient.Header;
 
-import static java.security.AccessController.getContext;
-
 public class DetailActivity extends AppCompatActivity {
-
     private RecyclerView mainRv;
     private ArrayList<AnswerModel> mArrayList;
     private QuestionViewModel question;
@@ -66,9 +52,6 @@ public class DetailActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private FloatingActionButton fab;
-    public  AlertDialog alertDialog;
-    public  ImageView cancel;
-    public  TextView  submit;
     private SwipeRefreshLayout swipeContainer;
     private TextView loadQuestion;
     private TextView loadWindowQuestion;
@@ -77,8 +60,17 @@ public class DetailActivity extends AppCompatActivity {
     private String toWhatQuestion1;
     private String answerTextString;
     private EditText answerText;
-    private String repliedByEmail;
-    private  boolean isAnon;
+    private String    repliedByEmail;
+    private TextView  promptCreateQuestion;
+    private ImageView promptCreateImage;
+    private ViewStub  stub;
+    private ShimmerFrameLayout shimmerFrameLayout;
+    private View view;
+
+    private boolean isAnon;
+    public  AlertDialog alertDialog;
+    public  ImageView cancel;
+    public  TextView  submit;
 
     RequestParams params;
     AsyncHttpClient client;
@@ -91,41 +83,35 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collapsingtoolbar);
+        setViews();
         setUpSwipeContainer();
         setLayout();
         setUpToolBar();
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void setLayout(){
-        Intent intent = getIntent();
-        String responseNum = intent.getStringExtra("responseNumber");
-        if(!responseNum.equals("0 Answers")) {
-            ViewStub stub = (ViewStub) findViewById(R.id.layout_stub);
-            stub.setLayoutResource(R.layout.activity_detail);
-            stub.inflate();
-            setUpRecyclerView();
-            loadQuestionData();
-            loadListOfAnswers();
-            setUpSwipeListener();
-            adapter = new AnswerAdapter(mArrayList, getApplicationContext());
-            mainRv.setAdapter(adapter);
-        }
-        else if(responseNum.equals("0 Answers")) {
-            ViewStub stub = (ViewStub) findViewById(R.id.layout_stub);
-            stub.setLayoutResource(R.layout.no_answers_yet);
-            stub.inflate();
-            loadQuestionData();
-        }
+
+    private void setViews(){
+        stub = (ViewStub) findViewById(R.id.layout_stub);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer3);
+        toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        fab = (FloatingActionButton) findViewById(R.id.answerButton);
+        collapsingToolbar = findViewById(R.id.collapsingToolBar);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        loadQuestion    = findViewById(R.id.questionAnswerPage1);
     }
 
-    private void setUpSwipeContainer() {
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer3);
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void setLayout(){
+        //Intent intent     = getIntent();
+        //String responseNum = intent.getStringExtra("responseNum");
+        stub.setLayoutResource(R.layout.activity_detail);
+        stub.inflate();
+        shimmerFrameLayout = findViewById(R.id.shimmer_view_container1);
+        setUpRecyclerView();
+        loadQuestionData();
+        loadListOfAnswers();
+        setUpSwipeListener();
+        adapter = new AnswerAdapter(mArrayList, getApplicationContext());
+        mainRv.setAdapter(adapter);
     }
 
     private void setUpSwipeListener(){
@@ -141,30 +127,36 @@ public class DetailActivity extends AppCompatActivity {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                loadListOfAnswers();
+                if(mArrayList.size() != 0) {
+                    promptCreateQuestion.setVisibility(View.GONE);
+                    promptCreateImage.setVisibility(View.GONE);
+                }
             }
         });
     }
 
-    private void setUpToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar1);
-        setSupportActionBar(toolbar);
+    private void setUpSwipeContainer() {
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+    }
 
-        fab = (FloatingActionButton) findViewById(R.id.answerButton);
+    private void setUpToolBar() {
+        setSupportActionBar(toolbar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Snackbar.make(v, "Replace with Your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 openDialog();
-
             }
         });
-
-        collapsingToolbar = findViewById(R.id.collapsingToolBar);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.TextAppearance_MyApp_Title_Collapsed);
         collapsingToolbar.setExpandedTitleColor(R.style.TextAppearance_MyApp_Title_Expanded);
         collapsingToolbar.setTitle("");
-        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -261,7 +253,6 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
     private void takeAnswerToPost(){
         repliedByEmail = DrawerActivity.getEmail();
@@ -295,33 +286,30 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void loadQuestionData(){
-        Intent intent = getIntent();
+        Intent intent   = getIntent();
         String question = intent.getStringExtra("question");
         toWhatQuestion1 = question;
-        loadQuestion = findViewById(R.id.questionAnswerPage1);
         loadQuestion.setText(question);
     }
 
     private void loadWindowQuestion(View view){
-        Intent intent = getIntent();
-        String question = intent.getStringExtra("question");
-        toWhatQuestion = question;
+        Intent intent      = getIntent();
+        String question    = intent.getStringExtra("question");
+        toWhatQuestion     = question;
         loadWindowQuestion = view.findViewById(R.id.questionAnswerPage2);
         loadWindowQuestion.setText(question);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpRecyclerView() {
-        mainRv = findViewById(R.id.answersRV);
-        mainRv.setHasFixedSize(true);
-
+        mainRv = (RecyclerView) findViewById(R.id.answersRV);
+        mainRv.setHasFixedSize(false);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mainRv.setLayoutManager(layoutManager);
     }
 
     private void loadListOfAnswers(){
         mArrayList = new ArrayList<>();
-
         params = new RequestParams();
         params.put("q", toWhatQuestion1);
         client = new AsyncHttpClient();
@@ -333,31 +321,20 @@ public class DetailActivity extends AppCompatActivity {
                 Log.e("STRING DATA: ", response.toString());
                 try {
                     //Log.e("ELEMENT: ", response.getString("Question1"));
-
                     for (int i = 0; i < response.length(); i++){
-                        JSONObject object = response.getJSONObject(i);
-                        String name     = object.getString("RepliedBy");
-                        String answer   = object.getString("Text");
-                        String dateAns  = object.getString("DateReplied");
-                        int isAnonymous = object.getInt("isAnonymous");
-                        Log.d("DATA ANSWER: ", name + " " + answer + " " + dateAns + " " + isAnonymous);
+                        JSONObject object  = response.getJSONObject(i);
+                        AnswerModel answer = AnswerModel.fromJson(object);
                         Drawable image     = ContextCompat.getDrawable(Objects.requireNonNull(getApplication()), R.drawable.blank_profile);
-
-                        name = capitalizeFirstCharOfEveryWordInString(name);
-                        if(isAnonymous == 1) {
-                            AnswerModel data = new AnswerModel(ANONYMOUS, dateAns, answer, image);
-                            mArrayList.add(data);
-                        }
-                        else if (isAnonymous == 0){
-                            AnswerModel data = new AnswerModel(name, dateAns, answer, image);
-                            mArrayList.add(data);
-                        }
+                        answer.setProfileImage(image);
+                        mArrayList.add(answer);
+                        adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.GONE);
                 adapter = new AnswerAdapter(mArrayList, getApplicationContext());
-                adapter.notifyDataSetChanged();
                 mainRv.setAdapter(adapter);
                 swipeContainer.setRefreshing(false);
             }
@@ -375,23 +352,31 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    private String capitalizeFirstCharOfEveryWordInString(String string){
-        char[] ch = string.toCharArray();
-        for(int i = 0; i < string.length(); i++) {
-            // Find first char of a word
-            // Make sure the character does not equal a space
-            if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
-                // If such character is lower-case
-                if (ch[i] >= 'a' && ch[i] <= 'z') {
-                    // simply convert it into upper-case
-                    // refer to the ASCII table to understand this line of code
-                    ch[i] = (char) (ch[i] - 'a' + 'A');
-                }
-            }
-            else if (ch[i] >= 'A' && ch[i] <= 'Z'){
-                ch[i] = (char) (ch[i] + 'a' - 'A');
-            }
-        }
-        return new String(ch);
+    @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayout.startShimmer();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        shimmerFrameLayout.stopShimmer();
     }
 }
+
+
+        /*else if(responseNum.equals("0 Answers")) {
+            stub.setLayoutResource(R.layout.no_answers_yet);
+            stub.inflate();
+            String name = DrawerActivity.getFirstName();
+            String promptUser    = "Hi " + name + "! Be the first to answer this question";
+            promptCreateQuestion = findViewById(R.id.promptCreateFirstAnswer);
+            promptCreateImage    = findViewById(R.id.createFirstAnswer);
+            shimmerFrameLayout   = findViewById(R.id.shimmer_view_container1);
+            promptCreateQuestion.setText(promptUser);
+            setUpRecyclerView();
+            loadQuestionData();
+            loadListOfAnswers();
+            setUpSwipeListener1();
+        }*/

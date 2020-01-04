@@ -30,6 +30,8 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
     PeopleItemAdapter(ArrayList<PeopleItemModel> mArrayList, Context mcontext){
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
+        notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -42,13 +44,14 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position){
+        PeopleItemModel people = mArrayList.get(position);
         Glide.with(mcontext)
-                .load(mArrayList.get(position).getProfileImage())
+                .load(people.getProfileImage())
                 .into(holder.iv_image);
 
-        holder.tv_name.setText(mArrayList.get(position).getName());
-        holder.tv_college.setText(mArrayList.get(position).getCollege());
-        holder.tv_desc.setText(mArrayList.get(position).getDesc());
+        holder.tv_name.setText(people.name);
+        holder.tv_college.setText(people.college);
+        holder.tv_desc.setText(people.desc);
     }
 
     @Override

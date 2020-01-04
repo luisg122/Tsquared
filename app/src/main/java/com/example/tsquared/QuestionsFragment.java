@@ -37,6 +37,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
@@ -55,7 +56,7 @@ import cz.msebera.android.httpclient.Header;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.facebook.share.internal.DeviceShareDialogFragment.TAG;
 
-public class QuestionsFragment extends Fragment {
+public class QuestionsFragment<adapter> extends Fragment {
 
     private View view;
     private RecyclerView mainRv;
@@ -74,11 +75,11 @@ public class QuestionsFragment extends Fragment {
     private String fullName;
     private String college;
 
+    private ShimmerFrameLayout shimmerFrameLayout;
+
     RequestParams params, params1;
     AsyncHttpClient client, client1;
     String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
-    String ANONYMOUS = "Anonymous";
-
     public QuestionsFragment(){
 
     }
@@ -92,18 +93,19 @@ public class QuestionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         view = inflater.inflate(R.layout.item_main, container, false);
-
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
         // Correct sequence of function calls
         setUpSwipeContainer();
         setUpSearchListener();
-        setUpRecyclerView();
         setupFloatingButtonAction();
-        loadListOfQuestions();
-        setUpSwipeListener();
 
+        mArrayList = new ArrayList<>();
         adapter = new QuestionItemAdapter(mArrayList, getContext());
+        setUpRecyclerView();
         mainRv.setAdapter(adapter);
+        loadListOfQuestions();
 
+        setUpSwipeListener();
         return view;
     }
 
@@ -128,7 +130,6 @@ public class QuestionsFragment extends Fragment {
                     }
                 });
                 Log.d("TAG", "onSearchAction()");
-
             }
         });
     }
@@ -205,46 +206,31 @@ public class QuestionsFragment extends Fragment {
     }
 
     private void loadListOfQuestions(){
-        mArrayList = new ArrayList<>();
         client = new AsyncHttpClient();
         client.get(URL, params, new JsonHttpResponseHandler() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //super.onSuccess(statusCode, headers, response);
                 Log.e("STRING DATA: ", response.toString());
-                try {
-                    for (int i = 0; i < response.length(); i++){
-                        JSONObject object  = response.getJSONObject(i);
-                        int isAnonymous    = object.getInt("isAnonymous");
-                        String name        = object.getString("PostedBy");
-                        String topic       = object.getString("QuestionDetails");
-                        String question    = object.getString("Content");
-                        String dateSubmit  = object.getString("DatePosted");
-                        String responseNum = object.getString("ResponseNumber");
-                        if(responseNum.equals("1")) responseNum = responseNum + " Answer";
-                        else if(!responseNum.equals("1")) responseNum = responseNum + " Answers";
-                        Log.d("DATA QUESTION: ", name + " " + topic + " " + question + " " + dateSubmit + " " + isAnonymous);
-                        Drawable image     = ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.blank_profile);
-
-                        name  = capitalizeFirstCharOfEveryWordInString(name);
-                        topic = capitalizeFirstCharOfEveryWordInString(topic);
-
-                        if(isAnonymous == 1){
-                            QuestionItemModel data = new QuestionItemModel(ANONYMOUS, topic, question, dateSubmit, responseNum, image);
-                            mArrayList.add(data);
-                        }
-                        else if(isAnonymous == 0){
-                            QuestionItemModel data = new QuestionItemModel(name, topic, question, dateSubmit, responseNum, image);
-                            mArrayList.add(data);
-                        }
+                ArrayList<QuestionItemModel> questionList = new ArrayList<>();
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject object = response.getJSONObject(i);
+                        QuestionItemModel question = QuestionItemModel.fromJson(object);
+                        Drawable image = ContextCompat.getDrawable(getContext(), R.drawable.blank_profile);
+                        question.setProfileImage(image);
+                        questionList.add(question);
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.GONE);
 
-                adapter = new QuestionItemAdapter(mArrayList, getContext());
-                adapter.notifyDataSetChanged();
+                adapter.clear();
+                adapter.addQuestions(questionList);
+                adapter = new QuestionItemAdapter(questionList, getContext());
                 mainRv.setAdapter(adapter);
                 swipeContainer.setRefreshing(false);
             }
@@ -260,23 +246,17 @@ public class QuestionsFragment extends Fragment {
         });
     }
 
-    private String capitalizeFirstCharOfEveryWordInString(String string){
-        char[] ch = string.toCharArray();
-        for(int i = 0; i < string.length(); i++) {
-            // Find first char of a word
-            // Make sure the character does not equal a space
-            if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
-                // If such character is lower-case
-                if (ch[i] >= 'a' && ch[i] <= 'z') {
-                    // simply convert it into upper-case
-                    // refer to the ASCII table to understand this line of code
-                    ch[i] = (char) (ch[i] - 'a' + 'A');
-                }
-            }
-            else if (ch[i] >= 'A' && ch[i] <= 'Z'){
-                ch[i] = (char) (ch[i] + 'a' - 'A');
-            }
-        }
-        return new String(ch);
+    @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayout.startShimmer();
+        loadListOfQuestions();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        shimmerFrameLayout.stopShimmer();
+        loadListOfQuestions();
     }
 }

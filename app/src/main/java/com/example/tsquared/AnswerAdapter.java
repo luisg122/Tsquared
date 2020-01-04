@@ -24,6 +24,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyViewHold
     AnswerAdapter(ArrayList<AnswerModel> mArrayList, Context mcontext){
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -36,13 +37,14 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull AnswerAdapter.MyViewHolder holder, int position) {
+        AnswerModel answer = mArrayList.get(position);
         Glide.with(mcontext)
-                .load(mArrayList.get(position).getProfileImage())
+                .load(answer.getProfileImage())
                 .into(holder.answerProfileImage);
 
-        holder.answerProfileName.setText(mArrayList.get(position).getName());
-        holder.answerProfileDate.setText(mArrayList.get(position).getDateAnswered());
-        holder.answer.setText(mArrayList.get(position).getAnswer());
+        holder.answerProfileName.setText(answer.name);
+        holder.answerProfileDate.setText(answer.dateAnswered);
+        holder.answer.setText(answer.answer);
     }
 
     @Override

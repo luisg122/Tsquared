@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/cardView"
     style="@style/CardView"
@@ -13,6 +13,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_horizontal">
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                shimmer:duration="1000">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <include
+                        layout="@layout/shimmer_placeholder"/>
+                    <include
+                        layout="@layout/shimmer_placeholder"/>
+                    <include
+                        layout="@layout/shimmer_placeholder"/>
+                    <include
+                        layout="@layout/shimmer_placeholder"/>
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/FAB"

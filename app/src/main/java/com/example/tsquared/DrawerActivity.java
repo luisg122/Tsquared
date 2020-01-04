@@ -37,6 +37,7 @@ public class DrawerActivity extends AppCompatActivity {
     TextView profileName;
     String fullName, college;
     static String email;
+    static String firstNameofUser;
 
 
     @Override
@@ -76,6 +77,7 @@ public class DrawerActivity extends AppCompatActivity {
             String lastName  = hashMap.get("Last Name");
             college          = hashMap.get("College");
             email            = hashMap.get("Email");
+            firstNameofUser  = firstName;
 
             assert firstName != null;
             assert lastName  != null;
@@ -94,6 +96,7 @@ public class DrawerActivity extends AppCompatActivity {
             String lastName  = hashMap.get("Last Name");
             college          = hashMap.get("College");
             email            = hashMap.get("Email");
+            firstNameofUser  = firstName;
 
             assert firstName != null;
             assert lastName  != null;
@@ -107,8 +110,9 @@ public class DrawerActivity extends AppCompatActivity {
         else if (!(intent.hasExtra("map") || intent.hasExtra("map1"))){
             String firstName = PreferenceUtils.getFirstName(this);
             String lastName  = PreferenceUtils.getLastName(this);
-            college = PreferenceUtils.getCollege(this);
-            email   = PreferenceUtils.getEmail(this);
+            college          = PreferenceUtils.getCollege(this);
+            email            = PreferenceUtils.getEmail(this);
+            firstNameofUser  = firstName;
 
             fullName = firstName + " " + lastName;
             navigationView = findViewById(R.id.navView);
@@ -120,6 +124,10 @@ public class DrawerActivity extends AppCompatActivity {
 
     public static String getEmail() {
         return email;
+    }
+
+    public static String getFirstName() {
+        return firstNameofUser;
     }
 
     public String getFullName(){

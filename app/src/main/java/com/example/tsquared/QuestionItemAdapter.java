@@ -31,7 +31,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     QuestionItemAdapter(ArrayList<QuestionItemModel> mArrayList, Context mcontext) {
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
-
         // Want to copy off that object, not point to the same object, or reference its memory address
         mArrayListFull  = new ArrayList<>(mArrayList);
     }
@@ -40,21 +39,23 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mcontext = parent.getContext();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_post, parent, false);
+        View view = LayoutInflater.from(mcontext).inflate(R.layout.item_main_post, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        QuestionItemModel question = mArrayList.get(position);
+
         Glide.with(mcontext)
-                .load(mArrayList.get(position).getProfileImage())
+                .load(question.getProfileImage())
                 .into(holder.iv_image);
 
-        holder.tv_name.setText(mArrayList.get(position).getName());
-        holder.tv_topic.setText(mArrayList.get(position).getTopic());
-        holder.tv_question.setText(mArrayList.get(position).getQuestion());
-        holder.tv_dateSubmitted.setText(mArrayList.get(position).getDateSubmitted());
-        holder.tv_responses.setText(mArrayList.get(position).getResponseNum());
+        holder.tv_name.setText(question.name);
+        holder.tv_topic.setText(question.topic);
+        holder.tv_question.setText(question.question);
+        holder.tv_dateSubmitted.setText(question.dateSubmitted);
+        holder.tv_responses.setText(question.responseNum);
 
         Log.d("MyAdapter", "position: " + position);
     }
@@ -66,6 +67,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
 
     public void clear(){
         mArrayList.clear();
+        notifyDataSetChanged();
     }
 
     public void addQuestions(ArrayList<QuestionItemModel> questionList){
@@ -153,9 +155,9 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
             Intent intent = new Intent(mcontext, DetailActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             String question = tv_question.getText().toString();
-            String respNum  = tv_responses.getText().toString();
             intent.putExtra("question", question);
-            intent.putExtra("responseNumber", respNum);
+            //String respNum  = tv_responses.getText().toString();
+            //intent.putExtra("responseNum", respNum);
             mcontext.startActivity(intent);
         }
     }
