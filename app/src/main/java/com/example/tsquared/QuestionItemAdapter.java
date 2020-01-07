@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,13 +25,15 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
 
     private final ArrayList<QuestionItemModel> mArrayList;
     private Context mcontext;
+    private OnNoteListener onNote;
 
     private ArrayList<QuestionItemModel> mArrayListFull;
     private Filter exampleFilter;
 
-    QuestionItemAdapter(ArrayList<QuestionItemModel> mArrayList, Context mcontext) {
+    QuestionItemAdapter(ArrayList<QuestionItemModel> mArrayList, Context mcontext, OnNoteListener onNote) {
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
+        this.onNote     = onNote;
         // Want to copy off that object, not point to the same object, or reference its memory address
         mArrayListFull  = new ArrayList<>(mArrayList);
     }
@@ -40,13 +43,12 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mcontext = parent.getContext();
         View view = LayoutInflater.from(mcontext).inflate(R.layout.item_main_post, parent, false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, onNote);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         QuestionItemModel question = mArrayList.get(position);
-
         Glide.with(mcontext)
                 .load(question.getProfileImage())
                 .into(holder.iv_image);
@@ -65,16 +67,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         return mArrayList.size();
     }
 
-    public void clear(){
-        mArrayList.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addQuestions(ArrayList<QuestionItemModel> questionList){
-        questionList.addAll(mArrayList);
-        notifyDataSetChanged();
-    }
-
     @Override
     public Filter getFilter() {
         return null;
@@ -90,10 +82,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-
-
                 ArrayList<QuestionItemModel> suggestionList = new ArrayList<>();
-
                 if (!(constraint == null || constraint.length() == 0)) {
 
                     for (QuestionItemModel question : mArrayListFull) {
@@ -122,22 +111,23 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         }.filter(query);
     }
 
-    public void swapData(ArrayList<QuestionItemModel> mNewDataSet) {
-        mArrayList.clear();
-        mArrayList.addAll(mNewDataSet);
+    void swapData(ArrayList<QuestionItemModel> mNewDataSet) {
+        this.mArrayList.clear();
+        this.mArrayList.addAll(mNewDataSet);
         notifyDataSetChanged();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView iv_image;
         private final TextView  tv_name;
         private final TextView  tv_topic;
         private final TextView  tv_question;
         private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
-        private final ConstraintLayout cardViewLayout;
+        private final CardView  cardViewLayout;
+        OnNoteListener onNoteListener;
 
-        MyViewHolder(View view) {
+        public MyViewHolder(View view, OnNoteListener onNoteListener) {
             super(view);
             iv_image         = view.findViewById(R.id.postIV);
             tv_name          = view.findViewById(R.id.QuestionName);
@@ -145,20 +135,25 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
             tv_question      = view.findViewById(R.id.questionContent);
             tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
+            this.onNoteListener = onNoteListener;
 
             cardViewLayout = view.findViewById(R.id.cardViewLayout);
             cardViewLayout.setOnClickListener(this);
         }
-
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(mcontext, DetailActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            String question = tv_question.getText().toString();
-            intent.putExtra("question", question);
-            //String respNum  = tv_responses.getText().toString();
-            //intent.putExtra("responseNum", respNum);
-            mcontext.startActivity(intent);
+            onNoteListener.OnNoteClick(getAdapterPosition());
         }
     }
+
+    public interface OnNoteListener{
+        void OnNoteClick(int position);
+    }
 }
+/*Intent intent = new Intent(mcontext, DetailActivity.class);
+  intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+  String question = tv_question.getText().toString();
+  intent.putExtra("question", question);
+  //String respNum  = tv_responses.getText().toString();
+  //intent.putExtra("responseNum", respNum);
+  mcontext.startActivity(intent);*/

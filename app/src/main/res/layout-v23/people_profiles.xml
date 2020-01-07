@@ -8,10 +8,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="0dp"
+    android:background="@color/dark_gray"
     app:strokeColor="#E0E0E0"
-    app:strokeWidth="1dp">
+    app:strokeWidth="1dp"
+    app:cardElevation="0dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,7 +81,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@id/followButton"
             android:layout_width="100dp"
             android:layout_height="40dp"
             style="?android:textAppearanceSmall"
@@ -88,7 +89,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:text="Follow"
-            android:textColor="@color/mainColor"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
             android:textAllCaps="false"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"

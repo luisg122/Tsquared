@@ -55,8 +55,9 @@ import cz.msebera.android.httpclient.Header;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.facebook.share.internal.DeviceShareDialogFragment.TAG;
+import static java.util.Objects.*;
 
-public class QuestionsFragment<adapter> extends Fragment {
+public class QuestionsFragment<adapter> extends Fragment implements QuestionItemAdapter.OnNoteListener {
 
     private View view;
     private RecyclerView mainRv;
@@ -76,12 +77,10 @@ public class QuestionsFragment<adapter> extends Fragment {
     private String college;
 
     private ShimmerFrameLayout shimmerFrameLayout;
-
-    RequestParams params, params1;
-    AsyncHttpClient client, client1;
-    String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
+    private RequestParams params, params1;
+    private AsyncHttpClient client, client1;
+    private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
     public QuestionsFragment(){
-
     }
 
     @Override
@@ -98,13 +97,8 @@ public class QuestionsFragment<adapter> extends Fragment {
         setUpSwipeContainer();
         setUpSearchListener();
         setupFloatingButtonAction();
-
-        mArrayList = new ArrayList<>();
-        adapter = new QuestionItemAdapter(mArrayList, getContext());
         setUpRecyclerView();
-        mainRv.setAdapter(adapter);
         loadListOfQuestions();
-
         setUpSwipeListener();
         return view;
     }
@@ -177,18 +171,15 @@ public class QuestionsFragment<adapter> extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpRecyclerView(){
+        mArrayList = new ArrayList<>();
         mainRv = view.findViewById(R.id.question_list_rv);
         mainRv.setHasFixedSize(true);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+                RecyclerView.VERTICAL, false);
         mainRv.setLayoutManager(layoutManager);
 
-        DividerItemDecoration divider = new
-                DividerItemDecoration(mainRv.getContext(),
-                DividerItemDecoration.VERTICAL);
-        divider.setDrawable((Objects.requireNonNull(ContextCompat.getDrawable(Objects.requireNonNull((this).getContext()),
-                R.drawable.line_divider))));
-        mainRv.addItemDecoration(divider);
+        adapter = new QuestionItemAdapter(mArrayList, getApplicationContext(), this);
+        mainRv.setAdapter(adapter);
 
         // Hide the floating action button when scrolling, purely for design purposes
         mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -208,6 +199,7 @@ public class QuestionsFragment<adapter> extends Fragment {
     private void loadListOfQuestions(){
         client = new AsyncHttpClient();
         client.get(URL, params, new JsonHttpResponseHandler() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //super.onSuccess(statusCode, headers, response);
@@ -217,22 +209,18 @@ public class QuestionsFragment<adapter> extends Fragment {
                     try {
                         JSONObject object = response.getJSONObject(i);
                         QuestionItemModel question = QuestionItemModel.fromJson(object);
-                        Drawable image = ContextCompat.getDrawable(getContext(), R.drawable.blank_profile);
+                        Drawable image = ContextCompat.getDrawable(requireNonNull(getApplicationContext()), R.drawable.blank_profile);
                         question.setProfileImage(image);
                         questionList.add(question);
-                        adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
                 shimmerFrameLayout.stopShimmer();
                 shimmerFrameLayout.setVisibility(View.GONE);
-
-                adapter.clear();
-                adapter.addQuestions(questionList);
-                adapter = new QuestionItemAdapter(questionList, getContext());
-                mainRv.setAdapter(adapter);
+                adapter.swapData(questionList);
                 swipeContainer.setRefreshing(false);
+
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -250,13 +238,29 @@ public class QuestionsFragment<adapter> extends Fragment {
     public void onResume() {
         super.onResume();
         shimmerFrameLayout.startShimmer();
-        loadListOfQuestions();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onPause(){
         super.onPause();
         shimmerFrameLayout.stopShimmer();
-        loadListOfQuestions();
+        adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void OnNoteClick(int position) {
+        String question = mArrayList.get(position).question;
+        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("question", question);
+        startActivity(intent);
+    }
+        /*Intent intent = new Intent(mcontext, DetailActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    String question = tv_question.getText().toString();
+                    intent.putExtra("question", question);
+                    //String respNum  = tv_responses.getText().toString();
+                    //intent.putExtra("responseNum", respNum);
+                    mcontext.startActivity(intent);*/
 }

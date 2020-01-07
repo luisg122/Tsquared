@@ -54,17 +54,14 @@ public class PersonProfile extends AppCompatActivity {
         String profileQuestions = firstName + "'s Questions";
         String profileAnswers   = firstName + "'s Answers";
 
+        String profileEmail = intent.getStringExtra("email");
+
         name.setText(profileName);
         college.setText(studyingCollege);
         desc.setText(profileDesc);
         userQuestions.setText(profileQuestions);
         userAnswers.setText(profileAnswers);
-
-        // Obtaining the User's email address, not good programming practice
-        String emailAddres = DrawerActivity.getEmail();
-        email.setText(emailAddres);
-
-
+        email.setText(profileEmail);
     }
 
     private void setUpToolBar(){

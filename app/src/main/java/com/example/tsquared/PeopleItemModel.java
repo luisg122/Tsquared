@@ -9,6 +9,7 @@ public class PeopleItemModel {
     public  String name;
     public  String desc;
     public  String college;
+    public  String email;
     public  Drawable profileImage;
 
     static PeopleItemModel fromJson(JSONObject jsonObject) throws JSONException {
@@ -16,10 +17,15 @@ public class PeopleItemModel {
         people.name            = jsonObject.getString("FullName");
         people.desc            = jsonObject.getString("Description");
         people.college         = jsonObject.getString("College");
+        people.email           = jsonObject.getString("Email");
 
         people.name            = capitalizeFirstCharOfEveryWordInString(people.name);
         people.college         = capitalizeFirstCharOfEveryWordInString(people.college);
         return people;
+    }
+
+    public String getEmail(){
+        return email;
     }
 
     public Drawable getProfileImage() {
