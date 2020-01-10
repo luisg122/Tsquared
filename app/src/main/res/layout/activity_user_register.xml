@@ -9,7 +9,7 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="5dp"
-    tools:context=".UserRegister">
+    tools:context=".Activities.UserRegister">
 
     <!-- Login progress -->
     <ProgressBar

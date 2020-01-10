@@ -1,21 +1,9 @@
-package com.example.tsquared;
+package com.example.tsquared.Models;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.view.View;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
-
-import com.google.android.gms.games.quest.Quest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
-
-import static java.security.AccessController.getContext;
 
 public class QuestionItemModel {
 
@@ -31,7 +19,7 @@ public class QuestionItemModel {
 
     }
 
-    static QuestionItemModel fromJson(JSONObject jsonObject) throws JSONException {
+    public static QuestionItemModel fromJson(JSONObject jsonObject) throws JSONException {
         QuestionItemModel question = new QuestionItemModel();
         question.isAnonymous   = jsonObject.getInt("isAnonymous");
         question.name          = jsonObject.getString("PostedBy");

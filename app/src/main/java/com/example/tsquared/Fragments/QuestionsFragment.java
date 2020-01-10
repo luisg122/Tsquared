@@ -1,45 +1,32 @@
-package com.example.tsquared;
+package com.example.tsquared.Fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.example.tsquared.Activities.DetailActivity;
+import com.example.tsquared.Activities.DrawerActivity;
+import com.example.tsquared.Activities.QuestionWindow;
+import com.example.tsquared.Adapters.QuestionItemAdapter;
+import com.example.tsquared.Models.QuestionItemModel;
+import com.example.tsquared.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -49,12 +36,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import cz.msebera.android.httpclient.Header;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static com.facebook.share.internal.DeviceShareDialogFragment.TAG;
 import static java.util.Objects.*;
 
 public class QuestionsFragment<adapter> extends Fragment implements QuestionItemAdapter.OnNoteListener {
@@ -256,11 +241,4 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
         intent.putExtra("question", question);
         startActivity(intent);
     }
-        /*Intent intent = new Intent(mcontext, DetailActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    String question = tv_question.getText().toString();
-                    intent.putExtra("question", question);
-                    //String respNum  = tv_responses.getText().toString();
-                    //intent.putExtra("responseNum", respNum);
-                    mcontext.startActivity(intent);*/
 }

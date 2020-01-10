@@ -1,10 +1,10 @@
-package com.example.tsquared;
+package com.example.tsquared.Activities;
+
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -28,6 +28,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tsquared.Adapters.AnswerAdapter;
+import com.example.tsquared.Models.AnswerModel;
+import com.example.tsquared.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -46,7 +49,6 @@ import cz.msebera.android.httpclient.Header;
 public class DetailActivity extends AppCompatActivity {
     private RecyclerView mainRv;
     private ArrayList<AnswerModel> mArrayList;
-    private QuestionViewModel question;
     private AnswerAdapter adapter;
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
@@ -101,8 +103,6 @@ public class DetailActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setLayout(){
-        //Intent intent     = getIntent();
-        //String responseNum = intent.getStringExtra("responseNum");
         stub.setLayoutResource(R.layout.activity_detail);
         stub.inflate();
         shimmerFrameLayout = findViewById(R.id.shimmer_view_container1);
@@ -110,8 +110,6 @@ public class DetailActivity extends AppCompatActivity {
         loadQuestionData();
         loadListOfAnswers();
         setUpSwipeListener();
-        adapter = new AnswerAdapter(mArrayList, getApplicationContext());
-        mainRv.setAdapter(adapter);
     }
 
     private void setUpSwipeListener(){
@@ -119,19 +117,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 loadListOfAnswers();
-            }
-        });
-    }
-
-    private void setUpSwipeListener1(){
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadListOfAnswers();
-                if(mArrayList.size() != 0) {
-                    promptCreateQuestion.setVisibility(View.GONE);
-                    promptCreateImage.setVisibility(View.GONE);
-                }
             }
         });
     }
@@ -302,14 +287,15 @@ public class DetailActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpRecyclerView() {
+        mArrayList = new ArrayList<>();
         mainRv = (RecyclerView) findViewById(R.id.answersRV);
         mainRv.setHasFixedSize(false);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mainRv.setLayoutManager(layoutManager);
+        adapter = new AnswerAdapter(mArrayList, getApplicationContext());
     }
 
     private void loadListOfAnswers(){
-        mArrayList = new ArrayList<>();
         params = new RequestParams();
         params.put("q", toWhatQuestion1);
         client = new AsyncHttpClient();
@@ -319,34 +305,33 @@ public class DetailActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //super.onSuccess(statusCode, headers, response);
                 Log.e("STRING DATA: ", response.toString());
-                try {
-                    //Log.e("ELEMENT: ", response.getString("Question1"));
-                    for (int i = 0; i < response.length(); i++){
+                ArrayList<AnswerModel> answerList = new ArrayList<>();
+                for (int i = 0; i < response.length(); i++){
+                    try {
+                        //Log.e("ELEMENT: ", response.getString("Question1"));
                         JSONObject object  = response.getJSONObject(i);
                         AnswerModel answer = AnswerModel.fromJson(object);
                         Drawable image     = ContextCompat.getDrawable(Objects.requireNonNull(getApplication()), R.drawable.blank_profile);
                         answer.setProfileImage(image);
-                        mArrayList.add(answer);
-                        adapter.notifyDataSetChanged();
+                        answerList.add(answer);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
                 shimmerFrameLayout.stopShimmer();
                 shimmerFrameLayout.setVisibility(View.GONE);
-                adapter = new AnswerAdapter(mArrayList, getApplicationContext());
+                adapter.swapData(answerList);
                 mainRv.setAdapter(adapter);
                 swipeContainer.setRefreshing(false);
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                //super.onFailure(statusCode, headers, responseString, throwable);
                 Log.e("TAG", "EMAIL: " + "dummy");
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                //super.onFailure(statusCode, headers, throwable, errorResponse);
                 Log.i("ws", "---->>onFailure" + throwable.toString());
             }
         });

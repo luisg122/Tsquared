@@ -1,4 +1,4 @@
-package com.example.tsquared;
+package com.example.tsquared.Constants;
 
 public class Constants {
     public static String KEY_EMAIL    = "email";

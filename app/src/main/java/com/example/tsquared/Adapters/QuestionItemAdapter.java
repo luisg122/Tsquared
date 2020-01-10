@@ -1,6 +1,5 @@
-package com.example.tsquared;
+package com.example.tsquared.Adapters;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,18 +7,17 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tsquared.Models.QuestionItemModel;
+import com.example.tsquared.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapter.MyViewHolder> implements Filterable {
 
@@ -30,7 +28,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     private ArrayList<QuestionItemModel> mArrayListFull;
     private Filter exampleFilter;
 
-    QuestionItemAdapter(ArrayList<QuestionItemModel> mArrayList, Context mcontext, OnNoteListener onNote) {
+    public QuestionItemAdapter(ArrayList<QuestionItemModel> mArrayList, Context mcontext, OnNoteListener onNote) {
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
         this.onNote     = onNote;
@@ -111,7 +109,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         }.filter(query);
     }
 
-    void swapData(ArrayList<QuestionItemModel> mNewDataSet) {
+    public void swapData(ArrayList<QuestionItemModel> mNewDataSet) {
         this.mArrayList.clear();
         this.mArrayList.addAll(mNewDataSet);
         notifyDataSetChanged();
@@ -150,10 +148,3 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         void OnNoteClick(int position);
     }
 }
-/*Intent intent = new Intent(mcontext, DetailActivity.class);
-  intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-  String question = tv_question.getText().toString();
-  intent.putExtra("question", question);
-  //String respNum  = tv_responses.getText().toString();
-  //intent.putExtra("responseNum", respNum);
-  mcontext.startActivity(intent);*/

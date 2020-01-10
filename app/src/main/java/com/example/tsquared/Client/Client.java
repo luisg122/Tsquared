@@ -1,4 +1,4 @@
-package com.example.tsquared;
+package com.example.tsquared.Client;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;

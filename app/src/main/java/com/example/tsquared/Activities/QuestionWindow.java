@@ -1,14 +1,11 @@
-package com.example.tsquared;
+package com.example.tsquared.Activities;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -21,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.android.volley.RequestQueue;
+import com.example.tsquared.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -31,8 +29,6 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 import cz.msebera.android.httpclient.Header;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class QuestionWindow extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
 

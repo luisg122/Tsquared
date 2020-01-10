@@ -1,4 +1,4 @@
-package com.example.tsquared;
+package com.example.tsquared.Models;
 
 import android.graphics.drawable.Drawable;
 
@@ -15,7 +15,7 @@ public class AnswerModel {
     AnswerModel(){
 
     }
-    static AnswerModel fromJson(JSONObject jsonObject) throws JSONException {
+    public static AnswerModel fromJson(JSONObject jsonObject) throws JSONException {
         AnswerModel answer   = new AnswerModel();
         answer.isAnonymous   = jsonObject.getInt("isAnonymous");
         answer.name          = jsonObject.getString("RepliedBy");

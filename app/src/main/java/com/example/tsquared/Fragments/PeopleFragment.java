@@ -1,4 +1,4 @@
-package com.example.tsquared;
+package com.example.tsquared.Fragments;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -13,16 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.android.material.card.MaterialCardView;
+import com.example.tsquared.Adapters.PeopleItemAdapter;
+import com.example.tsquared.Models.PeopleItemModel;
+import com.example.tsquared.Activities.PersonProfile;
+import com.example.tsquared.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -32,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -148,13 +145,19 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
         String college = mArrayList.get(position).college;
         String desc    = mArrayList.get(position).desc;
         String email   = mArrayList.get(position).email;
-
         intent.putExtra("name", name);
         intent.putExtra("college", college);
         intent.putExtra("desc", desc);
         intent.putExtra("email", email);
         startActivity(intent);
     }
+
+    /*@Override
+    public void OnFollowClick(int position){
+        final int pressedColor = this.getResources().getColor(R.color.mainColor);
+        mArrayList.get(position);
+        Toast.makeText(getApplicationContext(), "Position " + mArrayList.get(position), Toast.LENGTH_SHORT).show();
+    }*/
 }
 
 /*

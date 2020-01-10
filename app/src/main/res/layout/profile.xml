@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/profile_header_design"
-    tools:context=".PersonProfile">
+    tools:context=".Activities.PersonProfile">
 
     <!--<ScrollView
         android:layout_width="match_parent"
@@ -218,7 +218,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/profilePersonQuestions" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/profilePersonFollowing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -230,7 +230,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/profilePersonAnswers" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/profilePersonFollowers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -239,12 +239,12 @@
                         android:text="Followers"
                         android:textSize="15sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView8"
-                        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                        app:layout_constraintTop_toBottomOf="@+id/profilePersonFollowing" />
 
                     <ImageView
-                        android:id="@+id/arrowDown1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/questionsArrow"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_marginTop="50dp"
                         android:layout_marginEnd="45dp"
                         android:layout_marginRight="45dp"
@@ -253,37 +253,37 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/arrowDown2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp"
+                        android:id="@+id/answersArrow"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="50dp"
                         android:layout_marginEnd="45dp"
                         android:layout_marginRight="45dp"
                         android:src="@drawable/ic_arrow_drop_down_24dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/arrowDown1" />
+                        app:layout_constraintTop_toBottomOf="@+id/questionsArrow" />
 
                     <ImageView
-                        android:id="@+id/arrowDown3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp"
+                        android:id="@+id/followingArrow"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="50dp"
                         android:layout_marginEnd="45dp"
                         android:layout_marginRight="45dp"
                         android:src="@drawable/ic_arrow_drop_down_24dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/arrowDown2" />
+                        app:layout_constraintTop_toBottomOf="@+id/answersArrow" />
 
                     <ImageView
-                        android:id="@+id/arrowDown4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp"
+                        android:id="@+id/followersArrow"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="50dp"
                         android:layout_marginEnd="45dp"
                         android:layout_marginRight="45dp"
                         android:src="@drawable/ic_arrow_drop_down_24dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/arrowDown3" />
+                        app:layout_constraintTop_toBottomOf="@+id/followingArrow" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

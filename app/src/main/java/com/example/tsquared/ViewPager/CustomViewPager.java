@@ -1,4 +1,4 @@
-package com.example.tsquared;
+package com.example.tsquared.ViewPager;
 
 import android.content.Context;
 import android.util.AttributeSet;

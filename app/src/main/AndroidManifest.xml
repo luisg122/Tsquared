@@ -35,25 +35,22 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".NoAnswersOrMore"
+            android:name=".Activities.PersonProfile"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".PersonProfile"
+            android:name=".Activities.QuestionWindow"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".QuestionWindow"
+            android:name=".Activities.DetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".DetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".UserRegister"
+            android:name=".Activities.UserRegister"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DrawerActivity"
+            android:name=".Activities.DrawerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

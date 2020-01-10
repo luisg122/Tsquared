@@ -1,8 +1,10 @@
-package com.example.tsquared;
+package com.example.tsquared.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.example.tsquared.Constants.Constants;
 
 public class PreferenceUtils {
 

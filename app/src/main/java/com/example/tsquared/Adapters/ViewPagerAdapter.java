@@ -1,4 +1,4 @@
-package com.example.tsquared;
+package com.example.tsquared.Adapters;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

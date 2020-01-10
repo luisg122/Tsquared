@@ -1,4 +1,4 @@
-package com.example.tsquared;
+package com.example.tsquared.Models;
 
 import android.graphics.drawable.Drawable;
 
@@ -12,7 +12,7 @@ public class PeopleItemModel {
     public  String email;
     public  Drawable profileImage;
 
-    static PeopleItemModel fromJson(JSONObject jsonObject) throws JSONException {
+    public static PeopleItemModel fromJson(JSONObject jsonObject) throws JSONException {
         PeopleItemModel people = new PeopleItemModel();
         people.name            = jsonObject.getString("FullName");
         people.desc            = jsonObject.getString("Description");
