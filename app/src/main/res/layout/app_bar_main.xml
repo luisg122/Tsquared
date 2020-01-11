@@ -27,8 +27,7 @@
             app:floatingSearch_leftActionColor="#94e5ff"
             app:floatingSearch_searchHint="Search"
             app:floatingSearch_showSearchKey="true"
-            app:floatingSearch_suggestionsListAnimDuration="250">
-        </com.arlib.floatingsearchview.FloatingSearchView>
+            app:floatingSearch_suggestionsListAnimDuration="250"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

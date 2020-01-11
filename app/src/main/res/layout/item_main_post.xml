@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,6 +40,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="28dp"
             android:text="John Doe"
+            android:textColor="#6897BB"
             app:layout_constraintStart_toEndOf="@+id/postIV"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +55,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             app:contentPadding="6dp"
-            app:cardBackgroundColor="#94e5ff"
+            app:cardBackgroundColor="#F5F5F5"
             app:layout_constraintStart_toEndOf="@+id/postIV"
             app:layout_constraintTop_toBottomOf="@+id/QuestionName"
             app:cardCornerRadius="15dp"
@@ -64,11 +64,14 @@
                 android:id="@+id/topic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="Software Engineering"
-                android:textColor="#ffffff"
+                android:textColor="#6897BB"
                 android:textStyle="bold"/>
         </com.google.android.material.card.MaterialCardView>
-
 
         <TextView
             android:id="@+id/questionContent"
@@ -148,5 +151,16 @@
             android:src="@drawable/ic_rss_feed_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/questionContent"
+            app:srcCompat="@drawable/line_divider" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
