@@ -40,7 +40,8 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="28dp"
             android:text="John Doe"
-            android:textColor="#6897BB"
+            android:textStyle="normal"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/postIV"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,7 +70,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="Software Engineering"
-                android:textColor="#6897BB"
+                android:textColor="#1e5262"
                 android:textStyle="bold"/>
         </com.google.android.material.card.MaterialCardView>
 
@@ -79,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:background="@color/transparent"
@@ -122,7 +123,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_forum_24dp"
+            app:srcCompat="@drawable/ic_forum_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/questionContent"
@@ -148,7 +149,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="28dp"
-            android:src="@drawable/ic_rss_feed_24dp"
+            app:srcCompat="@drawable/ic_rss_feed_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 

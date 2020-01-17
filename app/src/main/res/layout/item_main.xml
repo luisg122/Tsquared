@@ -42,8 +42,8 @@
         android:clickable="true"
         android:focusable="true"
 
-        android:src="@drawable/ic_add_24dp"
-        app:backgroundTint="#0c2026"/>
+        app:srcCompat="@drawable/ic_add_white_24dp"
+        app:backgroundTint="@color/mainColor"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer1"

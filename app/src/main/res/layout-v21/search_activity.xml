@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayoutToolBar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EC4F65">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/searchToolBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/toolbar_bg"
+        android:fitsSystemWindows="true"
+        android:padding="5dp"
+        app:title=" ">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppSearchView"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/hint"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchToolBar1"
+        android:layout_marginBottom="0dp">
+        <!--<ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_newyork_city"/>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/results_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="0dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

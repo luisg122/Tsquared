@@ -92,10 +92,10 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
         mainRv.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        mainRv.setLayoutManager(layoutManager);
 
         adapter = new PeopleItemAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setAdapter(adapter);
+        mainRv.setLayoutManager(layoutManager);
     }
 
     private void loadListOfPeople() {

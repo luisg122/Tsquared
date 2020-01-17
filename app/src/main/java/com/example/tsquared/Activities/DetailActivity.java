@@ -224,6 +224,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+
         anonymous.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -291,8 +292,8 @@ public class DetailActivity extends AppCompatActivity {
         mainRv = (RecyclerView) findViewById(R.id.answersRV);
         mainRv.setHasFixedSize(false);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        mainRv.setLayoutManager(layoutManager);
         adapter = new AnswerAdapter(mArrayList, getApplicationContext());
+        mainRv.setLayoutManager(layoutManager);
     }
 
     private void loadListOfAnswers(){
@@ -349,8 +350,6 @@ public class DetailActivity extends AppCompatActivity {
         shimmerFrameLayout.stopShimmer();
     }
 }
-
-
         /*else if(responseNum.equals("0 Answers")) {
             stub.setLayoutResource(R.layout.no_answers_yet);
             stub.inflate();

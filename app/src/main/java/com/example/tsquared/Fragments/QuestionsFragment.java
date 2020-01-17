@@ -80,37 +80,11 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
         shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
         // Correct sequence of function calls
         setUpSwipeContainer();
-        setUpSearchListener();
         setupFloatingButtonAction();
         setUpRecyclerView();
         loadListOfQuestions();
         setUpSwipeListener();
         return view;
-    }
-
-    private void setUpSearchListener() {
-        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this.getActivity());
-        View view = layoutInflaterAndroid.inflate(R.layout.drawer_activity, null);
-        mSearchView = view.findViewById(R.id.searchView);
-
-        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
-            @Override
-            public void onSuggestionClicked (final SearchSuggestion searchSuggestion){
-            }
-
-            @Override
-            public void onSearchAction (String query){
-                mLastQuery = query;
-                adapter.findQuestions(getApplicationContext(), query,
-                    new QuestionItemAdapter.OnFindQuestionsListener(){
-                    @Override
-                    public void onResults(ArrayList<QuestionItemModel>results){
-                        adapter.swapData(results);
-                    }
-                });
-                Log.d("TAG", "onSearchAction()");
-            }
-        });
     }
 
     private void setUpSwipeContainer() {
@@ -161,10 +135,10 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
         mainRv.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
                 RecyclerView.VERTICAL, false);
-        mainRv.setLayoutManager(layoutManager);
 
         adapter = new QuestionItemAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setAdapter(adapter);
+        mainRv.setLayoutManager(layoutManager);
 
         // Hide the floating action button when scrolling, purely for design purposes
         mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
