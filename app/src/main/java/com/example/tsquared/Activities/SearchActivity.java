@@ -65,6 +65,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         SearchView searchView = findViewById(R.id.search_view);
+        searchView.onActionViewExpanded(); // Keyboard is opened by default when user opens SearchActivity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
