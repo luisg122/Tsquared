@@ -2,12 +2,15 @@ package com.example.tsquared.Adapters;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,7 +22,8 @@ import com.example.tsquared.R;
 
 import java.util.ArrayList;
 
-public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapter.MyViewHolder> implements Filterable {
+public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapter.MyViewHolder>
+        implements Filterable {
 
     private final ArrayList<QuestionItemModel> mArrayList;
     private Context mcontext;
@@ -45,7 +49,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         QuestionItemModel question = mArrayList.get(position);
         Glide.with(mcontext)
                 .load(question.getProfileImage())
@@ -56,7 +60,30 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         holder.tv_question.setText(question.question);
         holder.tv_dateSubmitted.setText(question.dateSubmitted);
         holder.tv_responses.setText(question.responseNum);
-
+        holder.moreIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(mcontext, holder.moreIcon);
+                popupMenu.inflate(R.menu.menu_scrolling);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.follow_info:
+                                Toast.makeText(mcontext, "Following Question", Toast.LENGTH_LONG).show();
+                                break;
+                            case R.id.bookmark:
+                                Toast.makeText(mcontext, "Question Bookmarked", Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
         Log.d("MyAdapter", "position: " + position);
     }
 
@@ -115,6 +142,11 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         notifyDataSetChanged();
     }
 
+    public void addItem(QuestionItemModel datum) {
+        mArrayList.add(datum);
+        notifyItemInserted(mArrayList.size());
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView iv_image;
         private final TextView  tv_name;
@@ -123,6 +155,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
         private final CardView  cardViewLayout;
+        private final ImageView moreIcon;
         OnNoteListener onNoteListener;
 
         public MyViewHolder(View view, OnNoteListener onNoteListener) {
@@ -133,6 +166,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
             tv_question      = view.findViewById(R.id.questionContent);
             tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
+            moreIcon         = view.findViewById(R.id.threeDots);
             this.onNoteListener = onNoteListener;
 
             cardViewLayout = view.findViewById(R.id.cardViewLayout);

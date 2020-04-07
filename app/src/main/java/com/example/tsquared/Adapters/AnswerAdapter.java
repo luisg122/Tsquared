@@ -88,6 +88,11 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
+    public void addItem(AnswerModel datum) {
+        mArrayList.add(datum);
+        notifyItemInserted(mArrayList.size());
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private final ImageView answerProfileImage;
         private final TextView  answerProfileName;

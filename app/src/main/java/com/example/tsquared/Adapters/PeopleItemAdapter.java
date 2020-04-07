@@ -8,17 +8,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.tsquared.Models.PeopleItemModel;
 import com.example.tsquared.R;
 import com.google.android.material.card.MaterialCardView;
-
 import java.util.ArrayList;
-
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.MyViewHolder> {
@@ -60,8 +56,8 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
         //holder.cardViewLayout.setCardBackgroundColor(color_bg);
         holder.cardViewLayout.setRadius(30f);
 
-        //final int pressedColor = mcontext.getResources().getColor(R.color.mainColor);
-        /*holder.tv_button.setOnClickListener(new View.OnClickListener() {
+        /*final int pressedColor = mcontext.getResources().getColor(R.color.mainColor);
+        holder.tv_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.tv_button.setBackgroundColor(pressedColor);
@@ -79,6 +75,11 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
         this.mArrayList.clear();
         this.mArrayList.addAll(mNewDataSet);
         notifyDataSetChanged();
+    }
+
+    public void addItem(PeopleItemModel datum) {
+        mArrayList.add(datum);
+        notifyItemInserted(mArrayList.size());
     }
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView iv_image;
@@ -133,17 +134,3 @@ public class PeopleItemAdapter extends RecyclerView.Adapter<PeopleItemAdapter.My
         //void OnFollowClick(int position);
     }
 }
-
-/*
-            Intent intent = new Intent(mcontext, PersonProfile.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            String name    = tv_name.getText().toString();
-            String college = tv_college.getText().toString();
-            String desc    = tv_desc.getText().toString();
-
-            intent.putExtra("name", name);
-            intent.putExtra("college", college);
-            intent.putExtra("desc", desc);
-            intent.putExtra("email", email);
-            mcontext.startActivity(intent);
- */

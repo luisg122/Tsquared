@@ -20,6 +20,9 @@
         <item name="colorPrimaryDark">@color/mainColor</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
+        <item name="android:windowAnimationStyle">@style/customActivityAnimation</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
     </style>
 
     <!-- Styling/customizing the Toolbar -->
@@ -61,13 +64,13 @@
 
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxBackgroundColor">#ffffff</item>
-        <item name="boxStrokeColor">#94e5ff</item>
+        <item name="boxStrokeColor">#FF7F50</item>
         <item name="android:paddingBottom">8dp</item>
     </style>
 
     <style name="HintText" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#94e5ff</item>
+        <item name="android:textColor">#FF7F50</item>
     </style>
 
     <style name="TextAppearance.MyApp.Title.Collapsed" parent="android:TextAppearance">
@@ -78,6 +81,52 @@
     <style name="TextAppearance.MyApp.Title.Expanded" parent="android:TextAppearance">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Base.TextAppearance.MaterialComponents.Button" parent="TextAppearance.AppCompat.Button">
+        <!-- Fake Roboto Medium. -->
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.0892857143</item>
+
+    </style>
+
+    <style name="TextAppearance.MaterialComponents.Button" parent="Base.TextAppearance.MaterialComponents.Button"/>
+    
+    <style name="signInBackground" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/sign_in_background</item>
+        <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>
+    </style>
+
+    <style name="backgroundSplash" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>
+    </style>
+
+    <style name="MyEditTextTheme">
+        <item name="colorControlNormal">#FFFFFF</item>
+        <item name="colorControlActivated">#FFFFFF</item>
+        <item name="colorControlHighlight">#FFFFFF</item>
+    </style>
+
+    <style name="MyDatePickerStyle"
+        parent="@android:style/Widget.Material.Light.DatePicker"
+        tools:targetApi="lollipop">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:datePickerMode">spinner</item>
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:colorAccent">@color/white</item>
+    </style>
+
+    <style name="customActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
 </resources>

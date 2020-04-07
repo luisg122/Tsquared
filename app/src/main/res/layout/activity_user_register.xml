@@ -161,6 +161,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/post_button_round"
                 android:text="Register"
+                android:textAllCaps="false"
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
 
@@ -174,7 +175,6 @@
                 android:layout_marginTop="30dip"
                 android:textColor="#3F51B5"
                 android:layout_marginBottom="10dp"/>
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

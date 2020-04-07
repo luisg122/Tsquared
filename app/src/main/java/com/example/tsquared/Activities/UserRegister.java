@@ -58,7 +58,7 @@ public class UserRegister extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_user_register);
         setViews();
         setListeners();
-        TestFairy.begin(this, "");
+        //TestFairy.begin(this, "");
     }
 
     private void setListeners() {

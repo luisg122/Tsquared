@@ -16,8 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
+import com.example.tsquared.Adapters.QuestionItemAdapter;
+import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
@@ -52,6 +55,8 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
     RequestParams params, params1;
     AsyncHttpClient client, client1;
     String URL1 = "http://207.237.59.117:8080/TSquared/platform?todo=postQuestion";
+    QuestionItemAdapter adapter;
+    RecyclerView        mainRv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +112,6 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.questionAnonymous:
                 break;
-
         }
     }
 

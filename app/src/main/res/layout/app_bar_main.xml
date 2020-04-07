@@ -2,90 +2,42 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:background="@color/mainColor">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/searchToolBar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:fitsSystemWindows="true"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             app:titleTextColor="@color/white"
             app:titleMarginStart="15dp">
-
-            <!--<include
-                layout="@layout/searchbar"/>-->
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:layout_below="@+id/searchToolBar"
             app:tabGravity="fill"
             app:tabMode="fixed"
             app:tabPaddingEnd="16dp"
             app:tabPaddingStart="16dp"
             app:tabTextAppearance="@style/TabLayoutStyle"
-            app:tabIndicatorColor="@color/pressed"/>
+            app:tabIndicatorColor="@color/pressed"
+            app:tabIndicatorHeight="5dp"/>
     </com.google.android.material.appbar.AppBarLayout>
-    <FrameLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:id="@+id/frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <com.example.tsquared.ViewPager.CustomViewPager
         android:id="@+id/mainViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-
-    <!--<com.arlib.floatingsearchview.FloatingSearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:floatingSearch_close_search_on_keyboard_dismiss="true"
-        app:floatingSearch_leftActionMode="showHamburger"
-        app:floatingSearch_menu="@menu/menu_main"
-        app:floatingSearch_searchBarMarginLeft="15dp"
-        app:floatingSearch_searchBarMarginRight="15dp"
-        app:floatingSearch_searchBarMarginTop="5dp"
-        app:floatingSearch_backgroundColor="#ffffff"
-        app:floatingSearch_leftActionColor="#94e5ff"
-        app:floatingSearch_searchHint="Search"
-        app:floatingSearch_showSearchKey="true"
-        app:floatingSearch_suggestionsListAnimDuration="250"/>-->
-    <!--<EditText
-        android:drawablePadding="8dp"
-        android:drawableLeft="@drawable/ic_menu_24dp"
-        android:drawableRight="@drawable/ic_search_black_24dp"
-        android:textColor="@color/light_gray"
-        android:hint="Search ..."
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:background="@drawable/search_input_style"
-        android:id="@+id/search_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>-->
+    <!--app:layout_scrollFlags="scroll|enterAlways"-->

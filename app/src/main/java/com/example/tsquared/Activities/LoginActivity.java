@@ -1,9 +1,12 @@
 package com.example.tsquared.Activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.signInBackground);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setViews();
@@ -52,8 +56,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void setViews() {
         email = (EditText) findViewById(R.id.email);
-        String appendedEmail = "@qmail.cuny.edu";
-        email.setText(appendedEmail);
+        // String appendedEmail = "@qmail.cuny.edu";
+        // email.setText(appendedEmail);
 
         login = (Button) findViewById(R.id.buttonSignIn);
         password = (EditText) findViewById(R.id.password);
@@ -92,16 +96,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.SignUp:
-                Intent register = new Intent(LoginActivity.this, UserRegister.class);
+                Intent register = new Intent(LoginActivity.this, SignUp_Screen1.class);
                 register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(register);
-                finish();
+                // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                //finish();
                 break;
         }
     }
 
     public void tryToLogin(final String email, final String password) {
-
         client = new AsyncHttpClient();
         URL += "" + email;
 

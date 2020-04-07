@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +22,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.tsquared.Activities.DetailActivity;
+import com.example.tsquared.Activities.DomainCategoryActivity;
 import com.example.tsquared.Activities.DrawerActivity;
 import com.example.tsquared.Activities.QuestionWindow;
 import com.example.tsquared.Adapters.QuestionItemAdapter;
+import com.example.tsquared.Adapters.SpheresAdapter;
 import com.example.tsquared.Models.QuestionItemModel;
+import com.example.tsquared.Models.SphereModel;
 import com.example.tsquared.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,14 +48,20 @@ import cz.msebera.android.httpclient.Header;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static java.util.Objects.*;
 
-public class QuestionsFragment<adapter> extends Fragment implements QuestionItemAdapter.OnNoteListener {
+public class QuestionsFragment<adapter> extends Fragment
+        implements QuestionItemAdapter.OnNoteListener, SpheresAdapter.OnCategoryListener {
 
     private View view;
     private RecyclerView mainRv;
-    private QuestionItemAdapter adapter;
+    private RecyclerView mainRv1;
+
     private FloatingActionButton fab;
 
     private ArrayList<QuestionItemModel> mArrayList;
+    private ArrayList<SphereModel> mArrayList1;
+    private QuestionItemAdapter adapter;
+    private SpheresAdapter adapter1;
+
     private SwipeRefreshLayout swipeContainer;
     private FloatingSearchView mSearchView;
     public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
@@ -65,6 +77,8 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
     private RequestParams params, params1;
     private AsyncHttpClient client, client1;
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
+    private MaterialCardView materialCardView;
+    private TextView textPrompt;
     public QuestionsFragment(){
     }
 
@@ -82,9 +96,38 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
         setUpSwipeContainer();
         setupFloatingButtonAction();
         setUpRecyclerView();
+        setUpSpheresRecyclerView();
         loadListOfQuestions();
         setUpSwipeListener();
         return view;
+    }
+
+    private void setUpSpheresRecyclerView() {
+        textPrompt = view.findViewById(R.id.textPrompt);
+        textPrompt.setVisibility(View.INVISIBLE);
+
+        materialCardView = view.findViewById(R.id.cardViewCircles);
+        materialCardView.setVisibility(View.INVISIBLE);
+
+        mArrayList1 = new ArrayList<>();
+        mainRv1 = view.findViewById(R.id.spheresRV);
+        mainRv1.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+                RecyclerView.HORIZONTAL, false);
+        mainRv1.setLayoutManager(layoutManager);
+
+        mArrayList1.add(new SphereModel(R.drawable.ic_target,"Business & Management"));
+        mArrayList1.add(new SphereModel(R.drawable.ic_sum,"Mathematics & Physics"));
+        mArrayList1.add(new SphereModel(R.drawable.ic_coding,"Computer Science & Engineering"));
+        mArrayList1.add(new SphereModel(R.drawable.ic_book,"Literature & Writing"));
+        mArrayList1.add(new SphereModel(R.drawable.ic_molecular,"Chemistry & Material Science"));
+        mArrayList1.add(new SphereModel(R.drawable.ic_healthcare_and_medical,"Biology & Life Science"));
+        mArrayList1.add(new SphereModel(R.drawable.ic_geology,"Geography & Earth Science"));
+        mArrayList1.add(new SphereModel(R.drawable.ic_column,"Arts & Humanities"));
+
+        adapter1 = new SpheresAdapter(mArrayList1, getApplicationContext(), this);
+        mainRv1.setAdapter(adapter1);
+        mainRv1.setNestedScrollingEnabled(false);
     }
 
     private void setUpSwipeContainer() {
@@ -130,7 +173,8 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpRecyclerView(){
-        mArrayList = new ArrayList<>();
+        mArrayList  = new ArrayList<>();
+
         mainRv = view.findViewById(R.id.question_list_rv);
         mainRv.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
@@ -139,20 +183,7 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
         adapter = new QuestionItemAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setAdapter(adapter);
         mainRv.setLayoutManager(layoutManager);
-
-        // Hide the floating action button when scrolling, purely for design purposes
-        mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if(dy > 0 && fab.getVisibility() == View.VISIBLE){
-                    fab.hide();
-                }
-                else if(dy < 0 && fab.getVisibility() != View.VISIBLE){
-                    fab.show();
-                }
-            }
-        });
+        mainRv.setNestedScrollingEnabled(false);
     }
 
     private void loadListOfQuestions(){
@@ -179,6 +210,9 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
                 shimmerFrameLayout.setVisibility(View.GONE);
                 adapter.swapData(questionList);
                 swipeContainer.setRefreshing(false);
+
+                materialCardView.setVisibility(View.VISIBLE);
+                textPrompt.setVisibility(View.VISIBLE);
 
             }
             @Override
@@ -213,6 +247,15 @@ public class QuestionsFragment<adapter> extends Fragment implements QuestionItem
         Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("question", question);
+        startActivity(intent);
+    }
+
+    @Override
+    public void OnCategoryClick(int position){
+        String categoryName = mArrayList1.get(position).getName();
+        Intent intent = new Intent(getApplicationContext(), DomainCategoryActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("category", categoryName);
         startActivity(intent);
     }
 }

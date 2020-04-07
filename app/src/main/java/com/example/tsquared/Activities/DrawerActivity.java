@@ -30,7 +30,6 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.HashMap;
 
 public class DrawerActivity extends AppCompatActivity {
-
     FloatingSearchView mSearchView;
     NavigationView navigationView;
     TextView profileName;

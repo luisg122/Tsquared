@@ -18,6 +18,16 @@ public class QuestionItemModel {
     QuestionItemModel() {
 
     }
+    public QuestionItemModel(String name, String topic, String question,
+                             String dateSubmitted, String responseNum, Drawable profileImage){
+        this.name     = name;
+        this.topic    = topic;
+        this.question = question;
+        this.dateSubmitted = dateSubmitted;
+        this.responseNum   = responseNum;
+        this.profileImage  = profileImage;
+
+    }
 
     public static QuestionItemModel fromJson(JSONObject jsonObject) throws JSONException {
         QuestionItemModel question = new QuestionItemModel();
@@ -106,13 +116,3 @@ public class QuestionItemModel {
         return new String(ch);
     }
 }
-    /*public QuestionItemModel(String name, String topic, String question,
-                             String dateSubmitted, String responseNum, Drawable profileImage){
-        this.name     = name;
-        this.topic    = topic;
-        this.question = question;
-        this.dateSubmitted = dateSubmitted;
-        this.responseNum   = responseNum;
-        this.profileImage  = profileImage;
-
-    }*/

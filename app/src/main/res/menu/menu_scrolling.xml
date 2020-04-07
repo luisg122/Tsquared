@@ -4,11 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_info"
-        android:orderInCategory="100"
-        android:title="answer"
+        android:id="@+id/follow_info"
+        android:title="Follow Question"/>
 
-        app:showAsAction="ifRoom"
-        android:src="@drawable/ic_add_24dp"/>
+    <item
+        android:id="@+id/bookmark"
+        android:title="Bookmark"/>
 
 </menu>
+
+<!--
+     android:orderInCategory="1"
+     android:icon="@drawable/ic_add_white_24dp"
+     app:showAsAction="ifRoom" -->

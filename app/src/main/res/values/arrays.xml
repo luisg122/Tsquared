@@ -13,4 +13,10 @@
         <item>remove_image</item>-->
     </string-array>
 
+    <string-array name="tsquaredFade">
+        <item>ask</item>
+        <item>answer</item>
+        <item>learn</item>
+    </string-array>
+
 </resources>
