@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -12,7 +12,7 @@
     android:id="@+id/category"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="0dp"
-    app:cardBackgroundColor="@color/transparent">
+    app:cardBackgroundColor="@color/mainColor">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             android:gravity="center_horizontal"
             android:text="Engineering and Computer Science"
             android:padding="2dp"
-            android:textColor="#742A46"
+            android:textColor="@color/white"
             android:textSize="12sp" />
     </RelativeLayout>
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

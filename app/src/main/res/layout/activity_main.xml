@@ -28,11 +28,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginStart="100dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="100dp"
-                android:layout_marginRight="100dp"
+                android:layout_marginTop="30dp"
                 app:srcCompat="@drawable/ic_tsquared" />
 
 
@@ -64,9 +60,11 @@
                         android:layout_above="@+id/googleSignIn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
+                        android:layout_marginTop="28dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="15dp"
@@ -108,7 +106,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginBottom="20dp"
                         android:background="@drawable/post_button_round"
                         android:text="Continue"
                         android:textAllCaps="false"
@@ -132,24 +130,33 @@
                         android:textColor="@color/black"
                         android:textSize="15sp" />
 
-                    <TextView
+                    <Button
                         android:id="@+id/SignUp"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="101dp"
-                        android:layout_marginRight="101dp"
-                        android:layout_marginBottom="34dp"
+                        android:layout_marginStart="85dp"
+                        android:layout_marginLeft="85dp"
+                        android:layout_marginEnd="85dp"
+                        android:layout_marginRight="85dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/signup_button"
+                        android:gravity="center"
+                        android:text="No Account Yet? Sign Up"
+                        android:textAllCaps="false"
                         android:textColor="#3F51B5"
-                        android:text="No Account Yet? Sign Up" />
+                        android:textSize="13sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/email_TextInputLayout"
-                        style="@style/TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/LogInActivateLine"
                         android:layout_above="@+id/password_TextInputLayout"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
@@ -165,21 +172,20 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/email"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignTop="@+id/email_TextInputLayout"
                             android:hint="Email"
                             android:inputType="textEmailAddress"
-                            android:padding="5dp"
+                            android:padding="10dp"
                             android:textCursorDrawable="@drawable/cursor_color" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/password_TextInputLayout"
-                        style="@style/TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:theme="@style/LogInActivateLine"
                         android:layout_above="@+id/buttonSignIn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
@@ -196,63 +202,16 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/password"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/password_TextInputLayout"
                             android:hint="Password"
                             android:inputType="textPassword"
                             android:maxLines="1"
-                            android:padding="5dp"
-                            android:textCursorDrawable="@drawable/cursor_color" />
+                            android:padding="10dp"
+                            android:textCursorDrawable="@drawable/cursor_color"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>
-
-
-
-
-
-
-
-
-    <!--<EditText
-        android:id="@+id/email"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_above="@+id/password"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="19dp"
-        android:background="@drawable/edit_text_background"
-        android:padding="5dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:textCursorDrawable="@drawable/cursor_color" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="208dp"
-        android:padding="5dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:background="@drawable/edit_text_background"
-        android:textCursorDrawable="@drawable/cursor_color"/>-->

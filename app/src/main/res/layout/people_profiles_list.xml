@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    style="@style/CardView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer2"
@@ -18,4 +18,6 @@
             android:layout_marginTop="10dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</androidx.cardview.widget.CardView>
+    <include
+        layout="@layout/cardview_articles"/>
+</RelativeLayout>

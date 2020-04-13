@@ -1,10 +1,8 @@
 package com.example.tsquared.Fragments;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,44 +10,31 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.tsquared.Activities.DetailActivity;
-import com.example.tsquared.Activities.DomainCategoryActivity;
 import com.example.tsquared.Activities.DrawerActivity;
 import com.example.tsquared.Activities.QuestionWindow;
 import com.example.tsquared.Adapters.QuestionItemAdapter;
-import com.example.tsquared.Adapters.SpheresAdapter;
 import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.Models.SphereModel;
 import com.example.tsquared.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cz.msebera.android.httpclient.Header;
-
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static java.util.Objects.*;
 
 public class QuestionsFragment<adapter> extends Fragment
-        implements QuestionItemAdapter.OnNoteListener, SpheresAdapter.OnCategoryListener {
+        implements QuestionItemAdapter.OnNoteListener {
 
     private View view;
     private RecyclerView mainRv;
@@ -60,8 +45,6 @@ public class QuestionsFragment<adapter> extends Fragment
     private ArrayList<QuestionItemModel> mArrayList;
     private ArrayList<SphereModel> mArrayList1;
     private QuestionItemAdapter adapter;
-    private SpheresAdapter adapter1;
-
     private SwipeRefreshLayout swipeContainer;
     private FloatingSearchView mSearchView;
     public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
@@ -77,7 +60,7 @@ public class QuestionsFragment<adapter> extends Fragment
     private RequestParams params, params1;
     private AsyncHttpClient client, client1;
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
-    private MaterialCardView materialCardView;
+    private CardView cardView;
     private TextView textPrompt;
     public QuestionsFragment(){
     }
@@ -94,20 +77,22 @@ public class QuestionsFragment<adapter> extends Fragment
         shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
         // Correct sequence of function calls
         setUpSwipeContainer();
-        setupFloatingButtonAction();
+        //setupFloatingButtonAction();
         setUpRecyclerView();
-        setUpSpheresRecyclerView();
+        //setUpSpheresRecyclerView();
+        textPrompt = view.findViewById(R.id.textPrompt);
+        textPrompt.setVisibility(View.INVISIBLE);
         loadListOfQuestions();
         setUpSwipeListener();
         return view;
     }
 
-    private void setUpSpheresRecyclerView() {
+    /*private void setUpSpheresRecyclerView() {
         textPrompt = view.findViewById(R.id.textPrompt);
         textPrompt.setVisibility(View.INVISIBLE);
 
-        materialCardView = view.findViewById(R.id.cardViewCircles);
-        materialCardView.setVisibility(View.INVISIBLE);
+        cardView = view.findViewById(R.id.cardViewCircles);
+        cardView.setVisibility(View.INVISIBLE);
 
         mArrayList1 = new ArrayList<>();
         mainRv1 = view.findViewById(R.id.spheresRV);
@@ -128,15 +113,13 @@ public class QuestionsFragment<adapter> extends Fragment
         adapter1 = new SpheresAdapter(mArrayList1, getApplicationContext(), this);
         mainRv1.setAdapter(adapter1);
         mainRv1.setNestedScrollingEnabled(false);
-    }
+    }*/
 
     private void setUpSwipeContainer() {
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer1);
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
+                android.R.color.black
         );
     }
 
@@ -149,7 +132,7 @@ public class QuestionsFragment<adapter> extends Fragment
         });
     }
 
-    private void setupFloatingButtonAction() {
+    /*private void setupFloatingButtonAction() {
         fab = view.findViewById(R.id.FAB);
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -162,7 +145,7 @@ public class QuestionsFragment<adapter> extends Fragment
                 startActivity(questionWindow);
             }
         });
-    }
+    }*/
 
     private void loadNameAndCollege(){
         DrawerActivity activity = (DrawerActivity) getActivity();
@@ -187,7 +170,7 @@ public class QuestionsFragment<adapter> extends Fragment
     }
 
     private void loadListOfQuestions(){
-        client = new AsyncHttpClient();
+        /*client = new AsyncHttpClient();
         client.get(URL, params, new JsonHttpResponseHandler() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -211,7 +194,7 @@ public class QuestionsFragment<adapter> extends Fragment
                 adapter.swapData(questionList);
                 swipeContainer.setRefreshing(false);
 
-                materialCardView.setVisibility(View.VISIBLE);
+                cardView.setVisibility(View.VISIBLE);
                 textPrompt.setVisibility(View.VISIBLE);
 
             }
@@ -224,7 +207,7 @@ public class QuestionsFragment<adapter> extends Fragment
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.i("ws", "---->>onFailure" + throwable.toString());
             }
-        });
+        });*/
     }
 
     @Override
@@ -247,15 +230,6 @@ public class QuestionsFragment<adapter> extends Fragment
         Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("question", question);
-        startActivity(intent);
-    }
-
-    @Override
-    public void OnCategoryClick(int position){
-        String categoryName = mArrayList1.get(position).getName();
-        Intent intent = new Intent(getApplicationContext(), DomainCategoryActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("category", categoryName);
         startActivity(intent);
     }
 }

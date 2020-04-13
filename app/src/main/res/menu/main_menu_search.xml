@@ -5,10 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SearchActivity">
     <item
-        android:id="@+id/search1"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_24dp"
+        android:title="Home"/>
+    <item
+        android:id="@+id/search"
         android:icon="@drawable/ic_search_24dp"
-        android:title="Search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        tools:ignore="HardcodedText"
-        app:showAsAction="always"/>
+        android:title="Home"
+        />
+    <item
+        android:id="@+id/addQuestion"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="Home"/>
+
 </menu>

@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="mainColor">#0c2026</color>
+    <color name="mainPostColor">#24363b</color>
     <color name="placeholder">#dddddd</color>
     <color name="card_bg">#6897BB</color>
     <color name="card_bg1">#E8F6F3</color>

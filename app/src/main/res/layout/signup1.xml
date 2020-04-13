@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainColor"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/signUpButton1"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/post_button_round"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"/>
+
+    <View
+        android:id="@+id/tile_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="?actionBarSize"
+        android:background="@drawable/line_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.appcompat.widget.Toolbar
@@ -17,63 +46,56 @@
         android:background="@drawable/toolbar_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-    <View
-        android:id="@+id/tile_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line_divider"
-        android:layout_marginTop="?actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"/>
-
-    <EditText
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="108dp"
-        android:hint="First name"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="20sp"
-        android:theme="@style/MyEditTextTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"/>
-
-    <EditText
-        android:layout_width="145dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:hint="Last name"
-        android:inputType="text"
-        android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="20sp"
         android:theme="@style/MyEditTextTheme"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp">
 
-    <Button
-        android:id="@+id/signUpButton1"
-        android:layout_width="350dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="495dp"
-        android:text="Next"
-        android:textSize="18sp"
-        android:background="@drawable/post_button_round"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="108dp"
+        android:hint="First name"
+        android:textColorHint="@color/white"
+        android:theme="@style/MyEditTextTheme"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

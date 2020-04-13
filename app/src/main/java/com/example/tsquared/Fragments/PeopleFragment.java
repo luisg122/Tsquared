@@ -69,9 +69,7 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer2);
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
+                android.R.color.black
         );
     }
 
@@ -99,7 +97,7 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
     }
 
     private void loadListOfPeople() {
-        client = new AsyncHttpClient();
+        /* client = new AsyncHttpClient();
         client.get(URL, params, new JsonHttpResponseHandler() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -134,7 +132,7 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
                 //super.onFailure(statusCode, headers, throwable, errorResponse);
                 Log.i("ws", "---->>onFailure" + throwable.toString());
             }
-        });
+        });*/
     }
 
     @Override

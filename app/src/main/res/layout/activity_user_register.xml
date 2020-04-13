@@ -44,8 +44,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/HintText"
-                style="@style/TextInputLayout">
+                app:hintTextAppearance="@style/HintText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/registerEmail"
@@ -62,8 +61,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/HintText"
-                style="@style/TextInputLayout">
+                app:hintTextAppearance="@style/HintText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/registerPassword"
@@ -81,8 +79,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/HintText"
-                style="@style/TextInputLayout">
+                app:hintTextAppearance="@style/HintText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/firstName"
@@ -99,8 +96,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/HintText"
-                style="@style/TextInputLayout">
+                app:hintTextAppearance="@style/HintText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/lastName"
@@ -118,8 +114,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/HintText"
-                style="@style/TextInputLayout">
+                app:hintTextAppearance="@style/HintText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/college"
@@ -136,8 +131,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/HintText"
-                style="@style/TextInputLayout">
+                app:hintTextAppearance="@style/HintText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/description"

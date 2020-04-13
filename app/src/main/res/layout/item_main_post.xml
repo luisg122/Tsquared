@@ -7,29 +7,69 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    app:cardElevation="0dp">
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp">
+        android:layout_marginLeft="0dp"
+        android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/postIV"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
+
+        <ImageView
+            android:id="@+id/threeDots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/questionContent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_more" />
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/blank_profile"
-            app:layout_constraintBottom_toTopOf="@+id/questionContent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/questionContent"
+            app:srcCompat="@drawable/line_divider" />
+
+
+        <TextView
+            android:id="@+id/dateSubmitted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:text="April 05 2019"
+            android:textSize="13sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/responseNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            android:text="50 Answers"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/forumImage"
+            app:layout_constraintTop_toBottomOf="@+id/questionContent" />
 
         <TextView
             android:id="@+id/QuestionName"
@@ -38,41 +78,13 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="28dp"
-            android:text="John Doe"
-            android:textStyle="normal"
+            android:layout_marginTop="15dp"
+            android:text="Asked by John Doe"
             android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/postIV"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bubble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            app:contentPadding="6dp"
-            app:cardBackgroundColor="#F5F5F5"
-            app:layout_constraintStart_toEndOf="@+id/postIV"
-            app:layout_constraintTop_toBottomOf="@+id/QuestionName"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="0dp">
-            <TextView
-                android:id="@+id/topic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="Software Engineering"
-                android:textColor="#1e5262"
-                android:textStyle="bold"/>
-        </com.google.android.material.card.MaterialCardView>
+            android:textSize="13sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bubbleTag" />
 
         <TextView
             android:id="@+id/questionContent"
@@ -99,21 +111,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.432"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubble" />
-
-        <TextView
-            android:id="@+id/dateSubmitted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
-            android:text="Submitted: April 05 2019"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/questionContent" />
-
+            app:layout_constraintTop_toBottomOf="@+id/QuestionName" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/forumImage"
@@ -123,45 +121,40 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_forum_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/questionContent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_forum_24dp" />
 
-        <TextView
-            android:id="@+id/responseNum"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bubbleTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="20dp"
-            android:text="50 Answers"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/forumImage"
-            app:layout_constraintTop_toBottomOf="@+id/questionContent" />
-
-        <ImageView
-            android:id="@+id/threeDots"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="28dp"
-            app:srcCompat="@drawable/ic_more"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <ImageView
-            android:id="@+id/imageView14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="28dp"
+            app:cardBackgroundColor="@color/light_gray"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:contentPadding="6dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/questionContent"
-            app:srcCompat="@drawable/line_divider" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/topic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Software Engineering"
+                android:textColor="#1e5262"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -6,7 +6,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.tsquared.ViewPager.CustomViewPager;
@@ -28,6 +31,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DrawerActivity extends AppCompatActivity {
     FloatingSearchView mSearchView;
@@ -55,6 +60,17 @@ public class DrawerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem menuItem = menu.findItem(R.id.profilePictureMenu);
+        View view = menuItem.getActionView();
+
+        CircleImageView profileImage = view.findViewById(R.id.toolbar_image_profile);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DrawerActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -70,6 +86,7 @@ public class DrawerActivity extends AppCompatActivity {
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
     }
 
     private void viewPagerInit() {
@@ -82,8 +99,9 @@ public class DrawerActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new QuestionsFragment(), "Questions");
-        adapter.addFragment(new PeopleFragment(), "People");
+        adapter.addFragment(new QuestionsFragment(), "Ask");
+        adapter.addFragment(new PeopleFragment(), "Discover");
+        adapter.addFragment(new Fragment(), "Groups");
         viewPager.setAdapter(adapter);
     }
 
@@ -118,8 +136,15 @@ public class DrawerActivity extends AppCompatActivity {
                 drawer.openDrawer(GravityCompat.START);
                 return true;
             case R.id.search:
-                Intent i = new Intent(this, SearchActivity.class);
-                startActivity(i);
+                Intent searchWindow = new Intent(this, SearchActivity.class);
+                searchWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(searchWindow);
+                return true;
+            case R.id.addQuestionIcon:
+                Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
+                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                questionWindow.putExtra("Full Name", fullName);
+                startActivity(questionWindow);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -69,16 +69,16 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
 
     private void setViews() {
         postName    = (TextView)     findViewById(R.id.postName);
-        postCollege = (TextView)     findViewById(R.id.postCollegeName);
-        topic       = (EditText)     findViewById(R.id.topic);
+        //postCollege = (TextView)     findViewById(R.id.postCollegeName);
+        //topic       = (EditText)     findViewById(R.id.topic);
         topicPost   = (EditText)     findViewById(R.id.topicPost);
-        post        = (Button)       findViewById(R.id.submitPostButton);
-        cancel      = (ImageView)    findViewById(R.id.cancelSubmitButton);
+        //post        = (Button)       findViewById(R.id.submitPostButton);
+        //cancel      = (ImageView)    findViewById(R.id.cancelSubmitButton);
         anonymous   = (SwitchCompat) findViewById(R.id.questionAnonymous);
     }
 
     private void setListeners(){
-        post.setOnClickListener(this);
+        //post.setOnClickListener(this);
         cancel.setOnClickListener(this);
         anonymous.setOnCheckedChangeListener(this);
     }
@@ -87,14 +87,14 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
         String fullName = getIntent().getStringExtra("Full Name");
         String college  = getIntent().getStringExtra("College");
         postName.setText(fullName);
-        postCollege.setText(college);
+        //postCollege.setText(college);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.submitPostButton:
+            /*case R.id.submitPostButton:
                 if(!getInfo()){
                     Snackbar snackbar = Snackbar.make(post, "Cannot leave fields empty", Snackbar.LENGTH_LONG);
                     snackbar.setAction("Action", null);
@@ -106,10 +106,10 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
                     takeDataToPost();
                     QuestionWindow.this.finish();
                 }
-                break;
-            case R.id.cancelSubmitButton:
+                break;*/
+            /*case R.id.cancelSubmitButton:
                 QuestionWindow.this.finish();
-                break;
+                break;*/
             case R.id.questionAnonymous:
                 break;
         }

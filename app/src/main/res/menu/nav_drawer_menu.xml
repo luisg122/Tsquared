@@ -9,22 +9,18 @@
 
         <item
             android:id="@+id/home"
-            android:icon="@drawable/ic_home_24dp"
             android:title="Home"/>
 
         <item
             android:id="@+id/bookmarks"
-            android:icon="@drawable/ic_bookmarks"
             android:title="Bookmarks"/>
 
         <item
             android:id="@+id/Questions"
-            android:icon="@drawable/ic_questions"
-            android:title="Your Questions"/>
+            android:title="Interests"/>
 
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_logout"
             android:title="Log Out"/>
 
     </group>

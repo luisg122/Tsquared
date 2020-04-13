@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Tsquared</string>
-    <string name="facebook_app_id">117498238887011</string>
+    <string name="facebook_app_id">202985997666708</string>
+    <string name="fb_login_protocol_scheme">fb202985997666708</string>
+
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -8,6 +11,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="upload_file">Upload file</string>
     <string name="uploadImages">Set your image</string>
-
     <string name="hint">Search for …</string>
 </resources>

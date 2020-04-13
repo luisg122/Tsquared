@@ -14,7 +14,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/searchToolBar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="wrap_content"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             app:titleTextColor="@color/white"
             app:titleMarginStart="15dp">
@@ -23,21 +23,37 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/searchToolBar"
             app:tabGravity="fill"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             app:tabPaddingEnd="16dp"
             app:tabPaddingStart="16dp"
             app:tabTextAppearance="@style/TabLayoutStyle"
-            app:tabIndicatorColor="@color/pressed"
-            app:tabIndicatorHeight="5dp"/>
+            app:tabIndicatorColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorHeight="3dp"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.example.tsquared.ViewPager.CustomViewPager
         android:id="@+id/mainViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.example.tsquared.ViewPager.CustomViewPager>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <!--app:layout_scrollFlags="scroll|enterAlways"-->
+
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemIconTint="@color/bottom_nav"
+        app:labelVisibilityMode="unlabeled"
+        app:backgroundTint="@color/mainColor"
+        app:elevation="16dp"
+        app:layout_anchor="@+id/mainViewPager"
+        app:layout_anchorGravity="start|bottom"
+        app:menu="@menu/main_menu_search"/>-->
