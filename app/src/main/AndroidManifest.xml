@@ -26,6 +26,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -39,11 +45,13 @@
             android:name=".Activities.SearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
             tools:ignore="LockedOrientationActivity">
         </activity>
 
         <activity
             android:name=".Activities.PostQuestionWindow"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
 
@@ -93,6 +101,29 @@
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.SignUp_Screen3"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.Profile"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.Following"
+            android:theme="@style/Following_Followers"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.Followers"
+            android:theme="@style/Following_Followers"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.Settings"
+            android:theme="@style/Following_Followers"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.LoginEmailActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
 

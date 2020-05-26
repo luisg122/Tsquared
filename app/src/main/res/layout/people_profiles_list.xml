@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,6 +19,17 @@
             android:layout_marginTop="10dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include
-        layout="@layout/cardview_articles"/>
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:duration="1000">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <include
+            layout="@layout/shimmer_placeholder1"/>
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 </RelativeLayout>

@@ -13,6 +13,7 @@
     <color name="pressedSub">#3F51B5</color>
     <color name="dialogColor">#778899</color>
     <color name="mainButton">#FF7F50</color>
+    <color name="groupButton">#f7d9cd</color>
     <color name="facebookButton">#00009d</color>
     <color name="googleButton">#c40000</color>
 
@@ -24,4 +25,5 @@
     <color name="black">#ff000000</color>
     <color name="transparent">#00000000</color>
     <color name="dark_gray">#ffaaaaaa</color>
+    <color name="veryDarkGray">#333333</color>
 </resources>

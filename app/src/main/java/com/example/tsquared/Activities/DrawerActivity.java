@@ -67,10 +67,13 @@ public class DrawerActivity extends AppCompatActivity {
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DrawerActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                Intent questionWindow = new Intent(getApplicationContext(), Profile.class);
+                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                questionWindow.putExtra("Full Name", fullName);
+                startActivity(questionWindow);
+                //Toast.makeText(DrawerActivity.this, "Profile", Toast.LENGTH_SHORT).show();
             }
         });
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -101,7 +104,7 @@ public class DrawerActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new QuestionsFragment(), "Ask");
         adapter.addFragment(new PeopleFragment(), "Discover");
-        adapter.addFragment(new Fragment(), "Groups");
+        adapter.addFragment(new PeopleFragment(), "Groups");
         viewPager.setAdapter(adapter);
     }
 
@@ -139,12 +142,16 @@ public class DrawerActivity extends AppCompatActivity {
                 Intent searchWindow = new Intent(this, SearchActivity.class);
                 searchWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(searchWindow);
+                // Slide activity upwards
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
                 return true;
             case R.id.addQuestionIcon:
                 Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
                 questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 questionWindow.putExtra("Full Name", fullName);
                 startActivity(questionWindow);
+                // Slide activity upwards
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
                 return true;
         }
         return super.onOptionsItemSelected(item);

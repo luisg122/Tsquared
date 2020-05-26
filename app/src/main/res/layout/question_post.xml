@@ -108,7 +108,7 @@
                     android:id="@+id/cardView2"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    app:cardElevation="10dp"
+                    app:cardElevation="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">

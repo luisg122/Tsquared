@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinatorLayout"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/bottomSheet"
+<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <include
+        layout="@layout/no_answers_yet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-        <include
-            layout="@layout/user_questions_details"/>
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="match_parent"/>
+</androidx.core.widget.NestedScrollView>

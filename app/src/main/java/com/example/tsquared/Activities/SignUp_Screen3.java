@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import com.example.tsquared.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -84,8 +85,9 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
             register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             register.putExtra("password", password1);
             startActivity(register);
-            // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
-            // finish();
+            // remove previous activity 'LoginActivity' from the backstack
+            // remove current activity from backstack or do not save onto the stack
+            ActivityCompat.finishAffinity(SignUp_Screen3.this);
         }
     }
 
@@ -120,11 +122,5 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
                 }
             });
 
-    }
-
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

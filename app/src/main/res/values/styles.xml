@@ -25,6 +25,14 @@
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
     </style>
 
+    <style name="Following_Followers" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">@color/veryDarkGray</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/customActivityAnimation</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/veryDarkGray</item>
+    </style>
+
     <!-- Styling/customizing the Toolbar -->
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">18sp</item>
@@ -42,6 +50,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Styling/customizing the TabLayout -->
+    <style name="TabLayoutStyle2" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">13sp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <!-- Styling/customizing the searchView -->
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
         <item name="android:editTextColor">@android:color/white</item>
@@ -49,7 +67,7 @@
         <item name="android:textCursorDrawable">@drawable/cursor_color_white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
-        <!--<item name="android:textSize">35sp</item>-->
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -126,6 +144,11 @@
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
         <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/mainButton</item>
     </style>
 
 </resources>

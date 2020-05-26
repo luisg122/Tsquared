@@ -1,0 +1,159 @@
+package com.example.tsquared.Activities;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewStub;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.tsquared.Adapters.ViewPagerAdapter;
+import com.example.tsquared.Fragments.PeopleFragment;
+import com.example.tsquared.Fragments.QuestionsFragment;
+import com.example.tsquared.Fragments.userQuestions;
+import com.example.tsquared.R;
+import com.example.tsquared.ViewPager.CustomViewPager;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+
+public class Profile extends AppCompatActivity {
+    private CollapsingToolbarLayout collapsingToolbar;
+    private AppBarLayout appBarLayout;
+    private Toolbar toolbar;
+    private Button  following;
+    private Button  followers;
+    private Button  settings;
+    boolean appBarExpanded = true;
+
+
+    @Override
+    protected void onCreate(Bundle savedBundleState){
+        super.onCreate(savedBundleState);
+        setContentView(R.layout.profile_page);
+        setViews();
+        setUpToolBar();
+        setButtonClicks();
+        viewPagerInit();
+    }
+
+    private void setViews() {
+        toolbar      = (Toolbar) findViewById(R.id.toolbar1);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        following    = (Button) findViewById(R.id.followingButton);
+        followers    = (Button) findViewById(R.id.followersButton);
+        collapsingToolbar = findViewById(R.id.collapsingToolBar);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.profile_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.profilePictureMenu);
+        View view = menuItem.getActionView();
+        settings  = view.findViewById(R.id.settingsButton);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, Settings.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setButtonClicks(){
+        following.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(Profile.this, Following.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            }
+        });
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, Followers.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            }
+        });
+    }
+
+    private void setUpToolBar() {
+        setSupportActionBar(toolbar);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.TextAppearance_MyApp_Title_Collapsed);
+        collapsingToolbar.setExpandedTitleColor(R.style.TextAppearance_MyApp_Title_Expanded);
+        collapsingToolbar.setTitle("");
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    collapsingToolbar.setTitle(" ");
+                    toolbar.setTitle(" ");
+                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                    appBarExpanded = false;
+                }
+
+                else if (scrollRange + verticalOffset == 0) {
+                    // Collapsed Toolbar
+                    collapsingToolbar.setTitle(" ");
+                    collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+                    toolbar.setTitle(" ");
+                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+                    isShow = true;
+                }
+
+                else if (isShow) {
+                    // Expanded Toolbar
+                    collapsingToolbar.setTitle(" ");
+                    toolbar.setTitle("");
+                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+                    isShow = false;
+                }
+            }
+        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
+    private void viewPagerInit() {
+        CustomViewPager viewPager = findViewById(R.id.mainViewPager1);
+        setupViewPager(viewPager);
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        viewPager.setCurrentItem(getIntent().getIntExtra("page", 0));
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new userQuestions(), "Questions");
+        adapter.addFragment(new userQuestions(), "Answers");
+        adapter.addFragment(new userQuestions(), "Articles");
+        adapter.addFragment(new userQuestions(), "Likes");
+        viewPager.setAdapter(adapter);
+    }
+}

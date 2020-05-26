@@ -11,20 +11,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.tsquared.Adapters.QuestionItemAdapter;
 import com.example.tsquared.Adapters.SearchResultsAdapter;
+import com.example.tsquared.Adapters.ViewPagerAdapter;
+import com.example.tsquared.Fragments.SearchQuestionsFragment;
 import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
+import com.example.tsquared.ViewPager.CustomViewPager;
+import com.google.android.gms.plus.model.people.Person;
+import com.google.android.material.tabs.TabLayout;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -43,6 +53,7 @@ import static java.util.Objects.requireNonNull;
 
 public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
+    private ImageView imageView;
     private ArrayList<QuestionItemModel> questionList;
     private RequestParams params;
     private AsyncHttpClient client;
@@ -57,15 +68,49 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
-        toolbar = findViewById(R.id.searchToolBar1);
+        setUpViews();
         setSupportActionBar(toolbar);
-        setUpRecyclerView();
+        setUpListeners();
+        viewPagerInit();
+    }
+
+    private void setUpViews() {
+        toolbar = findViewById(R.id.searchToolBar1);
+        imageView = findViewById(R.id.cancelSearch);
+    }
+
+    private void setUpListeners(){
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void viewPagerInit(){
+        CustomViewPager viewPager = findViewById(R.id.mainViewPager);
+        setUpViewPager(viewPager);
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        viewPager.setCurrentItem(getIntent().getIntExtra("page", 0));
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setUpViewPager(ViewPager viewPager){
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new SearchQuestionsFragment(), "Questions");
+        adapter.addFragment(new SearchQuestionsFragment(), "People");
+        adapter.addFragment(new SearchQuestionsFragment(), "Groups");
+        adapter.addFragment(new SearchQuestionsFragment(), "Articles");
+        adapter.addFragment(new SearchQuestionsFragment(), "Interests");
+        viewPager.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         SearchView searchView = findViewById(R.id.search_view);
-        searchView.onActionViewExpanded(); // Keyboard is opened by default when user opens SearchActivity
+        //searchView.onActionViewExpanded(); // Keyboard is opened by default when user opens SearchActivity
+        searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -78,6 +123,7 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         //How do we clear the search results when we press on the X (close Icon) button?
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
@@ -88,19 +134,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         return true;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void setUpRecyclerView(){
-        mArrayList = new ArrayList<>();
-        mainRv = findViewById(R.id.results_rv);
-        mainRv.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
-                RecyclerView.VERTICAL, false);
-
-        adapter = new SearchResultsAdapter(mArrayList, getApplicationContext());
-        mainRv.setAdapter(adapter);
-        mainRv.setLayoutManager(layoutManager);
     }
 
     private void searchQuestionsByKeywords(String currentQuery){
@@ -140,25 +173,11 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
+    }
 }
-
-/*MenuInflater inflater = getMenuInflater();
-  inflater.inflate(R.menu.main_menu_search, menu);
-  SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-  SearchView searchView = (SearchView) menu.findItem(R.id.search1).getActionView();
-  searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-  searchView.setIconifiedByDefault(true);
-  searchView.setIconified(false);
-  searchView.setFocusable(true);
-  searchView.requestFocusFromTouch();
-  return true;*/
-
-/*MenuInflater inflater = getMenuInflater();
-  inflater.inflate(R.menu.main_menu_search, menu);
-  MenuItem searchItem = menu.findItem(R.id.search1);
-  SearchView searchView = (SearchView) searchItem.getActionView();
-  searchView.setQueryHint(getString(R.string.hint));
-  searchView.setIconifiedByDefault(false);
-  searchView.setIconified(false);
-  searchView.onActionViewExpanded();
-  searchItem.expandActionView();*/
+//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);

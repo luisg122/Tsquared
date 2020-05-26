@@ -5,50 +5,76 @@
     android:id="@+id/relativeLayoutToolBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EC4F65">
+    android:background="@color/light_gray">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/searchToolBar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="0dp"
-        android:background="@drawable/toolbar_bg"
-        android:fitsSystemWindows="true"
-        android:padding="5dp"
-        app:title=" ">
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:theme="@style/AppSearchView"
-            app:iconifiedByDefault="false"
-            app:queryHint="@string/hint"/>
-    </androidx.appcompat.widget.Toolbar>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/searchToolBar1"
-        android:layout_marginBottom="0dp">
-        <!--<ImageView
+        android:layout_marginBottom="70dp">
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_newyork_city"/>-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/results_rv"
+            android:background="@color/mainColor"
+            android:fitsSystemWindows="true">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/searchToolBar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:fitsSystemWindows="true"
+                android:padding="5dp"
+                app:title=" ">
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:theme="@style/AppSearchView"
+                    app:queryBackground="@color/transparent"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="@string/hint"/>
+            </androidx.appcompat.widget.Toolbar>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/searchToolBar1"
+                app:tabGravity="fill"
+                app:tabMode="scrollable"
+                app:tabPaddingEnd="16dp"
+                app:tabPaddingStart="16dp"
+                app:tabTextAppearance="@style/TabLayoutStyle"
+                app:tabIndicatorColor="@color/white"
+                app:tabSelectedTextColor="@color/white"
+                app:tabIndicatorHeight="3dp"/>
+        </com.google.android.material.appbar.AppBarLayout>
+        <com.example.tsquared.ViewPager.CustomViewPager
+            android:id="@+id/mainViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="0dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.example.tsquared.ViewPager.CustomViewPager>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ImageView
+        android:id="@+id/cancelSearch"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="180dp"
+        android:layout_marginLeft="180dp"
+        android:layout_marginEnd="180dp"
+        android:layout_marginRight="180dp"
+        android:layout_marginBottom="15dp"
+        app:srcCompat="@drawable/ic_close_black_24dp" />
 </RelativeLayout>

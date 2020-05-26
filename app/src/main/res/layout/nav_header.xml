@@ -29,7 +29,7 @@
     <View
         android:id="@+id/tile_divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.7dp"
         android:background="@drawable/line_divider"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"

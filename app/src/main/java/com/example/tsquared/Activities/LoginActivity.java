@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.signInBackground);
+        //setTheme(R.style.signInBackground);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setViews();
@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FB_Login     = (Button) findViewById(R.id.facebookSignIn);
         Google_Login = (Button) findViewById(R.id.googleSignIn);
         email    = (EditText) findViewById(R.id.email);
-        login    = (Button) findViewById(R.id.buttonSignIn);
+        login    = (Button) findViewById(R.id.logInWithEmail);
         signUp   = (Button) findViewById(R.id.SignUp);
         password = (EditText) findViewById(R.id.password);
 
@@ -182,21 +182,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signUp.setOnClickListener(this);
         FB_Login.setOnClickListener(this);
         Google_Login.setOnClickListener(this);
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.buttonSignIn:
+            case R.id.logInWithEmail:
                 //emailString = email.getText().toString().trim();
                 //passwordString = password.getText().toString().trim();
                 //tryToLogin(emailString, passwordString);
-                Intent home = new Intent(LoginActivity.this, DrawerActivity.class);
+                Intent home = new Intent(LoginActivity.this, LoginEmailActivity.class);
                 home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(home);
-                finish();
-
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
                 break;
 
             case R.id.SignUp:
@@ -215,96 +213,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
         }
-    }
-
-    public void tryToLogin(final String email, final String password) {
-        /*client = new AsyncHttpClient();
-        URL += "" + email;
-
-        client.get(URL, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                //super.onSuccess(statusCode, headers, response);
-                Log.e("STRING DATA: ", response.toString());
-
-                try {
-
-                    String userPassword = response.getString("Password");
-
-                    if (isMatching(password, userPassword)) {
-                        firstName = response.getString("First Name");
-                        lastName = response.getString("Last Name");
-                        userEmail = response.getString("Email");
-                        college = response.getString("College");
-                        description = null;
-                        if (response.getString("Description") != null) {
-                            description = response.getString("Description");
-                        }
-
-                        firstName   = capitalizeFirstCharOfEveryWordInString(firstName);
-                        lastName    = capitalizeFirstCharOfEveryWordInString(lastName);
-                        college     = capitalizeFirstCharOfEveryWordInString(college);
-
-                        PreferenceUtils.saveEmail(email, getApplicationContext());
-                        PreferenceUtils.savePassword(password, getApplicationContext());
-                        PreferenceUtils.saveFirstName(firstName, getApplicationContext());
-                        PreferenceUtils.saveLastName(lastName, getApplicationContext());
-                        PreferenceUtils.saveCollege(college, getApplicationContext());
-
-                        Log.e("FIRSTNAME:", firstName + " " + lastName + " " + userEmail + " " + userPassword + " " + college + " " + description);
-
-                        HashMap<String, String> userMap = new HashMap<String, String>();
-                        userMap.put("First Name", firstName);
-                        userMap.put("Last Name", lastName);
-                        userMap.put("College", college);
-                        userMap.put("Email", userEmail);
-
-                        goToDrawerActivity(userMap);
-
-                    } else {
-                        Snackbar.make(login, "Incorrect Password, Try Again", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                //super.onFailure(statusCode, headers, responseString, throwable);
-                Log.e("TAG", "EMAIL: " + "dummy");
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                //super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.i("ws", "---->>onFailure" + throwable.toString());
-            }
-        });*/
-    }
-
-    boolean isMatching(String enteredPassword, String userPassword) {
-        return enteredPassword.equals(userPassword);
-    }
-
-    private String capitalizeFirstCharOfEveryWordInString(String string){
-        char[] ch = string.toCharArray();
-        for(int i = 0; i < string.length(); i++) {
-            // Find first char of a word
-            // Make sure the character does not equal a space
-            if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
-                // If such character is lower-case
-                if (ch[i] >= 'a' && ch[i] <= 'z') {
-                    // simply convert it into upper-case
-                    // refer to the ASCII table to understand this line of code
-                    ch[i] = (char) (ch[i] - 'a' + 'A');
-                }
-            }
-            else if (ch[i] >= 'A' && ch[i] <= 'Z'){
-                ch[i] = (char) (ch[i] + 'a' - 'A');
-            }
-        }
-        return new String(ch);
     }
 }

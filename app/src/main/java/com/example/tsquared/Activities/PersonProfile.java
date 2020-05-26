@@ -3,7 +3,6 @@ package com.example.tsquared.Activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,19 +10,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.tsquared.Activities.DrawerActivity;
-import com.example.tsquared.Fragments.UserAnswersFragment;
-import com.example.tsquared.Fragments.UserFollowersFragment;
-import com.example.tsquared.Fragments.UserFollowingFragment;
-import com.example.tsquared.Fragments.UserQuestionsFragment;
 import com.example.tsquared.R;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
 
 import static java.util.Objects.requireNonNull;
 
@@ -122,7 +111,7 @@ public class PersonProfile extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        /*switch (v.getId()) {
             case R.id.tv_follow:
                 addToFollowing(email.getText().toString());
                 break;
@@ -154,10 +143,10 @@ public class PersonProfile extends AppCompatActivity implements View.OnClickList
                 newFragment3.setArguments(args3);
                 newFragment3.show(getSupportFragmentManager(), "Dialog");
                 break;
-        }
+        }*/
     }
 
-    public static void addToFollowing(String profileEmail){
+    /*public static void addToFollowing(String profileEmail){
         params = new RequestParams();
         params.put("currentUserEmail", DrawerActivity.getEmail());
         params.put("userToFollow", profileEmail);
@@ -178,5 +167,5 @@ public class PersonProfile extends AppCompatActivity implements View.OnClickList
                 Log.i("ws", "---->>onFailure" + throwable.toString());
             }
         });
-    }
+    }*/
 }
