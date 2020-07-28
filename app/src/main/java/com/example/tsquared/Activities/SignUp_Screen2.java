@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.tsquared.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
@@ -26,6 +27,8 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
     private Button   nextButton;
     private Toolbar  toolbar;
     private TextInputEditText email;
+    private TextInputLayout   emailLayout;
+
     private AlertDialog alertDialog;
     private Button okResponse;
 
@@ -38,8 +41,26 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
         setUpToolBar();
     }
 
+    private boolean checkInput(){
+        if(email.getText().toString().trim().isEmpty()){
+            emailLayout.setError("Email cannot be empty");
+            return false;
+        }
+
+        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
+            emailLayout.setError("Please enter a valid email address");
+            return false;
+        }
+
+        else {
+            emailLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
     public void setUpEmail(){
         email = findViewById(R.id.registerEmail);
+        emailLayout = findViewById(R.id.emailLayout);
     }
 
     private void setUpToolBar() {
@@ -63,46 +84,14 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
-        String emailCheck = Objects.requireNonNull(email.getText()).toString().trim();
-        if(emailCheck.isEmpty()){
-            noFieldsEmptyDialog();
-        }
-
-        else {
+        if(checkInput()){
             Intent register = new Intent(SignUp_Screen2.this, SignUp_Screen3.class);
             register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            register.putExtra("email", emailCheck);
+            register.putExtra("email", Objects.requireNonNull(email.getText()).toString().trim());
             startActivity(register);
             // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
             // finish();
         }
-    }
-
-    public void noFieldsEmptyDialog(){
-        // Change from AlertDialog to Dialog for more compact features
-        AlertDialog.Builder builder = new AlertDialog.Builder(SignUp_Screen2.this, R.style.CustomAlertDialog);
-        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(SignUp_Screen2.this);
-        View view2 = layoutInflaterAndroid.inflate(R.layout.general_alert_dialog, null);
-        TextView textView = (TextView) view2.findViewById(R.id.titlePrompt);
-        textView.setText("Fields cannot be empty");
-
-        builder.setCustomTitle(view2);
-        builder.setCancelable(false);
-
-        alertDialog = builder.create();
-        alertDialog.show();
-
-        Window window = alertDialog.getWindow();
-        assert window != null;
-        window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        okResponse = (Button) alertDialog.findViewById(R.id.okResponse);
-        okResponse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
     }
 
     @Override

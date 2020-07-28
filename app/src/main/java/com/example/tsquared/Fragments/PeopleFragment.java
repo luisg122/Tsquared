@@ -8,16 +8,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.tsquared.Adapters.HorizontalScrollAdapter;
 import com.example.tsquared.Adapters.PeopleItemAdapter;
+import com.example.tsquared.Models.HorizontalModel;
 import com.example.tsquared.Models.PeopleItemModel;
 import com.example.tsquared.Activities.PersonProfile;
 import com.example.tsquared.R;
@@ -40,13 +46,24 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
     private RecyclerView mainRv;
     private PeopleItemAdapter adapter;
     private ArrayList<PeopleItemModel> mArrayList;
-    private SwipeRefreshLayout swipeContainer;
+    //private SwipeRefreshLayout swipeContainer;
+
+    private ArrayList<HorizontalModel> arrayList;
+    private ArrayList<HorizontalModel> arrayList1;
+    private RecyclerView recyclerView;
+    private RecyclerView recyclerView1;
+    private HorizontalScrollAdapter horizontalScrollAdapter;
+    private HorizontalScrollAdapter horizontalScrollAdapter1;
+    private Button moreButton;
+    private RelativeLayout relativeLayout;
+    private ScrollView scrollView;
 
     RequestParams params;
     AsyncHttpClient client;
     String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showPeople";
 
     public PeopleFragment() {
+
     }
 
     @Override
@@ -58,14 +75,67 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.people_profiles_list, container, false);
-        setUpSwipeContainer();
-        setUpRecyclerView();
-        loadListOfPeople();
-        setUpSwipeListener();
+        setUpViews();
+        bringCardToFront();
+        loadUpNewsRecyclerView();
+        loadUpInterestsRecyclerView();
+        //setUpSwipeContainer();
+        //setUpRecyclerView();
+        //loadListOfPeople();
+        //setUpSwipeListener();
         return view;
     }
 
-    private void setUpSwipeContainer() {
+    private void setUpViews() {
+        recyclerView   = (RecyclerView) view.findViewById(R.id.news_horizontal_recycler_view);
+        recyclerView1  = (RecyclerView) view.findViewById(R.id.interests_recycler_view);
+        moreButton     = (Button) view.findViewById(R.id.moreSelecting);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+        scrollView     = (ScrollView) view.findViewById(R.id.scrollView);
+    }
+
+    private void bringCardToFront(){
+        //Log.d("Message", "bringCardToFront: " + relativeLayout.indexOfChild(recyclerView));
+        //scrollView.bringChildToFront(recyclerView.getChildAt(1));
+        //recyclerView.bringToFront();
+        //relativeLayout.invalidate();
+    }
+
+    private void loadUpNewsRecyclerView(){
+        fillDummyNewsRecyclerView();
+        horizontalScrollAdapter = new HorizontalScrollAdapter(arrayList, getApplicationContext(), 1);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(horizontalScrollAdapter);
+        horizontalScrollAdapter.notifyDataSetChanged();
+    }
+
+    private void loadUpInterestsRecyclerView(){
+        fillDummyInterestsRecyclerView();
+        horizontalScrollAdapter1 = new HorizontalScrollAdapter(arrayList1, getApplicationContext(), 0);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView1.setLayoutManager(linearLayoutManager);
+        recyclerView1.setAdapter(horizontalScrollAdapter1);
+        horizontalScrollAdapter1.notifyDataSetChanged();
+    }
+
+    private void fillDummyNewsRecyclerView(){
+        arrayList = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            arrayList.add(new HorizontalModel(R.drawable.stockmarket, "The Dow Jones trends negative after opening with small gains"));
+        }
+    }
+
+    private void fillDummyInterestsRecyclerView(){
+        arrayList1 = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            arrayList1.add(new HorizontalModel(R.drawable.stockmarket, "Computer Science"));
+        }
+    }
+
+    /*private void setUpSwipeContainer() {
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer2);
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(
@@ -94,7 +164,7 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
         adapter = new PeopleItemAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setAdapter(adapter);
         mainRv.setLayoutManager(layoutManager);
-    }
+    }*/
 
     private void loadListOfPeople() {
         /* client = new AsyncHttpClient();

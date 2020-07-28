@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.example.tsquared.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickListener{
     private Button nextButton;
@@ -30,6 +35,9 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
     private Button okResponse;
     private TextInputEditText password;
     private TextInputEditText confirmPassword;
+    private TextInputLayout passwordLayout;
+    private TextInputLayout confirmPasswordLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -40,9 +48,48 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
         setUpToolBar();
     }
 
+    private boolean checkInput() {
+        if (password.getText().toString().trim().isEmpty()
+                && confirmPassword.getText().toString().trim().isEmpty()) {
+            passwordLayout.setError("Field cannot be empty");
+            confirmPasswordLayout.setError("Field cannot be empty");
+            return false;
+        }
+
+        else if (password.getText().toString().trim().isEmpty()) {
+            passwordLayout.setError("Field cannot be empty");
+            confirmPasswordLayout.setErrorEnabled(false);
+            return false;
+        }
+
+        else if (confirmPassword.getText().toString().trim().isEmpty()) {
+            confirmPasswordLayout.setError("Field cannot be empty");
+            passwordLayout.setErrorEnabled(false);
+            return false;
+        }
+
+        else {
+            passwordLayout.setErrorEnabled(false);
+            confirmPasswordLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    public boolean isValidPassword(String password){
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+    }
+
     public void setUpPassword(){
-        password = findViewById(R.id.registerPassword);
+        password        = findViewById(R.id.registerPassword);
         confirmPassword = findViewById(R.id.confirmRegisterPassword);
+        passwordLayout  = findViewById(R.id.passwordLayout);
+        confirmPasswordLayout = findViewById(R.id.confirmPasswordLayout);
     }
 
     private void setUpToolBar() {
@@ -66,29 +113,44 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
-        String password1 = Objects.requireNonNull(password.getText()).toString().trim();
-        String password2 = Objects.requireNonNull(confirmPassword.getText()).toString().trim();
-        int checkDialogType = 0;
-        if(password1.isEmpty() || password2.isEmpty()){
-            checkDialogType = 1;
-            invokeAlertDialog(checkDialogType);
-        }
-
-        else if(!password1.equals(password2)){
-            checkDialogType = 2;
-            invokeAlertDialog(checkDialogType);
-        }
-
-
-        else {
-            Intent register = new Intent(SignUp_Screen3.this, DrawerActivity.class);
+        if(checkInput() && passwordMatch() && checkValidPassword()) {
+            Intent register = new Intent(SignUp_Screen3.this, InterestsActivity.class);
             register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            register.putExtra("password", password1);
+            register.putExtra("password", Objects.requireNonNull(password.getText()).toString().trim());
             startActivity(register);
             // remove previous activity 'LoginActivity' from the backstack
             // remove current activity from backstack or do not save onto the stack
             ActivityCompat.finishAffinity(SignUp_Screen3.this);
         }
+
+        else if(!passwordMatch() && checkInput()){
+            invokeAlertDialog(1);   // passwords do not match
+        }
+
+        else if(!checkValidPassword() && checkInput() && passwordMatch()){
+            invokeAlertDialog(2);   // password is not valid
+        }
+    }
+
+    private boolean passwordMatch(){
+        if(!password.getText().toString().trim().equals(
+                confirmPassword.getText().toString().trim())){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkValidPassword(){
+        boolean returnValue = false;
+        if(password.getText().toString().trim().length() < 8
+                && !isValidPassword(password.getText().toString().trim())) {
+            returnValue = false;
+        }
+        else if(password.getText().toString().trim().length() >= 8
+                && isValidPassword(password.getText().toString().trim())){
+           returnValue = true;
+        }
+        return returnValue;
     }
 
     public void invokeAlertDialog(int checkDialogType){
@@ -99,10 +161,17 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
         TextView textView = (TextView) view2.findViewById(R.id.titlePrompt);
 
         if(checkDialogType == 1) {
-            textView.setText("Fields cannot be empty");
+            textView.setText("Passwords do not match");
         }
         else if(checkDialogType == 2) {
-            textView.setText("Passwords do not match");
+            String warningPrompt = "Please enter a valid password\n\n" +
+                    "Password must:\n" +
+                    "(be at least 8 characters long)\n" +
+                    "(contain capital and lowercase letters)\n" +
+                    "(contain numbers)\n" +
+                    "(contain characters e.g., &,*,#)";
+            textView.setText(warningPrompt);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         }
 
         builder.setCustomTitle(view2);
@@ -118,9 +187,8 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
         okResponse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    alertDialog.dismiss();
-                }
-            });
-
+                alertDialog.dismiss();
+            }
+        });
     }
 }

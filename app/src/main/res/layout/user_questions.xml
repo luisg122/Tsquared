@@ -3,7 +3,7 @@
     android:background="#F5F5F5"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <include
-        layout="@layout/no_answers_yet"
+        layout="@layout/empty_prompt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </androidx.core.widget.NestedScrollView>

@@ -4,9 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="0dp"
-    app:cardBackgroundColor="@color/white">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/white"
+    android:clickable="true"
+    android:focusable="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,7 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="27dp"
             android:layout_marginLeft="27dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/blank_profile" />
 
         <TextView
@@ -31,7 +34,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/linkProfilePic"
             android:layout_toRightOf="@+id/linkProfilePic"
             android:text="Brian Doe"
@@ -49,22 +52,9 @@
             android:layout_marginStart="27dp"
             android:layout_marginLeft="27dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginBottom="20dp"
             android:text="Post a link to share"
             android:textStyle="bold"
-            android:textSize="25sp" />
-
-        <View
-            android:id="@+id/tile_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/postLinkPrompt"
-            android:background="@drawable/line_divider_black"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="0dp"/>
+            android:textSize="20sp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

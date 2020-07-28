@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:paddingLeft="15dp"
+    android:paddingStart="15dp"
+    tools:ignore="RtlSymmetry">
+
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:backgroundTint="#153944"
+        app:fabSize="mini"
+        app:rippleColor="@color/light_gray"
+        app:srcCompat="@drawable/ic_add_white_24dp"/>-->
+
+    <Button
+        android:id="@+id/finishSelecting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/group_button_style"
+        android:paddingTop="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Finish"
+        android:textAllCaps="false"
+        android:textColor="@color/mainColor"
+        android:textSize="12sp" />
+</FrameLayout>

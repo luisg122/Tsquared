@@ -19,10 +19,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.tsquared.Activities.DetailActivity;
 import com.example.tsquared.Activities.DrawerActivity;
-import com.example.tsquared.Activities.QuestionWindow;
+import com.example.tsquared.Activities.PostQuestionWindow;
 import com.example.tsquared.Adapters.QuestionItemAdapter;
 import com.example.tsquared.Models.QuestionItemModel;
-import com.example.tsquared.Models.SphereModel;
+import com.example.tsquared.Models.HorizontalModel;
 import com.example.tsquared.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,6 +30,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -43,7 +44,7 @@ public class QuestionsFragment<adapter> extends Fragment
     private FloatingActionButton fab;
 
     private ArrayList<QuestionItemModel> mArrayList;
-    private ArrayList<SphereModel> mArrayList1;
+    private ArrayList<HorizontalModel> mArrayList1;
     private QuestionItemAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
     private FloatingSearchView mSearchView;
@@ -80,8 +81,8 @@ public class QuestionsFragment<adapter> extends Fragment
         //setupFloatingButtonAction();
         setUpRecyclerView();
         //setUpSpheresRecyclerView();
-        textPrompt = view.findViewById(R.id.textPrompt);
-        textPrompt.setVisibility(View.INVISIBLE);
+        //textPrompt = view.findViewById(R.id.textPrompt);
+        //textPrompt.setVisibility(View.INVISIBLE);
         loadListOfQuestions();
         setUpSwipeListener();
         return view;
@@ -132,21 +133,6 @@ public class QuestionsFragment<adapter> extends Fragment
         });
     }
 
-    /*private void setupFloatingButtonAction() {
-        fab = view.findViewById(R.id.FAB);
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                loadNameAndCollege();
-                Intent questionWindow = new Intent(getApplicationContext(), QuestionWindow.class);
-                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                questionWindow.putExtra("Full Name", fullName);
-                questionWindow.putExtra("College", college);
-                startActivity(questionWindow);
-            }
-        });
-    }*/
-
     private void loadNameAndCollege(){
         DrawerActivity activity = (DrawerActivity) getActivity();
         assert activity != null;
@@ -168,6 +154,25 @@ public class QuestionsFragment<adapter> extends Fragment
         mainRv.setLayoutManager(layoutManager);
         mainRv.setNestedScrollingEnabled(false);
     }
+
+    private void setupFloatingButtonAction() {
+        fab = view.findViewById(R.id.FAB);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View view) {
+                //loadNameAndCollege();
+                Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
+                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                //questionWindow.putExtra("Full Name", fullName);
+                //questionWindow.putExtra("College", college);
+                startActivity(questionWindow);
+                // Slide activity upwards
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            }
+        });
+    }
+
 
     private void loadListOfQuestions(){
         /*client = new AsyncHttpClient();

@@ -1,0 +1,60 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    style="@style/CardView"
+    android:layout_width="match_parent"
+    android:layout_height="230dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="8dp">
+
+    <LinearLayout
+        android:id="@+id/cardViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:text="Your interests"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:id="@+id/sub_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Read about what interests you"
+                android:textSize="13sp"
+                android:layout_below="@+id/header"/>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/interests_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

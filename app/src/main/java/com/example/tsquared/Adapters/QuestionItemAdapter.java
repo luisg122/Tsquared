@@ -51,9 +51,9 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         QuestionItemModel question = mArrayList.get(position);
-        Glide.with(mcontext)
+        /*Glide.with(mcontext)
                 .load(question.getProfileImage())
-                .into(holder.iv_image);
+                .into(holder.iv_image);*/
 
         holder.tv_name.setText(question.name);
         holder.tv_topic.setText(question.topic);

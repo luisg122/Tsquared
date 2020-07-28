@@ -17,22 +17,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.bumptech.glide.Glide;
 import com.example.tsquared.ViewPager.CustomViewPager;
 import com.example.tsquared.Fragments.PeopleFragment;
 import com.example.tsquared.Utils.PreferenceUtils;
 import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.R;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DrawerActivity extends AppCompatActivity {
     FloatingSearchView mSearchView;
@@ -43,6 +49,8 @@ public class DrawerActivity extends AppCompatActivity {
     public static String firstNameofUser;
     public DrawerLayout drawer;
     private Toolbar toolbar;
+    private FloatingActionButton fab;
+    private ActionBarDrawerToggle toggle;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -51,9 +59,11 @@ public class DrawerActivity extends AppCompatActivity {
         setContentView(R.layout.drawer_activity);
 
         navigationView = findViewById(R.id.navView);
+        setProfileImage(navigationView);
         setProfileName(navigationView);
         viewPagerInit();
         setUpDrawer();
+        setupFloatingButtonAction();
         setupDrawerContent(navigationView);
     }
 
@@ -74,7 +84,40 @@ public class DrawerActivity extends AppCompatActivity {
                 //Toast.makeText(DrawerActivity.this, "Profile", Toast.LENGTH_SHORT).show();
             }
         });
+
+        menuItem = menu.findItem(R.id.search);
+        view = menuItem.getActionView();
+        FloatingActionButton search = view.findViewById(R.id.fabSearch);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent searchWindow = new Intent(getApplicationContext(), SearchActivity.class);
+                searchWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(searchWindow);
+                // Slide activity upwards
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setupFloatingButtonAction() {
+        fab = findViewById(R.id.FAB);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View view) {
+                //loadNameAndCollege();
+                Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
+                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                //questionWindow.putExtra("Full Name", fullName);
+                //questionWindow.putExtra("College", college);
+                startActivity(questionWindow);
+                // Slide activity upwards
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -82,14 +125,13 @@ public class DrawerActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.searchToolBar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
     }
 
     private void viewPagerInit() {
@@ -104,8 +146,32 @@ public class DrawerActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new QuestionsFragment(), "Ask");
         adapter.addFragment(new PeopleFragment(), "Discover");
-        adapter.addFragment(new PeopleFragment(), "Groups");
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        //fabVisible = true;
+                        fab.show();
+                        break;
+                    default:
+                        //fabVisible = false;
+                        fab.hide();
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void setupDrawerContent(@NonNull NavigationView navigationView){
@@ -132,27 +198,8 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        int id = item.getItemId();
-        switch (id){
-            case R.id.home:
-                drawer.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.search:
-                Intent searchWindow = new Intent(this, SearchActivity.class);
-                searchWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(searchWindow);
-                // Slide activity upwards
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-                return true;
-            case R.id.addQuestionIcon:
-                Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
-                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                questionWindow.putExtra("Full Name", fullName);
-                startActivity(questionWindow);
-                // Slide activity upwards
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-                return true;
+        if(toggle.onOptionsItemSelected(item)){
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -173,11 +220,20 @@ public class DrawerActivity extends AppCompatActivity {
         return college;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void setProfileImage(NavigationView navigationView){
+        View headerView = navigationView.getHeaderView(0);
+        ImageView profileImage = headerView.findViewById(R.id.profileImage);
+        Glide.with(Objects.requireNonNull(profileImage.getContext()))
+                .asBitmap()
+                .load(R.drawable.blank_profile)
+                .into(profileImage);
+    }
+
     // getting data from either two activities 'UserRegister' or 'LoginActivity'and inserting it into
     // DrawerActivity
     private void setProfileName(NavigationView navigationView) {
         Intent intent = getIntent();
-
         if(intent.hasExtra("map")){
             HashMap<String, String> hashMap;
             hashMap = (HashMap<String, String>)intent.getSerializableExtra("map");

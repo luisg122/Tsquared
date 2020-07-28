@@ -32,10 +32,10 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
+        android:id="@+id/emailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="108dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
@@ -46,7 +46,9 @@
         app:endIconMode="clear_text"
         app:endIconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"
+        app:errorTextAppearance="@style/error_appearance"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerEmail"
@@ -74,7 +76,5 @@
         android:layout_marginLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/emailLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

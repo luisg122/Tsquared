@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.tsquared.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
@@ -30,8 +31,11 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
     private Button continueButton;
     private Button quitButton;
     private Button okResponse;
+
     private TextInputEditText firstName;
     private TextInputEditText lastName;
+    private TextInputLayout   firstNameLayout;
+    private TextInputLayout   lastNameLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -41,9 +45,38 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
         setUpToolBar();
     }
 
+    private boolean checkInput(){
+        if(firstName.getText().toString().trim().isEmpty()
+                && lastName.getText().toString().trim().isEmpty()){
+            firstNameLayout.setError("Field cannot be empty");
+            lastNameLayout.setError("Field cannot be empty");
+            return false;
+        }
+
+        else if(firstName.getText().toString().trim().isEmpty()){
+            firstNameLayout.setError("First Name cannot be empty");
+            lastNameLayout.setErrorEnabled(false);
+            return false;
+        }
+
+        else if(lastName.getText().toString().trim().isEmpty()){
+            lastNameLayout.setError("Last Name cannot be empty");
+            firstNameLayout.setErrorEnabled(false);
+            return false;
+        }
+
+        else {
+            firstNameLayout.setErrorEnabled(false);
+            lastNameLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
     private void setUpFirstAndLastName(){
-        firstName = findViewById(R.id.registerFirstName);
-        lastName  = findViewById(R.id.registerLastName);
+        firstName       = findViewById(R.id.registerFirstName);
+        lastName        = findViewById(R.id.registerLastName);
+        firstNameLayout = findViewById(R.id.firstNameLayout);
+        lastNameLayout  = findViewById(R.id.lastNameLayout);
     }
 
     private void setUpToolBar() {
@@ -110,46 +143,13 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
-        String first = Objects.requireNonNull(firstName.getText()).toString().trim();
-        String last  = Objects.requireNonNull(lastName.getText()).toString().trim();
-        if(first.isEmpty() || last.isEmpty()){
-            noFieldsEmptyDialog();
-        }
-
-        else {
+        if(checkInput()) {
             Intent register = new Intent(SignUp_Screen1.this, SignUp_Screen2.class);
             register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            register.putExtra("FirstName", first);
-            register.putExtra("LastName", last);
+            register.putExtra("FirstName", Objects.requireNonNull(firstName.getText()).toString().trim());
+            register.putExtra("LastName", Objects.requireNonNull(lastName.getText()).toString().trim());
             startActivity(register);
         }
-    }
-
-    public void noFieldsEmptyDialog(){
-        // Change from AlertDialog to Dialog for more compact features
-        AlertDialog.Builder builder = new AlertDialog.Builder(SignUp_Screen1.this, R.style.CustomAlertDialog);
-        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(SignUp_Screen1.this);
-        View view2 = layoutInflaterAndroid.inflate(R.layout.general_alert_dialog, null);
-        TextView textView = (TextView) view2.findViewById(R.id.titlePrompt);
-        textView.setText("Fields cannot be empty");
-
-        builder.setCustomTitle(view2);
-        builder.setCancelable(false);
-
-        alertDialog = builder.create();
-        alertDialog.show();
-
-        Window window = alertDialog.getWindow();
-        assert window != null;
-        window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        okResponse = (Button) alertDialog.findViewById(R.id.okResponse);
-        okResponse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
     }
 
     @Override

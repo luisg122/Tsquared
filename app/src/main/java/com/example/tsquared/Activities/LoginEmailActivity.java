@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,6 +16,8 @@ import com.example.tsquared.R;
 import com.example.tsquared.Utils.PreferenceUtils;
 import com.facebook.CallbackManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
@@ -23,8 +26,11 @@ import java.util.HashMap;
 public class LoginEmailActivity extends AppCompatActivity implements View.OnClickListener {
     private Toolbar toolbar;
     private Button login;
-    private EditText email;
-    private EditText password;
+    private TextInputEditText email;
+    private TextInputEditText password;
+    private TextInputLayout   emailLayout;
+    private TextInputLayout   passwordLayout;
+
     private String emailString;
     private String passwordString;
     private String firstName;
@@ -40,6 +46,7 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin_with_email);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setViews();
         setListeners();
         setUpToolBar();
@@ -47,10 +54,13 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
 
     private void setViews() {
         toolbar  = (Toolbar) findViewById(R.id.toolbarEmail);
-        email    = (EditText) findViewById(R.id.email);
+        email    = (TextInputEditText) findViewById(R.id.email);
+        password = (TextInputEditText) findViewById(R.id.password);
         login    = (Button) findViewById(R.id.buttonSignIn);
-        password = (EditText) findViewById(R.id.password);
-    }
+
+        emailLayout    = (TextInputLayout) findViewById(R.id.email_TextInputLayout);
+        passwordLayout = (TextInputLayout) findViewById(R.id.password_TextInputLayout);
+     }
 
     private void setUpToolBar() {
         toolbar = findViewById(R.id.toolbarEmail);
@@ -75,6 +85,39 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
         finish();
     }
 
+    public boolean checkInput(){
+        if(email.getText().toString().trim().isEmpty() &&
+                password.getText().toString().trim().isEmpty()){
+            emailLayout.setError("Field cannot be empty");
+            passwordLayout.setError("Field cannot be empty");
+            return false;
+        }
+
+        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
+            emailLayout.setError("Please enter a valid email address");
+            passwordLayout.setErrorEnabled(false);
+            return false;
+        }
+
+        else if(email.getText().toString().trim().isEmpty()){
+            emailLayout.setError("Field cannot be empty");
+            passwordLayout.setErrorEnabled(false);
+            return false;
+        }
+
+        else if(password.getText().toString().trim().isEmpty()){
+            passwordLayout.setError("Field cannot be empty");
+            emailLayout.setErrorEnabled(false);
+            return false;
+        }
+
+        else{
+            emailLayout.setError(null);
+            passwordLayout.setError(null);
+            return true;
+        }
+    }
+
     private void setListeners() {
         login.setOnClickListener(this);
     }
@@ -86,12 +129,14 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
                 //emailString = email.getText().toString().trim();
                 //passwordString = password.getText().toString().trim();
                 //tryToLogin(emailString, passwordString);
-                Intent home = new Intent(LoginEmailActivity.this, DrawerActivity.class);
-                home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(home);
-                // remove previous activity 'LoginActivity' from the backstack
-                // remove current activity from backstack or do not save onto the stack
-                ActivityCompat.finishAffinity(LoginEmailActivity.this);
+                if(checkInput()){
+                    Intent home = new Intent(LoginEmailActivity.this, DrawerActivity.class);
+                    home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(home);
+                    // remove previous activity 'LoginActivity' from the backstack
+                    // remove current activity from backstack or do not save onto the stack
+                    ActivityCompat.finishAffinity(LoginEmailActivity.this);
+                }
                 break;
         }
     }

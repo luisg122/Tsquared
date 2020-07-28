@@ -21,16 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textPrompt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Explore all questions"
-                    android:textStyle="bold"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="5dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/question_list_rv"
@@ -60,3 +50,14 @@
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
 </RelativeLayout>
+
+<!--<TextView
+android:id="@+id/textPrompt"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Explore all questions"
+android:textStyle="bold"
+android:fontFamily="sans-serif"
+android:layout_marginLeft="25dp"
+android:layout_marginStart="25dp"
+android:layout_marginTop="5dp"/>-->
