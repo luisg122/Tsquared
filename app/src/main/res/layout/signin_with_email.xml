@@ -5,8 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/mainColor"
     tools:context=".Activities.LoginActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -34,6 +32,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:isScrollContainer="true"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tile_divider">
@@ -41,8 +40,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cV"
@@ -59,7 +57,8 @@
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="100dp"
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="15dp"
+                app:cardBackgroundColor="@color/white">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -75,10 +74,10 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="55dp"
+                        android:layout_marginTop="60dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="30dp"
+                        android:layout_marginBottom="50dp"
                         android:background="@drawable/post_button_round"
                         android:text="Continue"
                         android:textAllCaps="false"
@@ -99,7 +98,7 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         android:theme="@style/LogInActivateLine"
-                        app:hintTextAppearance="@style/HintText"
+                        android:textColorHint="@color/black"
                         app:errorTextAppearance="@style/error_appearance1"
                         app:errorEnabled="true">
 
@@ -109,6 +108,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@+id/email_TextInputLayout"
                             android:hint="Email"
+                            android:textColor="@color/black"
                             android:inputType="textEmailAddress"
                             android:padding="10dp"
                             android:textCursorDrawable="@drawable/cursor_color" />
@@ -130,7 +130,7 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         android:theme="@style/LogInActivateLine"
-                        app:hintTextAppearance="@style/HintText"
+                        android:textColorHint="@color/black"
                         app:errorTextAppearance="@style/error_appearance1"
                         app:errorEnabled="true">
 
@@ -140,6 +140,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/password_TextInputLayout"
                             android:hint="Password"
+                            android:textColor="@color/black"
                             android:inputType="textPassword"
                             android:maxLines="1"
                             android:padding="10dp"

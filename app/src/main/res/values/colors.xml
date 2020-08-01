@@ -26,4 +26,7 @@
     <color name="transparent">#00000000</color>
     <color name="dark_gray">#ffaaaaaa</color>
     <color name="veryDarkGray">#333333</color>
+
+    <color name="darkMaroon">#4d0000</color>
+    <color name="crimsonRed">#DC143C</color>
 </resources>

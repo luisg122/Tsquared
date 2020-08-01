@@ -6,25 +6,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tsquared.Adapters.ViewPagerAdapter;
-import com.example.tsquared.Fragments.PeopleFragment;
-import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.Fragments.userQuestions;
 import com.example.tsquared.R;
 import com.example.tsquared.ViewPager.CustomViewPager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class Profile extends AppCompatActivity {

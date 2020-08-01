@@ -41,11 +41,13 @@ import cz.msebera.android.httpclient.Header;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNoteListener {
+public class DiscoverFragment extends Fragment implements PeopleItemAdapter.OnNoteListener {
     private View view;
     private RecyclerView mainRv;
     private PeopleItemAdapter adapter;
     private ArrayList<PeopleItemModel> mArrayList;
+    private CardView cardView;
+
     //private SwipeRefreshLayout swipeContainer;
 
     private ArrayList<HorizontalModel> arrayList;
@@ -62,7 +64,7 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
     AsyncHttpClient client;
     String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showPeople";
 
-    public PeopleFragment() {
+    public DiscoverFragment() {
 
     }
 
@@ -76,6 +78,7 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.people_profiles_list, container, false);
         setUpViews();
+        invokeLinkBottomSheet();
         bringCardToFront();
         loadUpNewsRecyclerView();
         loadUpInterestsRecyclerView();
@@ -92,6 +95,18 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
         moreButton     = (Button) view.findViewById(R.id.moreSelecting);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
         scrollView     = (ScrollView) view.findViewById(R.id.scrollView);
+        cardView       = (CardView)   view.findViewById(R.id.shareLink);
+    }
+
+    private void invokeLinkBottomSheet(){
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinkPromptBottomSheet bottomSheet = new LinkPromptBottomSheet();
+                assert getFragmentManager() != null;
+                bottomSheet.show(getFragmentManager(), "TAG");
+            }
+        });
     }
 
     private void bringCardToFront(){
@@ -108,7 +123,7 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(horizontalScrollAdapter);
-        horizontalScrollAdapter.notifyDataSetChanged();
+        //horizontalScrollAdapter.notifyDataSetChanged();
     }
 
     private void loadUpInterestsRecyclerView(){
@@ -118,7 +133,7 @@ public class PeopleFragment extends Fragment implements PeopleItemAdapter.OnNote
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView1.setLayoutManager(linearLayoutManager);
         recyclerView1.setAdapter(horizontalScrollAdapter1);
-        horizontalScrollAdapter1.notifyDataSetChanged();
+        //horizontalScrollAdapter1.notifyDataSetChanged();
     }
 
     private void fillDummyNewsRecyclerView(){

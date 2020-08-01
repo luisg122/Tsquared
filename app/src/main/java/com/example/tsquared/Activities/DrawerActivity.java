@@ -6,9 +6,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -19,12 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
 import com.example.tsquared.ViewPager.CustomViewPager;
-import com.example.tsquared.Fragments.PeopleFragment;
+import com.example.tsquared.Fragments.DiscoverFragment;
 import com.example.tsquared.Utils.PreferenceUtils;
 import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.R;
@@ -37,8 +34,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DrawerActivity extends AppCompatActivity {
     FloatingSearchView mSearchView;
@@ -145,7 +140,7 @@ public class DrawerActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new QuestionsFragment(), "Ask");
-        adapter.addFragment(new PeopleFragment(), "Discover");
+        adapter.addFragment(new DiscoverFragment(), "Discover");
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

@@ -44,7 +44,7 @@
                 android:id="@+id/sub_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Read about what interests you"
+                android:text="Read stuff that interests you"
                 android:textSize="13sp"
                 android:layout_below="@+id/header"/>
 

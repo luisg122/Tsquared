@@ -45,6 +45,7 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.backgroundColorForSignIn);
         setContentView(R.layout.signin_with_email);
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setViews();
