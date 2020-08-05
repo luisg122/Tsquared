@@ -46,20 +46,31 @@ public class DrawerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private ActionBarDrawerToggle toggle;
+    private CustomViewPager viewPager;
+    private Runnable runnable;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity);
+        setUpViews();
 
-        navigationView = findViewById(R.id.navView);
         setProfileImage(navigationView);
         setProfileName(navigationView);
         viewPagerInit();
         setUpDrawer();
         setupFloatingButtonAction();
         setupDrawerContent(navigationView);
+    }
+
+    private void setUpViews(){
+        navigationView  = findViewById(R.id.navView);
+        toolbar         = findViewById(R.id.searchToolBar);
+        drawer          = findViewById(R.id.drawer_layout);
+        fab             = findViewById(R.id.FAB);
+        viewPager       = findViewById(R.id.mainViewPager);
+
     }
 
     @Override
@@ -98,7 +109,6 @@ public class DrawerActivity extends AppCompatActivity {
     }
 
     private void setupFloatingButtonAction() {
-        fab = findViewById(R.id.FAB);
         fab.setOnClickListener(new View.OnClickListener(){
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -117,20 +127,41 @@ public class DrawerActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpDrawer() {
-        toolbar = findViewById(R.id.searchToolBar);
         setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
 
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                //invalidateOptionsMenu();
+                // make sure this function is available when user is not in the 'discover' tab
+                if(viewPager.getCurrentItem() == 0) fab.hide();
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                //invalidateOptionsMenu();
+                // make sure this function is available when user is not in the 'discover' tab
+                if(viewPager.getCurrentItem() == 0) fab.show();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                //if(runnable)
+            }
+        };
+
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
     private void viewPagerInit() {
-        CustomViewPager viewPager = findViewById(R.id.mainViewPager);
         setupViewPager(viewPager);
         TabLayout tabLayout = findViewById(R.id.tabs);
         viewPager.setCurrentItem(getIntent().getIntExtra("page", 0));
@@ -152,11 +183,9 @@ public class DrawerActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        //fabVisible = true;
                         fab.show();
                         break;
                     default:
-                        //fabVisible = false;
                         fab.hide();
                         break;
                 }
@@ -174,7 +203,6 @@ public class DrawerActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        DrawerLayout drawer = findViewById(R.id.drawer_layout);
                         selectDrawerItem(menuItem);
                         drawer.closeDrawers();
                         return true;
@@ -184,7 +212,6 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else

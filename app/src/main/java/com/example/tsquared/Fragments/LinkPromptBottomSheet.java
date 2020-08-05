@@ -1,8 +1,14 @@
 package com.example.tsquared.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,19 +24,32 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.example.tsquared.R;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
@@ -45,8 +64,15 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
     private Handler handler;
     private Runnable input_finish_checker;
     private ViewStub viewStub;
-    private LinearLayout rootView;
     private LinearLayout containerOfViewStub;
+    private ProgressDialog progressDialog;
+    private TextView  headLine;
+    private TextView  source;
+
+    private String    title;
+    private String    publisherSource;
+
+
 
     public LinkPromptBottomSheet(){
 
@@ -57,9 +83,18 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         view = inflater.inflate(R.layout.link_bottom_sheet, container, false);
-        Objects.requireNonNull(Objects.requireNonNull(getDialog())
-                .getWindow())
-                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        // these lines are very important, want to make sure that all of the view from the BottomSheetDialog fully shown
+        // or expanded
+        Objects.requireNonNull(getDialog()).setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                BottomSheetDialog d = (BottomSheetDialog) dialog;
+                FrameLayout bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+                assert bottomSheet != null;
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
 
         setUpViews();
         initializeRunnable();
@@ -72,7 +107,6 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         editText        = view.findViewById(R.id.linkEditText);
         fab             = view.findViewById(R.id.checkValidLink);
         viewStub        = view.findViewById(R.id.layout_stub);
-        rootView        = view.findViewById(R.id.linearLayout);
         containerOfViewStub = view.findViewById(R.id.linearLayoutContainer);
     }
 
@@ -123,27 +157,33 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
                 // The index of viewStub is '4' in layout hierarchy
                 // we need this index to remove the layout that the viewStub inflated
                 // and dynamically add a second layout
-                final int index = rootView.indexOfChild(containerOfViewStub);
-                Log.d("indexOf", "position of LL of " + index);
+                //final int index = rootView.indexOfChild(containerOfViewStub);
+                //Log.d("indexOf", "position of LL of " + index);
                 new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        inFlateViewBasedOnValidUrl(index);
-                    }
-                }, 300);
-            }
+                        @Override
+                        public void run() {
+                            inFlateViewBasedOnValidUrl();
+                        }
+                    }, 300);
+                }
         });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void inFlateViewBasedOnValidUrl(int index){
+    private void inFlateViewBasedOnValidUrl(){
         if(checkValidLink() && (viewStub.getParent() != null)){
             viewStub.setLayoutResource(R.layout.viewstub_valid_link);
             viewStub.inflate();
+            headLine       = view.findViewById(R.id.headLine);
+            source         = view.findViewById(R.id.source);
+            new Content().execute();
         }
         else if(checkValidLink() && (viewStub.getParent() == null)){
             containerOfViewStub.removeAllViews();
             containerOfViewStub.addView(LayoutInflater.from(getContext()).inflate(R.layout.viewstub_valid_link, containerOfViewStub, false));
+            headLine       = view.findViewById(R.id.headLine);
+            source         = view.findViewById(R.id.source);
+            new Content().execute();
         }
         else if(!checkValidLink() && (viewStub.getParent() != null)){
             viewStub.setLayoutResource(R.layout.viewstub_invalid_link);
@@ -152,6 +192,16 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         else if(!checkValidLink() && (viewStub.getParent() == null)){
             containerOfViewStub.removeAllViews();
             containerOfViewStub.addView(LayoutInflater.from(getContext()).inflate(R.layout.viewstub_invalid_link, containerOfViewStub, false));
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private boolean checkIfInputIsEmpty(){
+        if(Objects.requireNonNull(editText.getText()).toString().trim().isEmpty()){
+            return true;    // returns true only if field is empty
+        }
+        else{
+            return false;   // return false only if field is not empty
         }
     }
 
@@ -193,10 +243,44 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean checkValidLink(){
-        if(android.util.Patterns.WEB_URL.matcher(Objects.requireNonNull(editText.getText()).toString().trim()).matches()){
+        boolean isValidLink = android.util.Patterns.WEB_URL.matcher(Objects.requireNonNull(editText.getText()).toString().trim()).matches();
+        if(isValidLink && !checkIfInputIsEmpty()){
             return true;
         }
         return false;
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class Content extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                //Connect to the website
+                Document document = Jsoup.connect(editText.getText().toString().trim()).get();
+                title = document.title();
+                publisherSource = document.baseUri();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            headLine.setText(title);
+            source.setText(publisherSource);
+            progressDialog.dismiss();
+        }
     }
 }
                 /*Rect r = new Rect();

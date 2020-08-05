@@ -6,11 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?selectableItemBackgroundBorderless"
     app:cardCornerRadius="15dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/white"
-    android:clickable="true"
-    android:focusable="true">
+    app:cardBackgroundColor="@color/white">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,10 +56,9 @@ public class DiscoverFragment extends Fragment implements PeopleItemAdapter.OnNo
     private RecyclerView recyclerView;
     private RecyclerView recyclerView1;
     private HorizontalScrollAdapter horizontalScrollAdapter;
-    private HorizontalScrollAdapter horizontalScrollAdapter1;
     private Button moreButton;
     private RelativeLayout relativeLayout;
-    private ScrollView scrollView;
+    private NestedScrollView nestedScrollView;
 
     RequestParams params;
     AsyncHttpClient client;
@@ -90,12 +90,12 @@ public class DiscoverFragment extends Fragment implements PeopleItemAdapter.OnNo
     }
 
     private void setUpViews() {
-        recyclerView   = (RecyclerView) view.findViewById(R.id.news_horizontal_recycler_view);
-        recyclerView1  = (RecyclerView) view.findViewById(R.id.interests_recycler_view);
-        moreButton     = (Button) view.findViewById(R.id.moreSelecting);
-        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
-        scrollView     = (ScrollView) view.findViewById(R.id.scrollView);
-        cardView       = (CardView)   view.findViewById(R.id.shareLink);
+        recyclerView     = (RecyclerView) view.findViewById(R.id.news_horizontal_recycler_view);
+        recyclerView1    = (RecyclerView) view.findViewById(R.id.interests_recycler_view);
+        moreButton       = (Button) view.findViewById(R.id.moreSelecting);
+        relativeLayout   = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+        nestedScrollView = (NestedScrollView) view.findViewById(R.id.nestedScrollView                                                                                               );
+        cardView         = (CardView)   view.findViewById(R.id.shareLink);
     }
 
     private void invokeLinkBottomSheet(){
@@ -123,16 +123,18 @@ public class DiscoverFragment extends Fragment implements PeopleItemAdapter.OnNo
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(horizontalScrollAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
         //horizontalScrollAdapter.notifyDataSetChanged();
     }
 
     private void loadUpInterestsRecyclerView(){
         fillDummyInterestsRecyclerView();
-        horizontalScrollAdapter1 = new HorizontalScrollAdapter(arrayList1, getApplicationContext(), 0);
+        horizontalScrollAdapter = new HorizontalScrollAdapter(arrayList1, getApplicationContext(), 0);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView1.setLayoutManager(linearLayoutManager);
-        recyclerView1.setAdapter(horizontalScrollAdapter1);
+        recyclerView1.setAdapter(horizontalScrollAdapter);
+        recyclerView1.setNestedScrollingEnabled(false);
         //horizontalScrollAdapter1.notifyDataSetChanged();
     }
 
