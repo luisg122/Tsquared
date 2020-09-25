@@ -2,10 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    android:id="@+id/validLink"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="gone">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
         android:layout_marginRight="15dp"
         app:cardElevation="0dp"
         app:cardCornerRadius="15dp"
-        app:cardBackgroundColor="@color/mainColor">
+        app:cardBackgroundColor="@color/card_bg">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -25,7 +26,6 @@
                 android:id="@+id/headLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dow Jones heads for a decline after earnings"
                 android:textColor="@color/white"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
@@ -45,7 +45,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="New York Times"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/light_gray"
                 android:layout_below="@+id/headLine"
@@ -77,19 +76,9 @@
         android:textSize="18sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="50dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"/>
 </LinearLayout>
-
-<!--
-            <ImageView
-                android:id="@+id/linkImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/stockmarket"
-                android:scaleType="centerCrop"
-                android:tint="#6F000000"/>
--->

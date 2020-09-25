@@ -13,3 +13,4 @@ public class SplashActivity extends AppCompatActivity {
         finish();
     }
 }
+// How to fix a slow UI-thread?

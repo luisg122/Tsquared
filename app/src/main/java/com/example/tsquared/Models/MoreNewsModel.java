@@ -1,13 +1,14 @@
 package com.example.tsquared.Models;
 
-public class HorizontalModel {
+public class MoreNewsModel {
     private int image;
     private String description;
+    private String sourcePublisher;
 
-    public HorizontalModel() {
+    public MoreNewsModel() {
     }
 
-    public HorizontalModel(int image, String description) {
+    public MoreNewsModel(int image, String description) {
         this.image        = image;
         this.description  = description;
     }

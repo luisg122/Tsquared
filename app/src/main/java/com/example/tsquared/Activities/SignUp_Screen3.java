@@ -10,17 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 
 import com.example.tsquared.R;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -43,9 +40,9 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup3);
-        setButtonViewAndListener();
-        setUpPassword();
         setUpToolBar();
+        setUpPassword();
+        setButtonViewAndListener();
     }
 
     private boolean checkInput() {
@@ -118,9 +115,7 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
             register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             register.putExtra("password", Objects.requireNonNull(password.getText()).toString().trim());
             startActivity(register);
-            // remove previous activity 'LoginActivity' from the backstack
-            // remove current activity from backstack or do not save onto the stack
-            ActivityCompat.finishAffinity(SignUp_Screen3.this);
+            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
 
         else if(!passwordMatch() && checkInput()){
@@ -184,11 +179,18 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
         window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         okResponse = (Button) alertDialog.findViewById(R.id.okResponse);
+        assert okResponse != null;
         okResponse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

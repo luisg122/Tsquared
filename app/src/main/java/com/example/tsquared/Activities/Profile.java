@@ -149,4 +149,10 @@ public class Profile extends AppCompatActivity {
         adapter.addFragment(new userQuestions(), "Likes");
         viewPager.setAdapter(adapter);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 }

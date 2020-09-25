@@ -148,7 +148,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final ImageView iv_image;
+        //private final ImageView iv_image;
         private final TextView  tv_name;
         private final TextView  tv_topic;
         private final TextView  tv_question;
@@ -160,7 +160,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
 
         public MyViewHolder(View view, OnNoteListener onNoteListener) {
             super(view);
-            iv_image         = view.findViewById(R.id.postIV);
+            //iv_image         = view.findViewById(R.id.postIV);
             tv_name          = view.findViewById(R.id.QuestionName);
             tv_topic         = view.findViewById(R.id.topic);
             tv_question      = view.findViewById(R.id.questionContent);

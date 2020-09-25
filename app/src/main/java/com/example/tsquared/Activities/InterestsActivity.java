@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,7 +61,8 @@ public class InterestsActivity extends AppCompatActivity {
                 Intent intent = new Intent(InterestsActivity.this, DrawerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
-                finish();
+                ActivityCompat.finishAffinity(InterestsActivity.this);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
         return super.onCreateOptionsMenu(menu);
@@ -140,5 +142,11 @@ public class InterestsActivity extends AppCompatActivity {
         for(int i = 0; i < obtainedInterests.size(); i++){
             Log.d("Subject" + "(" + (keepCount++) + "): ", obtainedInterests.get(i));
         }
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

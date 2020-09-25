@@ -40,9 +40,9 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup1);
-        setButtonViewAndListener();
-        setUpFirstAndLastName();
         setUpToolBar();
+        setUpFirstAndLastName();
+        setButtonViewAndListener();
     }
 
     private boolean checkInput(){
@@ -149,6 +149,7 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
             register.putExtra("FirstName", Objects.requireNonNull(firstName.getText()).toString().trim());
             register.putExtra("LastName", Objects.requireNonNull(lastName.getText()).toString().trim());
             startActivity(register);
+            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 

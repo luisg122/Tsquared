@@ -201,8 +201,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent register = new Intent(LoginActivity.this, SignUp_Screen1.class);
                 register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(register);
-                // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                //finish();
+                //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
             case R.id.facebookSignIn:

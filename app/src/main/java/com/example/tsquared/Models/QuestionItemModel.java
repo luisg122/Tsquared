@@ -13,13 +13,13 @@ public class QuestionItemModel {
     public  String   question;
     public  String   dateSubmitted;
     public  String   responseNum;
-    public  Drawable profileImage;
+    public  int profileImage;
 
     QuestionItemModel() {
 
     }
     public QuestionItemModel(String name, String topic, String question,
-                             String dateSubmitted, String responseNum, Drawable profileImage){
+                             String dateSubmitted, String responseNum, int profileImage){
         this.name     = name;
         this.topic    = topic;
         this.question = question;
@@ -88,11 +88,11 @@ public class QuestionItemModel {
         this.dateSubmitted = dateSubmitted;
     }
 
-    public Drawable getProfileImage() {
+    public int getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(Drawable profileImage) {
+    public void setProfileImage(int profileImage) {
         this.profileImage = profileImage;
     }
 

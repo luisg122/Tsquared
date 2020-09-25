@@ -1,6 +1,7 @@
 package com.example.tsquared.Fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import com.example.tsquared.Activities.DrawerActivity;
 import com.example.tsquared.Activities.PostQuestionWindow;
 import com.example.tsquared.Adapters.QuestionItemAdapter;
 import com.example.tsquared.Models.QuestionItemModel;
-import com.example.tsquared.Models.HorizontalModel;
+import com.example.tsquared.Models.NewsHorizontalModel;
 import com.example.tsquared.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,7 +45,7 @@ public class QuestionsFragment<adapter> extends Fragment
     private FloatingActionButton fab;
 
     private ArrayList<QuestionItemModel> mArrayList;
-    private ArrayList<HorizontalModel> mArrayList1;
+    private ArrayList<NewsHorizontalModel> mArrayList1;
     private QuestionItemAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
     private FloatingSearchView mSearchView;
@@ -63,7 +64,9 @@ public class QuestionsFragment<adapter> extends Fragment
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
     private CardView cardView;
     private TextView textPrompt;
+
     public QuestionsFragment(){
+
     }
 
     @Override
@@ -80,57 +83,26 @@ public class QuestionsFragment<adapter> extends Fragment
         setUpSwipeContainer();
         //setupFloatingButtonAction();
         setUpRecyclerView();
-        //setUpSpheresRecyclerView();
-        //textPrompt = view.findViewById(R.id.textPrompt);
-        //textPrompt.setVisibility(View.INVISIBLE);
         loadListOfQuestions();
         setUpSwipeListener();
         return view;
     }
 
-    /*private void setUpSpheresRecyclerView() {
-        textPrompt = view.findViewById(R.id.textPrompt);
-        textPrompt.setVisibility(View.INVISIBLE);
-
-        cardView = view.findViewById(R.id.cardViewCircles);
-        cardView.setVisibility(View.INVISIBLE);
-
-        mArrayList1 = new ArrayList<>();
-        mainRv1 = view.findViewById(R.id.spheresRV);
-        mainRv1.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
-                RecyclerView.HORIZONTAL, false);
-        mainRv1.setLayoutManager(layoutManager);
-
-        mArrayList1.add(new SphereModel(R.drawable.ic_target,"Business & Management"));
-        mArrayList1.add(new SphereModel(R.drawable.ic_sum,"Mathematics & Physics"));
-        mArrayList1.add(new SphereModel(R.drawable.ic_coding,"Computer Science & Engineering"));
-        mArrayList1.add(new SphereModel(R.drawable.ic_book,"Literature & Writing"));
-        mArrayList1.add(new SphereModel(R.drawable.ic_molecular,"Chemistry & Material Science"));
-        mArrayList1.add(new SphereModel(R.drawable.ic_healthcare_and_medical,"Biology & Life Science"));
-        mArrayList1.add(new SphereModel(R.drawable.ic_geology,"Geography & Earth Science"));
-        mArrayList1.add(new SphereModel(R.drawable.ic_column,"Arts & Humanities"));
-
-        adapter1 = new SpheresAdapter(mArrayList1, getApplicationContext(), this);
-        mainRv1.setAdapter(adapter1);
-        mainRv1.setNestedScrollingEnabled(false);
-    }*/
-
     private void setUpSwipeContainer() {
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer1);
+        /*swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer1);
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(
                 android.R.color.black
-        );
+        );*/
     }
 
     private void setUpSwipeListener(){
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadListOfQuestions();
+                //loadListOfQuestions();
             }
-        });
+        });*/
     }
 
     private void loadNameAndCollege(){
@@ -142,10 +114,9 @@ public class QuestionsFragment<adapter> extends Fragment
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpRecyclerView(){
-        mArrayList  = new ArrayList<>();
-
+        dummyData();
         mainRv = view.findViewById(R.id.question_list_rv);
-        mainRv.setHasFixedSize(true);
+        mainRv.setHasFixedSize(false);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
                 RecyclerView.VERTICAL, false);
 
@@ -173,6 +144,15 @@ public class QuestionsFragment<adapter> extends Fragment
         });
     }
 
+    private void dummyData(){
+        mArrayList  = new ArrayList<>();
+        for(int i = 0; i < 20; i++){
+            QuestionItemModel questionItem = new QuestionItemModel("John Doe", "Mathematics", "What are polynomials and why are they important",
+                    "September 09 2020", "5", R.drawable.blank_profile);
+            mArrayList.add(questionItem);
+        }
+    }
+
 
     private void loadListOfQuestions(){
         /*client = new AsyncHttpClient();
@@ -198,10 +178,6 @@ public class QuestionsFragment<adapter> extends Fragment
                 shimmerFrameLayout.setVisibility(View.GONE);
                 adapter.swapData(questionList);
                 swipeContainer.setRefreshing(false);
-
-                cardView.setVisibility(View.VISIBLE);
-                textPrompt.setVisibility(View.VISIBLE);
-
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -231,10 +207,10 @@ public class QuestionsFragment<adapter> extends Fragment
 
     @Override
     public void OnNoteClick(int position) {
-        String question = mArrayList.get(position).question;
+        /*String question = mArrayList.get(position).question;
         Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("question", question);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }

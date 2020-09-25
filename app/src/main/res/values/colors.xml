@@ -16,6 +16,9 @@
     <color name="groupButton">#f7d9cd</color>
     <color name="facebookButton">#00009d</color>
     <color name="googleButton">#c40000</color>
+    <color name="lightPurple">#e79aff</color>
+    <color name="darkPurple">#b148d2</color>
+    <color name="darkOrange">#ff7944</color>
 
 
     <color name="card_bg_color">#f6f6f6</color>
@@ -26,6 +29,7 @@
     <color name="transparent">#00000000</color>
     <color name="dark_gray">#ffaaaaaa</color>
     <color name="veryDarkGray">#333333</color>
+    <color name="beautifulBackground">#b8b9c7</color>
 
     <color name="darkMaroon">#4d0000</color>
     <color name="crimsonRed">#DC143C</color>

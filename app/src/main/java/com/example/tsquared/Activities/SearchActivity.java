@@ -70,22 +70,11 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.search_activity);
         setUpViews();
         setSupportActionBar(toolbar);
-        setUpListeners();
         viewPagerInit();
     }
 
     private void setUpViews() {
         toolbar = findViewById(R.id.searchToolBar1);
-        imageView = findViewById(R.id.cancelSearch);
-    }
-
-    private void setUpListeners(){
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void viewPagerInit(){
@@ -99,9 +88,8 @@ public class SearchActivity extends AppCompatActivity {
     private void setUpViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new SearchQuestionsFragment(), "Questions");
-        adapter.addFragment(new SearchQuestionsFragment(), "People");
-        adapter.addFragment(new SearchQuestionsFragment(), "Groups");
         adapter.addFragment(new SearchQuestionsFragment(), "Articles");
+        adapter.addFragment(new SearchQuestionsFragment(), "People");
         adapter.addFragment(new SearchQuestionsFragment(), "Interests");
         viewPager.setAdapter(adapter);
     }
@@ -153,8 +141,7 @@ public class SearchActivity extends AppCompatActivity {
                     try {
                         JSONObject object = response.getJSONObject(i);
                         QuestionItemModel question = QuestionItemModel.fromJson(object);
-                        Drawable image = ContextCompat.getDrawable(requireNonNull(getApplicationContext()), R.drawable.blank_profile);
-                        question.setProfileImage(image);
+                        question.setProfileImage(R.drawable.blank_profile);
                         questionList.add(question);
                     } catch (JSONException e) {
                         e.printStackTrace();

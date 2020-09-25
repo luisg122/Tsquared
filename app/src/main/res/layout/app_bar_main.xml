@@ -15,7 +15,7 @@
             android:id="@+id/searchToolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="TSquared"
+            app:title="@string/app_name"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             app:titleTextColor="@color/white"
             app:titleMarginStart="15dp">
@@ -62,6 +62,8 @@
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="40dp"
+        android:clickable="true"
+        android:focusable="true"
         app:srcCompat="@drawable/ic_add_white_24dp"
-        app:backgroundTint="#153944"/>
+        app:backgroundTint="@color/mainColor"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

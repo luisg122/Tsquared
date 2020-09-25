@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
+import com.example.tsquared.Fragments.IdeasFragment;
 import com.example.tsquared.ViewPager.CustomViewPager;
 import com.example.tsquared.Fragments.DiscoverFragment;
 import com.example.tsquared.Utils.PreferenceUtils;
@@ -55,8 +57,6 @@ public class DrawerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity);
         setUpViews();
-
-        setProfileImage(navigationView);
         setProfileName(navigationView);
         viewPagerInit();
         setUpDrawer();
@@ -70,7 +70,6 @@ public class DrawerActivity extends AppCompatActivity {
         drawer          = findViewById(R.id.drawer_layout);
         fab             = findViewById(R.id.FAB);
         viewPager       = findViewById(R.id.mainViewPager);
-
     }
 
     @Override
@@ -87,6 +86,7 @@ public class DrawerActivity extends AppCompatActivity {
                 questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 questionWindow.putExtra("Full Name", fullName);
                 startActivity(questionWindow);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 //Toast.makeText(DrawerActivity.this, "Profile", Toast.LENGTH_SHORT).show();
             }
         });
@@ -109,6 +109,8 @@ public class DrawerActivity extends AppCompatActivity {
     }
 
     private void setupFloatingButtonAction() {
+        fab.setClickable(true);
+        fab.setFocusable(true);
         fab.setOnClickListener(new View.OnClickListener(){
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -172,6 +174,8 @@ public class DrawerActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new QuestionsFragment(), "Ask");
         adapter.addFragment(new DiscoverFragment(), "Discover");
+        adapter.addFragment(new IdeasFragment(), "Ideas");
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -242,16 +246,6 @@ public class DrawerActivity extends AppCompatActivity {
         return college;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void setProfileImage(NavigationView navigationView){
-        View headerView = navigationView.getHeaderView(0);
-        ImageView profileImage = headerView.findViewById(R.id.profileImage);
-        Glide.with(Objects.requireNonNull(profileImage.getContext()))
-                .asBitmap()
-                .load(R.drawable.blank_profile)
-                .into(profileImage);
-    }
-
     // getting data from either two activities 'UserRegister' or 'LoginActivity'and inserting it into
     // DrawerActivity
     private void setProfileName(NavigationView navigationView) {
@@ -320,5 +314,17 @@ public class DrawerActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(viewPager.getCurrentItem() == 0) fab.show();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        fab.hide();
     }
 }

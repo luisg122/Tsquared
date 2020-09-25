@@ -72,6 +72,8 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
     private String    title;
     private String    publisherSource;
 
+    private LinearLayout content;
+
 
 
     public LinkPromptBottomSheet(){
@@ -123,6 +125,7 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         };
     }
 
+    // must detect what the user is typing
     private void detectTyping(){
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -154,11 +157,6 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 hideKeyboard(v);
-                // The index of viewStub is '4' in layout hierarchy
-                // we need this index to remove the layout that the viewStub inflated
-                // and dynamically add a second layout
-                //final int index = rootView.indexOfChild(containerOfViewStub);
-                //Log.d("indexOf", "position of LL of " + index);
                 new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -169,29 +167,43 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         });
     }
 
+    // should be important to document this
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void inFlateViewBasedOnValidUrl(){
         if(checkValidLink() && (viewStub.getParent() != null)){
             viewStub.setLayoutResource(R.layout.viewstub_valid_link);
             viewStub.inflate();
-            headLine       = view.findViewById(R.id.headLine);
-            source         = view.findViewById(R.id.source);
+
+            headLine = view.findViewById(R.id.headLine);
+            source   = view.findViewById(R.id.source);
+            content  = view.findViewById(R.id.validLink);
+
             new Content().execute();
         }
         else if(checkValidLink() && (viewStub.getParent() == null)){
             containerOfViewStub.removeAllViews();
             containerOfViewStub.addView(LayoutInflater.from(getContext()).inflate(R.layout.viewstub_valid_link, containerOfViewStub, false));
-            headLine       = view.findViewById(R.id.headLine);
-            source         = view.findViewById(R.id.source);
+
+            headLine = view.findViewById(R.id.headLine);
+            source   = view.findViewById(R.id.source);
+            content  = view.findViewById(R.id.validLink);
+            content.setVisibility(View.INVISIBLE);
+
             new Content().execute();
         }
         else if(!checkValidLink() && (viewStub.getParent() != null)){
             viewStub.setLayoutResource(R.layout.viewstub_invalid_link);
             viewStub.inflate();
+
+            content = view.findViewById(R.id.invalidLink);
+            content.setVisibility(View.VISIBLE);
         }
         else if(!checkValidLink() && (viewStub.getParent() == null)){
             containerOfViewStub.removeAllViews();
             containerOfViewStub.addView(LayoutInflater.from(getContext()).inflate(R.layout.viewstub_invalid_link, containerOfViewStub, false));
+
+            content = view.findViewById(R.id.invalidLink);
+            content.setVisibility(View.VISIBLE);
         }
     }
 
@@ -207,38 +219,10 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void hideKeyboard(@NonNull View v) {
-        //if(detectIfKeyboardIsOpen()) {
-            InputMethodManager inputManager = (InputMethodManager) v.getContext()
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputManager = (InputMethodManager) v.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
 
-            inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        //}
-    }
-
-    // How to detect if the soft input keyboard is opened in a bottomSheetDialogFragment?
-    private boolean detectIfKeyboardIsOpen(){
-        final boolean[] value = new boolean[1];
-        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            int maxRootViewHeight     = 0;
-            int currentRootViewHeight = 0;
-            @Override
-            public void onGlobalLayout() {
-                //currentRootViewHeight = view.getRootView().getHeight();
-                currentRootViewHeight = view.getHeight();
-                if(currentRootViewHeight > maxRootViewHeight){
-                    maxRootViewHeight = currentRootViewHeight;
-                }
-                if(currentRootViewHeight >= maxRootViewHeight){
-                    // Keyboard is hidden
-                    value[0] = false;
-                }
-                else if(currentRootViewHeight < maxRootViewHeight){
-                    // Keyboard is shown
-                    value[0] = true;
-                }
-            }
-        });
-        return value[0];
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -250,6 +234,7 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         return false;
     }
 
+    // web scrape title and link of article from provided Url
     @SuppressLint("StaticFieldLeak")
     private class Content extends AsyncTask<Void, Void, Void> {
 
@@ -279,21 +264,9 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             super.onPostExecute(aVoid);
             headLine.setText(title);
             source.setText(publisherSource);
+            content.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.INVISIBLE);
             progressDialog.dismiss();
         }
     }
 }
-                /*Rect r = new Rect();
-                //r will be populated with the coordinates of the view where that area still visible.
-                view.getWindowVisibleDisplayFrame(r);
-                int screenHeight = view.getRootView().getHeight();
-                int heightDiff   = screenHeight - (r.bottom - r.top);
-                boolean visible  = heightDiff > (screenHeight / 3);
-                if(visible){
-                    Log.e("isOpened", "Keyboard is open");
-                    value[0]  = true;
-                }
-                else {
-                    Log.e("isClosed", "Keyboard is closed");
-                    value[0] = false;
-                }*/

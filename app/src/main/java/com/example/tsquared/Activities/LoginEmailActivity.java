@@ -3,6 +3,8 @@ package com.example.tsquared.Activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -30,6 +32,8 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
     private TextInputEditText password;
     private TextInputLayout   emailLayout;
     private TextInputLayout   passwordLayout;
+    private Handler handler;
+
 
     private String emailString;
     private String passwordString;
@@ -49,6 +53,7 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.signin_with_email);
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setViews();
+        initializeHandler();
         setListeners();
         setUpToolBar();
     }
@@ -61,7 +66,11 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
 
         emailLayout    = (TextInputLayout) findViewById(R.id.email_TextInputLayout);
         passwordLayout = (TextInputLayout) findViewById(R.id.password_TextInputLayout);
-     }
+    }
+
+    private void initializeHandler(){
+        handler = new Handler(Looper.getMainLooper());
+    }
 
     private void setUpToolBar() {
         toolbar = findViewById(R.id.toolbarEmail);
@@ -123,21 +132,29 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
         login.setOnClickListener(this);
     }
 
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonSignIn:
-                //emailString = email.getText().toString().trim();
-                //passwordString = password.getText().toString().trim();
-                //tryToLogin(emailString, passwordString);
-                if(checkInput()){
-                    Intent home = new Intent(LoginEmailActivity.this, DrawerActivity.class);
-                    home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(home);
-                    // remove previous activity 'LoginActivity' from the backstack
-                    // remove current activity from backstack or do not save onto the stack
-                    ActivityCompat.finishAffinity(LoginEmailActivity.this);
-                }
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //emailString = email.getText().toString().trim();
+                        //passwordString = password.getText().toString().trim();
+                        //tryToLogin(emailString, passwordString);
+                        if(checkInput()){
+                            Intent home = new Intent(LoginEmailActivity.this, DrawerActivity.class);
+                            home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(home);
+                            // remove previous activity 'LoginActivity' from the backstack
+                            // remove current activity from backstack or do not save onto the stack
+                            ActivityCompat.finishAffinity(LoginEmailActivity.this);
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        }
+                    }
+                }, 150);
                 break;
         }
     }

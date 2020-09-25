@@ -4,16 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -29,20 +23,18 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
     private TextInputEditText email;
     private TextInputLayout   emailLayout;
 
-    private AlertDialog alertDialog;
-    private Button okResponse;
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup2);
-        setButtonViewAndListener();
-        setUpEmail();
         setUpToolBar();
+        setUpEmail();
+        setButtonViewAndListener();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean checkInput(){
-        if(email.getText().toString().trim().isEmpty()){
+        if(Objects.requireNonNull(email.getText()).toString().trim().isEmpty()){
             emailLayout.setError("Email cannot be empty");
             return false;
         }
@@ -58,11 +50,6 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void setUpEmail(){
-        email = findViewById(R.id.registerEmail);
-        emailLayout = findViewById(R.id.emailLayout);
-    }
-
     private void setUpToolBar() {
         toolbar = findViewById(R.id.toolbarSignUp);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
@@ -74,6 +61,11 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
                 onBackPressed();
             }
         });
+    }
+
+    public void setUpEmail(){
+        email = findViewById(R.id.registerEmail);
+        emailLayout = findViewById(R.id.emailLayout);
     }
 
     private void setButtonViewAndListener() {
@@ -89,8 +81,7 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
             register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             register.putExtra("email", Objects.requireNonNull(email.getText()).toString().trim());
             startActivity(register);
-            // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
-            // finish();
+            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
         }
     }
 
