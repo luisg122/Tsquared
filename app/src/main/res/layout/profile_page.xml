@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:background="@color/mainColor">
+        android:background="?attr/appBarColor">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/mainColor"
+            app:contentScrim="?attr/appBarColor"
             app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed">
 
             <RelativeLayout
@@ -154,6 +154,7 @@
             app:tabTextAppearance="@style/TabLayoutStyle2"
             app:tabIndicatorColor="@color/white"
             app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/light_gray"
             app:tabIndicatorHeight="3dp"/>
     </com.google.android.material.appbar.AppBarLayout>
     <com.example.tsquared.ViewPager.CustomViewPager

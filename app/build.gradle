@@ -73,4 +73,8 @@ android {
     testfairyConfig {
         apiKey 'SDK-jvpnMK85'
     }
+
+    lintOptions{
+        disable 'PrivateResource'
+    }
 }

@@ -18,7 +18,7 @@
         android:layout_marginRight="15dp"
         app:cardElevation="0dp"
         app:cardCornerRadius="15dp"
-        app:cardBackgroundColor="@color/card_bg">
+        app:cardBackgroundColor="#153944">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -69,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/post_button_round"
-        android:backgroundTint="@color/card_bg"
+        android:backgroundTint="#153944"
         android:text="Share"
         android:textAllCaps="false"
         android:textColor="@color/white"

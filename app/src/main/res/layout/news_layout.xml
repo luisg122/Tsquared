@@ -30,6 +30,7 @@
         android:singleLine="false"
         android:maxLines="2"
         android:textStyle="bold"
+        android:textColor="?attr/lightTextColor"
         android:layout_below="@+id/newsRelativeLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"

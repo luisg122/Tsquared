@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,6 +49,8 @@ public class IdeasFragment extends Fragment {
         setUpViews();
         setUpIdeaPrompt();
         setUpUsersIdeasRecyclerView();
+
+        ViewCompat.setNestedScrollingEnabled(preViewRV, false);
 
         return view;
     }

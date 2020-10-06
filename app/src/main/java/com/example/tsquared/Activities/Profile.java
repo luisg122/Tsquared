@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
 import com.example.tsquared.Fragments.userQuestions;
 import com.example.tsquared.R;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -32,6 +33,12 @@ public class Profile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedBundleState){
+        if(DarkSharedPref.isDark){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
         super.onCreate(savedBundleState);
         setContentView(R.layout.profile_page);
         setViews();

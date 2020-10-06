@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.tsquared.R;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 
 public class PostQuestionWindow extends AppCompatActivity implements View.OnClickListener{
     Toolbar  toolbar;
@@ -20,6 +21,13 @@ public class PostQuestionWindow extends AppCompatActivity implements View.OnClic
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        if(DarkSharedPref.isDark){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_post);
         setViews();

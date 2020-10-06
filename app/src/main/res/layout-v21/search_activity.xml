@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayoutToolBar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_gray">
+    android:layout_height="match_parent">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
@@ -15,7 +14,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mainColor"
+            android:background="?attr/appBarColor"
             android:fitsSystemWindows="true">
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/searchToolBar1"
@@ -51,6 +50,7 @@
                 app:tabTextAppearance="@style/TabLayoutStyle"
                 app:tabIndicatorColor="@color/white"
                 app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/light_gray"
                 app:tabIndicatorHeight="3dp"/>
         </com.google.android.material.appbar.AppBarLayout>
         <com.example.tsquared.ViewPager.CustomViewPager

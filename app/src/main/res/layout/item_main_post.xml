@@ -10,7 +10,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="?attr/cardBackgroundColor"
     app:cardElevation="0dp"
     app:cardCornerRadius="0dp">
 
@@ -55,6 +55,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:text="April 05 2019"
+            android:textColor="?attr/lightTextColor"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -68,7 +69,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginBottom="20dp"
             android:text="50 Answers"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/forumImage"
             app:layout_constraintTop_toBottomOf="@+id/questionContent" />
@@ -82,7 +83,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
             android:text="Asked by John Doe"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="13sp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +107,7 @@
             android:padding="3dp"
             android:singleLine="false"
             android:text="What is the idea behind scrum and how is it efficiently applied?"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="17sp"
             android:textStyle="bold"
             app:fontFamily="sans-serif"

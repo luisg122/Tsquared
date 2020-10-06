@@ -36,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New York Times"
+            android:textColor="?attr/lightTextColor"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginLeft="5dp"
@@ -58,6 +59,7 @@
             android:singleLine="false"
             android:ellipsize="end"
             android:text="Today the dow has suffered a bloodshed when job reporting had turned ut to be lower than expected"
+            android:textColor="?attr/lightTextColor"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_below="@+id/source"/>

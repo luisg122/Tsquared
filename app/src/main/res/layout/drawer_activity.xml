@@ -11,7 +11,8 @@
     tools:context=".Activities.DrawerActivity">
 
     <include
-        layout="@layout/app_bar_main"/>
+        layout="@layout/app_bar_main"
+        android:visibility="visible"/>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"
@@ -19,8 +20,54 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:itemTextColor="?attr/lightTextColor"
         app:headerLayout="@layout/nav_header"
         app:insetForeground="@android:color/transparent"
-        app:menu="@menu/nav_drawer_menu"/>
+        app:menu="@menu/nav_drawer_menu">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/darkThemeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="8dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                app:theme="@style/Switch_style" />
+
+            <ImageView
+                android:id="@+id/darkMoonIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/darkThemeSwitch"
+                android:layout_toStartOf="@+id/darkThemeSwitch"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/dark_moon"/>
+
+            <ImageView
+                android:id="@+id/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/settings"/>
+
+        </RelativeLayout>
+    </com.google.android.material.navigation.NavigationView>
+
+    
 </androidx.drawerlayout.widget.DrawerLayout>
 <!--#b8b9c7-->

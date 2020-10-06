@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.tsquared.Adapters.NewsArticleViewPagerAdapter;
 import com.example.tsquared.Models.NewsArticlesViewModel;
 import com.example.tsquared.R;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPagerTransition.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
@@ -22,6 +23,13 @@ public class NewsArticleContainer extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        if(DarkSharedPref.isDark){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_article_viewpager);
         setUpViews();

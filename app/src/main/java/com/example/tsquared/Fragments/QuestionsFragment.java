@@ -20,12 +20,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.tsquared.Activities.DetailActivity;
 import com.example.tsquared.Activities.DrawerActivity;
+import com.example.tsquared.Activities.HideOrShowObject;
 import com.example.tsquared.Activities.PostQuestionWindow;
 import com.example.tsquared.Adapters.QuestionItemAdapter;
 import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.Models.NewsHorizontalModel;
 import com.example.tsquared.R;
+import com.example.tsquared.RecyclerviewListeners.CustomScrollListener;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -41,8 +44,6 @@ public class QuestionsFragment<adapter> extends Fragment
     private View view;
     private RecyclerView mainRv;
     private RecyclerView mainRv1;
-
-    private FloatingActionButton fab;
 
     private ArrayList<QuestionItemModel> mArrayList;
     private ArrayList<NewsHorizontalModel> mArrayList1;
@@ -64,6 +65,7 @@ public class QuestionsFragment<adapter> extends Fragment
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
     private CardView cardView;
     private TextView textPrompt;
+    private DrawerActivity object;
 
     public QuestionsFragment(){
 
@@ -79,9 +81,7 @@ public class QuestionsFragment<adapter> extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         view = inflater.inflate(R.layout.item_main, container, false);
         shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
-        // Correct sequence of function calls
         setUpSwipeContainer();
-        //setupFloatingButtonAction();
         setUpRecyclerView();
         loadListOfQuestions();
         setUpSwipeListener();
@@ -123,26 +123,23 @@ public class QuestionsFragment<adapter> extends Fragment
         adapter = new QuestionItemAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setAdapter(adapter);
         mainRv.setLayoutManager(layoutManager);
-        mainRv.setNestedScrollingEnabled(false);
-    }
 
-    private void setupFloatingButtonAction() {
-        fab = view.findViewById(R.id.FAB);
-        fab.setOnClickListener(new View.OnClickListener(){
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        // design to expand and shrink the extended fab button
+        mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onClick(View view) {
-                //loadNameAndCollege();
-                Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
-                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                //questionWindow.putExtra("Full Name", fullName);
-                //questionWindow.putExtra("College", college);
-                startActivity(questionWindow);
-                // Slide activity upwards
-                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && DrawerActivity.fab != null) {
+                    // Scrolled Downwards
+                    DrawerActivity.fab.shrink();
+                } else if (dy < 0 && DrawerActivity.fab != null) {
+                    // Scrolled Upwards
+                    DrawerActivity.fab.extend();
+                }
             }
         });
     }
+
 
     private void dummyData(){
         mArrayList  = new ArrayList<>();
@@ -203,6 +200,11 @@ public class QuestionsFragment<adapter> extends Fragment
         super.onPause();
         shimmerFrameLayout.stopShimmer();
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

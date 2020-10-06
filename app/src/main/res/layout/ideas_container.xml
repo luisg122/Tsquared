@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Brian Doe"
+            android:textColor="?attr/lightTextColor"
             android:textSize="20sp"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
@@ -63,7 +64,7 @@
             android:textSize="20sp"
             android:singleLine="false"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:maxLines="2"
             android:ellipsize="end"/>
 
@@ -72,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NewYorkTimes.com"
+            android:textColor="?attr/lightTextColor"
             android:layout_below="@+id/descInfo"
             android:layout_toRightOf="@+id/imageInfo"
             android:layout_toEndOf="@+id/imageInfo"

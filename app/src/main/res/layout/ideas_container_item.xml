@@ -10,7 +10,7 @@
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="15dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="?attr/cardBackgroundColor"
     app:cardElevation="1dp">
 
     <RelativeLayout
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Investing or speculating?"
             android:textSize="20sp"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
@@ -49,6 +49,7 @@
             android:textSize="17sp"
             android:layout_below="@id/previewTitle"
             android:text="In today's world many people believe to be investors but what they actually are doing is speculating, meaning they're buying assets for the short term and then dumping them like their ex-wives."
+            android:textColor="?attr/lightTextColor"
             android:lineSpacingExtra="5dp"
             android:layout_marginBottom="10dp"/>
     </RelativeLayout>

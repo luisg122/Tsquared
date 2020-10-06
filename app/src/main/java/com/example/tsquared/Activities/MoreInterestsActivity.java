@@ -21,6 +21,7 @@ import com.example.tsquared.Adapters.MoreNewsAdapter;
 import com.example.tsquared.Models.MoreInterestsModel;
 import com.example.tsquared.Models.MoreNewsModel;
 import com.example.tsquared.R;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -37,6 +38,13 @@ public class MoreInterestsActivity extends AppCompatActivity implements MoreInte
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        if(DarkSharedPref.isDark){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interests_more_layout);
         setUpViews();
@@ -56,7 +64,7 @@ public class MoreInterestsActivity extends AppCompatActivity implements MoreInte
 
     private void setUpToolbar(){
         toolbar.setTitle("Your interests");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

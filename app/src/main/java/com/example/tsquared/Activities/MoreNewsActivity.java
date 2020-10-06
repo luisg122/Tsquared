@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.tsquared.Adapters.MoreNewsAdapter;
 import com.example.tsquared.Models.MoreNewsModel;
 import com.example.tsquared.R;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -29,6 +30,13 @@ public class MoreNewsActivity extends AppCompatActivity implements MoreNewsAdapt
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        if(DarkSharedPref.isDark){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_more_layout);
         setUpViews();
@@ -43,7 +51,7 @@ public class MoreNewsActivity extends AppCompatActivity implements MoreNewsAdapt
 
     private void setUpToolbar(){
         toolbar.setTitle("News");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -32,6 +32,7 @@ import com.example.tsquared.Adapters.ViewPagerAdapter;
 import com.example.tsquared.Fragments.SearchQuestionsFragment;
 import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
 import com.google.android.gms.plus.model.people.Person;
 import com.google.android.material.tabs.TabLayout;
@@ -66,6 +67,12 @@ public class SearchActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        if(DarkSharedPref.isDark){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
         setUpViews();

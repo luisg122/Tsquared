@@ -32,6 +32,7 @@
         android:layout_toEndOf="@+id/linkProfilePic"
         android:layout_toRightOf="@+id/linkProfilePic"
         android:text="Brian Doe"
+        android:textColor="?attr/lightTextColor"
         android:textStyle="normal"
         android:fontFamily="sans-serif"
         android:textSize="13sp"/>
@@ -48,6 +49,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="20dp"
         android:text="Post a link to share"
+        android:textColor="?attr/lightTextColor"
         android:textStyle="bold"
         android:textSize="20sp" />
 </RelativeLayout>

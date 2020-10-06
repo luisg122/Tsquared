@@ -37,5 +37,6 @@
         android:singleLine="false"
         android:textAlignment="center"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="?attr/lightTextColor"/>
 </RelativeLayout>

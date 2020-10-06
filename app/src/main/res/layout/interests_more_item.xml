@@ -33,6 +33,7 @@
         android:maxLines="2"
         android:singleLine="false"
         android:text="Computer Science"
+        android:textColor="?attr/lightTextColor"
         android:textSize="18sp"
         android:textStyle="bold" />
 </RelativeLayout>

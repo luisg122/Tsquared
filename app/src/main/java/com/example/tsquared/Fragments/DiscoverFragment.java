@@ -9,16 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.tsquared.Activities.DetailActivity;
 import com.example.tsquared.Activities.MoreInterestsActivity;
 import com.example.tsquared.Activities.MoreNewsActivity;
@@ -64,6 +69,7 @@ public class DiscoverFragment extends Fragment
     private RelativeLayout relativeLayout;
     private NestedScrollView nestedScrollView;
     private LinkPromptBottomSheet bottomSheet;
+    private ImageView discoverImg;
     private Handler handler;
 
     RequestParams params;
@@ -93,6 +99,9 @@ public class DiscoverFragment extends Fragment
         //setUpRecyclerView();
         //loadListOfPeople();
         //setUpSwipeListener();
+
+        ViewCompat.setNestedScrollingEnabled(newsRecyclerView, false);
+        ViewCompat.setNestedScrollingEnabled(interestsRecyclerView, false);
         return view;
     }
 
@@ -105,6 +114,7 @@ public class DiscoverFragment extends Fragment
         nestedScrollView       = (NestedScrollView) view.findViewById(R.id.nestedScrollView                                                                                               );
         cardView               = (RelativeLayout) view.findViewById(R.id.shareLink);
         discoverCard           = (RelativeLayout) view.findViewById(R.id.discoverCard);
+        discoverImg            = (ImageView) view.findViewById(R.id.image);
     }
 
     private void initializeHandler(){
@@ -122,6 +132,11 @@ public class DiscoverFragment extends Fragment
                 }
             }
         });
+
+
+        Glide.with(getApplicationContext())
+                .load("https://i.pinimg.com/originals/08/07/95/08079583048f368002280805a5221b8b.jpg")
+                .into(discoverImg);
 
         discoverCard.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)

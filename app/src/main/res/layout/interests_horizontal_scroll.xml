@@ -10,6 +10,7 @@
     android:layout_marginLeft="0dp"
     android:layout_marginRight="0dp"
     android:layout_marginTop="10dp"
+    app:cardBackgroundColor="?attr/cardBackgroundColor"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp">
 
@@ -31,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="1dp"
                 android:text="Your interests"
+                android:textColor="?attr/lightTextColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
@@ -42,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Read stuff that interests you"
+                android:textColor="?attr/lightTextColor"
                 android:textSize="13sp"
                 android:layout_marginTop="1dp"
                 android:layout_below="@+id/header"

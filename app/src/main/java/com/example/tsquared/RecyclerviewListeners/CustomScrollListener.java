@@ -39,8 +39,10 @@ public class CustomScrollListener extends RecyclerView.OnScrollListener {
 
         if (dy > 0) {
             System.out.println("Scrolled Downwards");
+            extendedFloatingActionButton.shrink();
         } else if (dy < 0) {
             System.out.println("Scrolled Upwards");
+            extendedFloatingActionButton.extend();
         } else {
             System.out.println("No Vertical Scrolled");
         }

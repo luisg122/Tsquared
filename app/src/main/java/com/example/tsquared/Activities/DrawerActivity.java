@@ -4,10 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -16,18 +17,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.bumptech.glide.Glide;
 import com.example.tsquared.Fragments.IdeasFragment;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
 import com.example.tsquared.Fragments.DiscoverFragment;
 import com.example.tsquared.Utils.PreferenceUtils;
 import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.R;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
+import com.facebook.share.Share;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -36,6 +39,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DrawerActivity extends AppCompatActivity {
     FloatingSearchView mSearchView;
@@ -46,30 +51,81 @@ public class DrawerActivity extends AppCompatActivity {
     public static String firstNameofUser;
     public DrawerLayout drawer;
     private Toolbar toolbar;
-    private FloatingActionButton fab;
     private ActionBarDrawerToggle toggle;
     private CustomViewPager viewPager;
+    private SwitchCompat switchToggle;
+    public static ExtendedFloatingActionButton fab;
     private Runnable runnable;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(DarkSharedPref.loadNightModeState(this)){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity);
         setUpViews();
+
+        if(DarkSharedPref.loadNightModeState(this)){
+            switchToggle.setChecked(true);
+        }
+        setUpDarkModeSwitch();
+        setupFloatingButtonAction();
         setProfileName(navigationView);
         viewPagerInit();
         setUpDrawer();
-        setupFloatingButtonAction();
         setupDrawerContent(navigationView);
+    }
+
+    private void setUpDarkModeSwitch(){
+        switchToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    DarkSharedPref.setNightModeState(true, getApplicationContext());
+                    DarkSharedPref.isDark = true;
+                    DrawerActivity.this.recreate();
+                }
+                else {
+                    DarkSharedPref.setNightModeState(false, getApplicationContext());
+                    DarkSharedPref.isDark = false;
+                    DrawerActivity.this.recreate();
+                }
+            }
+        });
     }
 
     private void setUpViews(){
         navigationView  = findViewById(R.id.navView);
         toolbar         = findViewById(R.id.searchToolBar);
         drawer          = findViewById(R.id.drawer_layout);
-        fab             = findViewById(R.id.FAB);
         viewPager       = findViewById(R.id.mainViewPager);
+        fab             = findViewById(R.id.FAB);
+        switchToggle    = findViewById(R.id.darkThemeSwitch);
+    }
+
+    private void setupFloatingButtonAction() {
+        fab.setClickable(true);
+        fab.setFocusable(true);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View view) {
+                //loadNameAndCollege();
+                Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
+                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                //questionWindow.putExtra("Full Name", fullName);
+                //questionWindow.putExtra("College", college);
+                startActivity(questionWindow);
+                // Slide activity upwards
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            }
+        });
     }
 
     @Override
@@ -108,25 +164,6 @@ public class DrawerActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setupFloatingButtonAction() {
-        fab.setClickable(true);
-        fab.setFocusable(true);
-        fab.setOnClickListener(new View.OnClickListener(){
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View view) {
-                //loadNameAndCollege();
-                Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
-                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                //questionWindow.putExtra("Full Name", fullName);
-                //questionWindow.putExtra("College", college);
-                startActivity(questionWindow);
-                // Slide activity upwards
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-            }
-        });
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpDrawer() {
         setSupportActionBar(toolbar);
@@ -154,7 +191,6 @@ public class DrawerActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerStateChanged(int newState) {
-                //if(runnable)
             }
         };
 
@@ -177,6 +213,7 @@ public class DrawerActivity extends AppCompatActivity {
         adapter.addFragment(new IdeasFragment(), "Ideas");
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -186,11 +223,10 @@ public class DrawerActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
-                    case 0:
-                        fab.show();
+                    case 0:fab.show();
                         break;
-                    default:
-                        fab.hide();
+
+                    default:fab.hide();
                         break;
                 }
             }
@@ -310,11 +346,22 @@ public class DrawerActivity extends AppCompatActivity {
                 PreferenceUtils.saveLastName(null, this);
                 PreferenceUtils.saveFirstName(null, this);
                 PreferenceUtils.saveCollege(null, this);
+
+                DarkSharedPref.setNightModeState(false, getApplicationContext());
+                DarkSharedPref.isDark = false;
                 Intent intent = new Intent(DrawerActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
         }
     }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        // when user starts app, maintain the state (either Dark or Light)
+        DarkSharedPref.isDark = DarkSharedPref.loadNightModeState(this);
+    }
+
 
     @Override
     public void onResume() {
