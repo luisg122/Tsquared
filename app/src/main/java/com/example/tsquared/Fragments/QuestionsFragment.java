@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +38,7 @@ import com.loopj.android.http.RequestParams;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class QuestionsFragment<adapter> extends Fragment
@@ -63,9 +66,7 @@ public class QuestionsFragment<adapter> extends Fragment
     private RequestParams params, params1;
     private AsyncHttpClient client, client1;
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
-    private CardView cardView;
-    private TextView textPrompt;
-    private DrawerActivity object;
+    public  static  final int REQUEST_CODE_ADD_NOTE = 1;
 
     public QuestionsFragment(){
 
@@ -119,15 +120,14 @@ public class QuestionsFragment<adapter> extends Fragment
         mainRv.setHasFixedSize(false);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
                 RecyclerView.VERTICAL, false);
+        mainRv.setLayoutManager(layoutManager);
 
         adapter = new QuestionItemAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setAdapter(adapter);
-        mainRv.setLayoutManager(layoutManager);
-
         // design to expand and shrink the extended fab button
         mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0 && DrawerActivity.fab != null) {
                     // Scrolled Downwards
@@ -192,14 +192,12 @@ public class QuestionsFragment<adapter> extends Fragment
     public void onResume() {
         super.onResume();
         shimmerFrameLayout.startShimmer();
-        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onPause(){
         super.onPause();
         shimmerFrameLayout.stopShimmer();
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -207,12 +205,22 @@ public class QuestionsFragment<adapter> extends Fragment
         super.onDestroy();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void OnNoteClick(int position) {
-        /*String question = mArrayList.get(position).question;
+        String question = mArrayList.get(position).question;
         Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("question", question);
-        startActivity(intent);*/
+        startActivity(intent);
+        Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
+
+        }
     }
 }

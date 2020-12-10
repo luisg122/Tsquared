@@ -66,8 +66,8 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
         }
 
         else {
-            passwordLayout.setErrorEnabled(false);
-            confirmPasswordLayout.setErrorEnabled(false);
+            passwordLayout.setError(null);
+            confirmPasswordLayout.setError(null);
             return true;
         }
     }
@@ -115,7 +115,6 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
             register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             register.putExtra("password", Objects.requireNonNull(password.getText()).toString().trim());
             startActivity(register);
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
 
         else if(!passwordMatch() && checkInput()){
@@ -191,6 +190,5 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
     @Override
     public void finish(){
         super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

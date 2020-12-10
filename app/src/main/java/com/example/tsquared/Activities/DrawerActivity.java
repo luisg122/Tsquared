@@ -4,16 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.bumptech.glide.Glide;
 import com.example.tsquared.Fragments.IdeasFragment;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
@@ -36,14 +38,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 public class DrawerActivity extends AppCompatActivity {
-    FloatingSearchView mSearchView;
     NavigationView navigationView;
     TextView profileName;
     String fullName, college;
@@ -83,19 +81,21 @@ public class DrawerActivity extends AppCompatActivity {
     }
 
     private void setUpDarkModeSwitch(){
+        final Vibrator vibe = (Vibrator) DrawerActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
         switchToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     DarkSharedPref.setNightModeState(true, getApplicationContext());
                     DarkSharedPref.isDark = true;
-                    DrawerActivity.this.recreate();
                 }
                 else {
                     DarkSharedPref.setNightModeState(false, getApplicationContext());
                     DarkSharedPref.isDark = false;
-                    DrawerActivity.this.recreate();
                 }
+                vibe.vibrate(80);
+                DrawerActivity.this.recreate();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
     }
@@ -135,6 +135,9 @@ public class DrawerActivity extends AppCompatActivity {
         View view = menuItem.getActionView();
 
         CircleImageView profileImage = view.findViewById(R.id.toolbar_image_profile);
+        Glide.with(this)
+                .load("https://seventhqueen.com/themes/kleo/wp-content/uploads/rtMedia/users/44269/2020/07/dummy-profile.png")
+                .into(profileImage);
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

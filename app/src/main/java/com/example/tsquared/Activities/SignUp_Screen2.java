@@ -45,7 +45,7 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
         }
 
         else {
-            emailLayout.setErrorEnabled(false);
+            emailLayout.setError(null);
             return true;
         }
     }
@@ -81,13 +81,11 @@ public class SignUp_Screen2 extends AppCompatActivity implements View.OnClickLis
             register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             register.putExtra("email", Objects.requireNonNull(email.getText()).toString().trim());
             startActivity(register);
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
         }
     }
 
     @Override
     public void finish(){
         super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

@@ -9,7 +9,7 @@
         android:orderInCategory="1"
         android:title="Search"
         app:actionLayout="@layout/search_menu_layout"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/profilePictureMenu"

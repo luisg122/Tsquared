@@ -1,69 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relativeLayoutToolBar"
+    android:id="@+id/searchLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="0dp">
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="0dp">
-        <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="wrap_content"
+        android:background="?attr/appBarColor"
+        android:fitsSystemWindows="true">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/searchToolBar1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/appBarColor"
-            android:fitsSystemWindows="true">
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/searchToolBar1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:padding="5dp"
+            app:title=" "
+            android:layout_alignParentLeft="true">
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginRight="0dp"
-                android:fitsSystemWindows="true"
-                android:padding="5dp"
-                app:title=" "
-                android:layout_alignParentLeft="true">
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/search_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    android:theme="@style/AppSearchView"
-                    app:queryBackground="@color/transparent"
-                    app:iconifiedByDefault="false"
-                    app:queryHint="@string/hint"/>
-            </androidx.appcompat.widget.Toolbar>
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/searchToolBar1"
-                app:tabGravity="fill"
-                app:tabMode="scrollable"
-                app:tabPaddingEnd="16dp"
-                app:tabPaddingStart="16dp"
-                app:tabTextAppearance="@style/TabLayoutStyle"
-                app:tabIndicatorColor="@color/white"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/light_gray"
-                app:tabIndicatorHeight="3dp"/>
-        </com.google.android.material.appbar.AppBarLayout>
-        <com.example.tsquared.ViewPager.CustomViewPager
-            android:id="@+id/mainViewPager"
+                android:theme="@style/AppSearchView"
+                app:queryBackground="@color/transparent"
+                app:iconifiedByDefault="false"
+                app:queryHint="@string/hint"
+                app:searchIcon="@null"/>
+        </androidx.appcompat.widget.Toolbar>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.example.tsquared.ViewPager.CustomViewPager>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchToolBar1"
+            app:tabGravity="fill"
+            app:tabMode="scrollable"
+            app:tabPaddingEnd="16dp"
+            app:tabPaddingStart="16dp"
+            app:tabTextAppearance="@style/TabLayoutStyle"
+            app:tabIndicatorColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/light_gray"
+            app:tabIndicatorHeight="3dp"/>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/mainViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

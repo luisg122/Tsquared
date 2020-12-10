@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainColor"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -29,74 +28,84 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/lastNameLayout"
-        android:layout_width="150dp"
+    <RelativeLayout
+        android:id="@+id/userFullName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Last name"
-        android:textColorHint="@color/white"
-        android:theme="@style/MyEditTextTheme"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"
-        app:errorTextAppearance="@style/error_appearance"
-        app:errorEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerLastName"
-            android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/tile_divider">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastNameLayout"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:hint="Last name"
+            android:textColorHint="@color/white"
+            android:theme="@style/MyEditTextTheme"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/white"
+            app:errorTextAppearance="@style/error_appearance"
+            app:errorEnabled="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/firstNameLayout"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="108dp"
-        android:hint="First name"
-        android:textColorHint="@color/white"
-        android:theme="@style/MyEditTextTheme"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"
-        app:errorTextAppearance="@style/error_appearance"
-        app:errorEnabled="true">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerFirstName"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameLayout"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:hint="First name"
+            android:textColorHint="@color/white"
+            android:theme="@style/MyEditTextTheme"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/white"
+            app:errorTextAppearance="@style/error_appearance"
+            app:errorEnabled="true">
 
-    <Button
-        android:id="@+id/signUpButton1"
-        android:layout_width="350dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/post_button_round"
-        android:text="Next"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastNameLayout"/>
+        app:layout_constraintTop_toBottomOf="@+id/userFullName">
+        <Button
+            android:id="@+id/signUpButton1"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="85dp"
+            android:layout_marginBottom="15dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/post_button_round"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,7 +50,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             AnswerModel answer = mArrayList.get(position);
             final MyViewHolder dataHolder = (MyViewHolder) holder;
             Glide.with(mcontext)
-                    .load(answer.getProfileImage())
+                    .load("https://seventhqueen.com/themes/kleo/wp-content/uploads/rtMedia/users/44269/2020/07/dummy-profile.png")
                     .into(dataHolder.answerProfileImage);
 
             dataHolder.answerProfileName.setText(answer.name);

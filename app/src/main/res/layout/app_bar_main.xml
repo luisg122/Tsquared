@@ -11,16 +11,17 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:background="?attr/appBarColor">
+        android:background="?attr/appBarColor"
+        app:layout_scrollFlags="scroll|enterAlways">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/searchToolBar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
             app:title="@string/app_name"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             app:titleTextColor="@color/white"
-            app:titleMarginStart="15dp"/>
+            app:titleMarginStart="15dp"
+            app:layout_scrollFlags="scroll|enterAlways"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

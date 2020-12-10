@@ -10,9 +10,14 @@ public class AnswerModel {
     public String   name;
     public String   dateAnswered;
     public String   answer;
-    public Drawable profileImage;
+    public String profileImage;
 
-    AnswerModel(){
+    public AnswerModel(){}
+
+    public AnswerModel(String name, String answer, String dateAnswered){
+        this.name = name;
+        this.answer = answer;
+        this.dateAnswered = dateAnswered;
 
     }
     public static AnswerModel fromJson(JSONObject jsonObject) throws JSONException {
@@ -29,11 +34,11 @@ public class AnswerModel {
         return answer;
     }
 
-    public Drawable getProfileImage() {
+    public String getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(Drawable profileImage) {
+    public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
 

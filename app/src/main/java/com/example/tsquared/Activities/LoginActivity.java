@@ -69,7 +69,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //setTheme(R.style.signInBackground);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setViews();
@@ -201,7 +200,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent register = new Intent(LoginActivity.this, SignUp_Screen1.class);
                 register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(register);
-                //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
             case R.id.facebookSignIn:

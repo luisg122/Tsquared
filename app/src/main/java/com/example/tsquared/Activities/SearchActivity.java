@@ -1,40 +1,30 @@
 package com.example.tsquared.Activities;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.animation.Animator;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewAnimationUtils;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.tsquared.Adapters.QuestionItemAdapter;
 import com.example.tsquared.Adapters.SearchResultsAdapter;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
 import com.example.tsquared.Fragments.SearchQuestionsFragment;
 import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
-import com.example.tsquared.ViewPager.CustomViewPager;
-import com.google.android.gms.plus.model.people.Person;
 import com.google.android.material.tabs.TabLayout;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -45,17 +35,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 import static java.util.Objects.requireNonNull;
 
 public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView imageView;
     private ArrayList<QuestionItemModel> questionList;
+    private View background;
     private RequestParams params;
     private AsyncHttpClient client;
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=qKeywords";
@@ -73,19 +62,32 @@ public class SearchActivity extends AppCompatActivity {
         else {
             setTheme(R.style.AppTheme_NoActionBar);
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
         setUpViews();
-        setSupportActionBar(toolbar);
+        setUpToolbar();
         viewPagerInit();
     }
 
     private void setUpViews() {
+        background = findViewById(R.id.searchLayout);
         toolbar = findViewById(R.id.searchToolBar1);
     }
 
+    private void setUpToolbar(){
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+    }
+
     private void viewPagerInit(){
-        CustomViewPager viewPager = findViewById(R.id.mainViewPager);
+        ViewPager viewPager = findViewById(R.id.mainViewPager);
         setUpViewPager(viewPager);
         TabLayout tabLayout = findViewById(R.id.tabs);
         viewPager.setCurrentItem(getIntent().getIntExtra("page", 0));
@@ -174,4 +176,3 @@ public class SearchActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
     }
 }
-//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);

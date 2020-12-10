@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tsquared.Activities.AddIdeaActivity;
 import com.example.tsquared.Activities.Settings;
 import com.example.tsquared.Adapters.IdeasItemAdapter;
 import com.example.tsquared.Adapters.IdeasPreviewAdapter;
@@ -49,9 +50,6 @@ public class IdeasFragment extends Fragment {
         setUpViews();
         setUpIdeaPrompt();
         setUpUsersIdeasRecyclerView();
-
-        ViewCompat.setNestedScrollingEnabled(preViewRV, false);
-
         return view;
     }
 
@@ -66,7 +64,7 @@ public class IdeasFragment extends Fragment {
         ideaPrompt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Settings.class);
+                Intent intent = new Intent(getContext(), AddIdeaActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
@@ -90,7 +88,7 @@ public class IdeasFragment extends Fragment {
         preViewAdapter = new IdeasPreviewAdapter(ideasPreList, getContext());
         preViewRV.setHasFixedSize(true);
         preViewRV.setAdapter(preViewAdapter);
-        preViewRV.setNestedScrollingEnabled(false);
+        ViewCompat.setNestedScrollingEnabled(preViewRV,false);
     }
 
     public void setUserIdeaPosts(){

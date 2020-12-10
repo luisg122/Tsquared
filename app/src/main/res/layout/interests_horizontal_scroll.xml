@@ -61,13 +61,14 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
                 android:text="more"
-                android:textColor="@color/black"
+                android:textColor="?attr/textColor"
                 android:textAllCaps="false"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="10dp"
-                app:backgroundTint="@color/white"
+                app:backgroundTint="?attr/cardBackgroundColor"
                 app:elevation="0dp"
                 app:icon="@drawable/ic_add_white_24dp"
+                app:iconTint="?attr/textColor"
                 app:rippleColor="#66000000"/>
         </RelativeLayout>
 

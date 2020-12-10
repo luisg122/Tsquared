@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -155,18 +157,18 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
         private final CardView  cardViewLayout;
-        private final ImageView moreIcon;
+        private final Button moreIcon;
         OnNoteListener onNoteListener;
 
         public MyViewHolder(View view, OnNoteListener onNoteListener) {
             super(view);
-            //iv_image         = view.findViewById(R.id.postIV);
+            //iv_image       = view.findViewById(R.id.postIV);
             tv_name          = view.findViewById(R.id.QuestionName);
             tv_topic         = view.findViewById(R.id.topic);
             tv_question      = view.findViewById(R.id.questionContent);
             tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
-            moreIcon         = view.findViewById(R.id.threeDots);
+            moreIcon         = view.findViewById(R.id.three_dots);
             this.onNoteListener = onNoteListener;
 
             cardViewLayout = view.findViewById(R.id.cardViewLayout);

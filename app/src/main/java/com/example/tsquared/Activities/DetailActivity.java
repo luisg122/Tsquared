@@ -34,6 +34,7 @@ import com.example.tsquared.Adapters.AnswerAdapter;
 import com.example.tsquared.Models.AnswerModel;
 import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -57,8 +58,9 @@ public class DetailActivity extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
+    private TextView collapsedText;
     private FloatingActionButton fab;
-    private MaterialButton fabCollapsed;
+    private FloatingActionButton fabCollapsed;
     private SwipeRefreshLayout swipeContainer;
     private TextView loadQuestion;
     private TextView loadWindowQuestion;
@@ -70,7 +72,7 @@ public class DetailActivity extends AppCompatActivity {
     private String repliedByEmail;
     private TextView promptCreateQuestion;
     private ImageView promptCreateImage;
-    private ViewStub stub;
+    //private ViewStub stub;
     private ShimmerFrameLayout shimmerFrameLayout;
     private View view;
 
@@ -89,47 +91,50 @@ public class DetailActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(DarkSharedPref.isDark){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collapsingtoolbar);
         setViews();
-        setUpSwipeContainer();
-        setLayout();
+        //setUpSwipeContainer();
+        //setLayout();
         setUpToolBar();
+        setUpRecyclerView();
     }
 
     private void setViews() {
-        stub = (ViewStub) findViewById(R.id.layout_stub);
+        //stub = (ViewStub) findViewById(R.id.layout_stub);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer3);
         toolbar = (Toolbar) findViewById(R.id.toolbar1);
         fab = (FloatingActionButton) findViewById(R.id.answerButton);
-        fabCollapsed = (MaterialButton) findViewById(R.id.answerButtonCollapsed);
+        fabCollapsed = (FloatingActionButton) findViewById(R.id.answerButtonCollapsed);
         collapsingToolbar = findViewById(R.id.collapsingToolBar);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         loadQuestion = findViewById(R.id.questionAnswerPage1);
+        mainRv = (RecyclerView) findViewById(R.id.answersRV);
+        collapsedText = (TextView) findViewById(R.id.collapsedText);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    /*@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setLayout() {
         stub.setLayoutResource(R.layout.activity_detail);
         stub.inflate();
         shimmerFrameLayout = findViewById(R.id.shimmer_view_container1);
         setUpRecyclerView();
         loadQuestionData();
-        loadListOfAnswers();
-        setUpSwipeListener();
-    }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-        return true;
+        //loadListOfAnswers();
+        //setUpSwipeListener();
     }*/
 
-    private void setUpSwipeListener() {
+    /*private void setUpSwipeListener() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadListOfAnswers();
+                //loadListOfAnswers();
             }
         });
     }
@@ -141,6 +146,26 @@ public class DetailActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );
+    }*/
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void setUpRecyclerView() {
+        dummyData();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        adapter = new AnswerAdapter(mArrayList, getApplicationContext());
+        mainRv.setAdapter(adapter);
+        mainRv.setLayoutManager(layoutManager);
+        mainRv.setNestedScrollingEnabled(false);
+        mainRv.setHasFixedSize(false);
+    }
+
+    private void dummyData(){
+        mArrayList  = new ArrayList<>();
+        for(int i = 0; i < 20; i++){
+            AnswerModel answerItem = new AnswerModel("John Doe", "polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition, subtraction, multiplication, and non-negative integer exponentiation of variables."
+                    , "September 09 2020");
+            mArrayList.add(answerItem);
+        }
     }
 
     public void initFloatingActionButton(){
@@ -148,7 +173,10 @@ public class DetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog();
+                Intent intent = new Intent(DetailActivity.this, AnswerWindow.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
             }
         });
 
@@ -156,7 +184,10 @@ public class DetailActivity extends AppCompatActivity {
         fabCollapsed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog();
+                Intent intent = new Intent(DetailActivity.this, AnswerWindow.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
             }
         });
     }
@@ -179,6 +210,7 @@ public class DetailActivity extends AppCompatActivity {
                     toolbar.setTitle("");
                     toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
                     fabCollapsed.setVisibility(View.GONE);
+                    collapsedText.setVisibility(View.GONE);
                     scrollRange = appBarLayout.getTotalScrollRange();
                     appBarExpanded = false;
                 }
@@ -189,6 +221,7 @@ public class DetailActivity extends AppCompatActivity {
                     toolbar.setTitle("");
                     toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
                     fabCollapsed.setVisibility(View.VISIBLE);
+                    collapsedText.setVisibility(View.VISIBLE);
                     isShow = true;
                 }
 
@@ -198,6 +231,7 @@ public class DetailActivity extends AppCompatActivity {
                     toolbar.setTitle("");
                     toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
                     fabCollapsed.setVisibility(View.GONE);
+                    collapsedText.setVisibility(View.GONE);
                     isShow = false;
                 }
             }
@@ -210,7 +244,7 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    private void openDialog() {
+    /*private void openDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialog);
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
         View view = layoutInflaterAndroid.inflate(R.layout.answer_window, null);
@@ -270,9 +304,9 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 
-    private void takeAnswerToPost() {
+    /*private void takeAnswerToPost() {
         repliedByEmail = DrawerActivity.getEmail();
         Log.e("Passing data to post ", repliedByEmail + " " + answerTextString + " to " + toWhatQuestion);
         params = new RequestParams();
@@ -301,7 +335,7 @@ public class DetailActivity extends AppCompatActivity {
                 Log.i("ws", "---->>onFailure" + throwable.toString());
             }
         });
-    }
+    }*/
 
     private void loadQuestionData() {
         Intent intent = getIntent();
@@ -318,17 +352,7 @@ public class DetailActivity extends AppCompatActivity {
         loadWindowQuestion.setText(question);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void setUpRecyclerView() {
-        mArrayList = new ArrayList<>();
-        mainRv = (RecyclerView) findViewById(R.id.answersRV);
-        mainRv.setHasFixedSize(false);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        adapter = new AnswerAdapter(mArrayList, getApplicationContext());
-        mainRv.setLayoutManager(layoutManager);
-    }
-
-    private void loadListOfAnswers() {
+    /*private void loadListOfAnswers() {
         params = new RequestParams();
         params.put("q", toWhatQuestion1);
         client = new AsyncHttpClient();
@@ -368,17 +392,23 @@ public class DetailActivity extends AppCompatActivity {
                 Log.i("ws", "---->>onFailure" + throwable.toString());
             }
         });
-    }
+    }*/
 
     @Override
     public void onResume() {
         super.onResume();
-        shimmerFrameLayout.startShimmer();
+        //shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        shimmerFrameLayout.stopShimmer();
+        //shimmerFrameLayout.stopShimmer();
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

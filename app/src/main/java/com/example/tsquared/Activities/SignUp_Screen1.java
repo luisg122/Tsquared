@@ -66,8 +66,8 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
         }
 
         else {
-            firstNameLayout.setErrorEnabled(false);
-            lastNameLayout.setErrorEnabled(false);
+            firstNameLayout.setError(null);
+            lastNameLayout.setError(null);
             return true;
         }
     }
@@ -149,7 +149,6 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
             register.putExtra("FirstName", Objects.requireNonNull(firstName.getText()).toString().trim());
             register.putExtra("LastName", Objects.requireNonNull(lastName.getText()).toString().trim());
             startActivity(register);
-            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 
@@ -157,6 +156,5 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
     public void finish(){
         super.finish();
         alertDialog.dismiss();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

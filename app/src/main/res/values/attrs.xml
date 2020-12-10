@@ -2,15 +2,17 @@
 <resources>
     <declare-styleable name="da">
         <attr name="cardBackgroundColor" format="color"/>
-        <attr name="textColor" format="color"/>
-        <attr name="lightTextColor" format="color"/>
-        <attr name="fabColor" format="color"/>
-        <attr name="iconLayoutColor" format="color"/>
-        <attr name="appBarColor" format="color"/>
-        <attr name="bottomSheetColor" format="color"/>
-        <attr name="lineDividerColor" format="color"/>
-        <attr name="ideasPrompt" format="color"/>
-        <attr name="tintDrawableColor" format="color"/>
-        <attr name="moonColor" format="color"/>
+        <attr name="textColor"           format="color"/>
+        <attr name="lightTextColor"      format="color"/>
+        <attr name="fabColor"            format="color"/>
+        <attr name="iconLayoutColor"     format="color"/>
+        <attr name="appBarColor"         format="color"/>
+        <attr name="bottomSheetColor"    format="color"/>
+        <attr name="lineDividerColor"    format="color"/>
+        <attr name="ideasPrompt"         format="color"/>
+        <attr name="tintDrawableColor"   format="color"/>
+        <attr name="moonColor"           format="color"/>
+        <attr name="bubbleItemColor"     format="color"/>
+        <attr name="textCategoryColor"   format="color"/>
     </declare-styleable>
 </resources>

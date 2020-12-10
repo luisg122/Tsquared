@@ -8,13 +8,11 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -22,20 +20,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.example.tsquared.Activities.DetailActivity;
 import com.example.tsquared.Activities.MoreInterestsActivity;
 import com.example.tsquared.Activities.MoreNewsActivity;
 import com.example.tsquared.Activities.NewsArticleContainer;
-import com.example.tsquared.Activities.Settings;
+import com.example.tsquared.Activities.NewsWebView;
 import com.example.tsquared.Adapters.InterestsHorizontalAdapter;
 import com.example.tsquared.Adapters.NewsHorizontalScrollAdapter;
 import com.example.tsquared.Adapters.PeopleItemAdapter;
 import com.example.tsquared.Models.InterestsHorizontalModel;
 import com.example.tsquared.Models.NewsHorizontalModel;
 import com.example.tsquared.Models.PeopleItemModel;
-import com.example.tsquared.Activities.PersonProfile;
 import com.example.tsquared.R;
 import com.example.tsquared.RecyclerviewListeners.CustomScrollListener;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -150,7 +144,7 @@ public class DiscoverFragment extends Fragment
                         startActivity(intent);
                         Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     }
-                }, 150);
+                }, 100);
             }
         });
     }
@@ -246,7 +240,7 @@ public class DiscoverFragment extends Fragment
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), Settings.class);
+                Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);

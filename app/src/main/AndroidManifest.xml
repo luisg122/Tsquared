@@ -25,6 +25,7 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <supports-screens android:smallScreens="true"
         android:normalScreens="true"
@@ -45,8 +46,8 @@
         <activity
             android:name=".Activities.SearchActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
         </activity>
 
@@ -56,10 +57,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
 
-        <activity
-            android:name=".Activities.PersonProfile"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.QuestionWindow"
             android:screenOrientation="portrait"
@@ -78,6 +75,7 @@
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.LoginActivity"
+            android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
         </activity>
@@ -94,14 +92,17 @@
         </activity>
         <activity
             android:name=".Activities.SignUp_Screen1"
+            android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.SignUp_Screen2"
+            android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.SignUp_Screen3"
+            android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
         <activity
@@ -125,10 +126,12 @@
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.LoginEmailActivity"
+            android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.InterestsActivity"
+            android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
         <activity
@@ -144,8 +147,24 @@
             android:name=".Activities.MoreInterestsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
-
-
+        <activity
+            android:name=".Activities.AnswerWindow"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.NewsWebView"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.AddIdeaActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.IdeaPostActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -154,6 +173,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"/>
+
         <activity android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>

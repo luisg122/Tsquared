@@ -24,6 +24,6 @@
         android:layout_marginBottom="10dp"
         android:text="Settings"
         android:textAllCaps="false"
-        android:textColor="@color/mainButton"
+        android:textColor="@color/white"
         android:textSize="12sp" />
 </FrameLayout>

@@ -3,11 +3,16 @@ package com.example.tsquared.Activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,30 +27,36 @@ import com.example.tsquared.R;
 
 import java.util.ArrayList;
 
-public class InterestsActivity extends AppCompatActivity {
+public class InterestsActivity extends AppCompatActivity implements InterestsAdapter.OnCheckClickListener{
     private ArrayList<InterestsModel> mArrayList;
     private ArrayList<String> obtainedInterests;
     private RecyclerView mainRv;
     private InterestsAdapter adapter;
     private Toolbar toolbar;
+    private Handler handler;
     private TextView keepTrackNum;
+    private int counter = 0;
+    private int lastPosition = -1;
+    private ArrayList<Integer> numberOfCheckItems;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interests_toolbar);
-        setUpToolBar();
         setUpViews();
+        setUpToolBar();
         setUpInterestsRecyclerView();
     }
 
-    private void setUpToolBar() {
+    private void setUpViews(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        keepTrackNum = (TextView) findViewById(R.id.keepTrackNum);
+        numberOfCheckItems = new ArrayList<>();
     }
 
-    private void setUpViews(){
-        keepTrackNum = (TextView) findViewById(R.id.keepTrackNum);
+    private void setUpToolBar() {
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -53,29 +64,41 @@ public class InterestsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.finish_sign_up_toolbar, menu);
         MenuItem menuItem = menu.findItem(R.id.finishButton);
         View view = menuItem.getActionView();
+
+        handler = new Handler(Looper.getMainLooper());
         Button finishSelecting = view.findViewById(R.id.finishSelecting);
         finishSelecting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkNumSubjectsSelected();
-                Intent intent = new Intent(InterestsActivity.this, DrawerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                ActivityCompat.finishAffinity(InterestsActivity.this);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(InterestsActivity.this, DrawerActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        ActivityCompat.finishAffinity(InterestsActivity.this);
+                    }
+                }, 150);
             }
         });
         return super.onCreateOptionsMenu(menu);
     }
 
     private void setUpInterestsRecyclerView() {
-        mArrayList = new ArrayList<>();
+        dummyInterests();
         mainRv     = findViewById(R.id.interestRV);
         mainRv.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
                 RecyclerView.VERTICAL, false);
         mainRv.setLayoutManager(layoutManager);
 
+        adapter = new InterestsAdapter(mArrayList, getApplicationContext(), this);
+        mainRv.setAdapter(adapter);
+        mainRv.setNestedScrollingEnabled(false);
+    }
+
+    private void dummyInterests(){
+        mArrayList = new ArrayList<>();
         mArrayList.add(new InterestsModel("Business"));
         mArrayList.add(new InterestsModel("Mathematics"));
         mArrayList.add(new InterestsModel("Computer Science"));
@@ -121,32 +144,28 @@ public class InterestsActivity extends AppCompatActivity {
         mArrayList.add(new InterestsModel("Sports"));
         mArrayList.add(new InterestsModel("Mental Health"));
         mArrayList.add(new InterestsModel("Family"));
-
-        adapter = new InterestsAdapter(mArrayList, getApplicationContext());
-        mainRv.setAdapter(adapter);
-        mainRv.setNestedScrollingEnabled(false);
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void checkNumSubjectsSelected(){
-        obtainedInterests = new ArrayList<>();
-        InterestsModel interestsModel;
-        int keepCount = 0;
-        for(int i = 0; i < mArrayList.size(); i++){
-            interestsModel = mArrayList.get(i);
-            if(interestsModel.isSelected()){
-                obtainedInterests.add(interestsModel.getSubject());
-            }
-        }
-
-        for(int i = 0; i < obtainedInterests.size(); i++){
-            Log.d("Subject" + "(" + (keepCount++) + "): ", obtainedInterests.get(i));
-        }
     }
 
     @Override
     public void finish(){
         super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onCheckedClick(int position, CompoundButton buttonView, boolean isChecked) {
+        boolean selected = false;
+        InterestsModel interests = mArrayList.get(position);
+        if(interests.isSelected()) selected = true;
+
+        interests.setSelected(isChecked);
+
+        // if check button has not been checked before but it is checked NOW, then add to arrayList
+        if(isChecked && !selected) numberOfCheckItems.add(1);
+
+        // if check button has been selected before but it is 'unchecked' NOW, then remove from the arrayList
+        if(!isChecked && selected) numberOfCheckItems.remove(numberOfCheckItems.size() - 1);
+
+        keepTrackNum.setText(numberOfCheckItems.size() + "/5");
     }
 }

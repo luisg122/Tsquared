@@ -49,9 +49,7 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.backgroundColorForSignIn);
         setContentView(R.layout.signin_with_email);
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setViews();
         initializeHandler();
         setListeners();
@@ -136,26 +134,23 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.buttonSignIn:
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //emailString = email.getText().toString().trim();
-                        //passwordString = password.getText().toString().trim();
-                        //tryToLogin(emailString, passwordString);
-                        if(checkInput()){
-                            Intent home = new Intent(LoginEmailActivity.this, DrawerActivity.class);
-                            home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            startActivity(home);
-                            // remove previous activity 'LoginActivity' from the backstack
-                            // remove current activity from backstack or do not save onto the stack
-                            ActivityCompat.finishAffinity(LoginEmailActivity.this);
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        }
+        if (v.getId() == R.id.buttonSignIn) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //emailString = email.getText().toString().trim();
+                    //passwordString = password.getText().toString().trim();
+                    //tryToLogin(emailString, passwordString);
+                    if (checkInput()) {
+                        Intent home = new Intent(LoginEmailActivity.this, DrawerActivity.class);
+                        home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(home);
+                        // remove previous activity 'LoginActivity' from the backStack
+                        // remove current activity from backStack or do not save onto the stack
+                        ActivityCompat.finishAffinity(LoginEmailActivity.this);
                     }
-                }, 150);
-                break;
+                }
+            }, 100);
         }
     }
 

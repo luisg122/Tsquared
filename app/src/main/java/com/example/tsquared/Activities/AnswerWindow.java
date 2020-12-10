@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -15,9 +14,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 
-public class PostQuestionWindow extends AppCompatActivity implements View.OnClickListener{
-    Toolbar  toolbar;
-    EditText editText;
+public class AnswerWindow extends AppCompatActivity{
+    private Toolbar toolbar;
+    private EditText answerEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -27,28 +26,42 @@ public class PostQuestionWindow extends AppCompatActivity implements View.OnClic
         else {
             setTheme(R.style.AppTheme_NoActionBar);
         }
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.question_post);
+        setContentView(R.layout.answer_window);
         setViews();
         setUpToolBar();
         setListeners();
         showSoftKeyboard();
     }
 
+    private void setViews(){
+        toolbar         = (Toolbar)  findViewById(R.id.toolbar);
+        answerEditText  = (EditText) findViewById(R.id.answerToQuestion);
+    }
+
+    private void setUpToolBar() {
+        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
+        setSupportActionBar(toolbar);
+    }
+
     private void setListeners() {
-        toolbar.setNavigationOnClickListener(this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void showSoftKeyboard() {
-        editText.requestFocus();
-        editText.setInputType(InputType.TYPE_CLASS_TEXT |
+        answerEditText.requestFocus();
+        answerEditText.setInputType(InputType.TYPE_CLASS_TEXT |
                 InputType.TYPE_TEXT_FLAG_MULTI_LINE |
                 InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 
         InputMethodManager imm = (InputMethodManager)getSystemService(
                 Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+        imm.showSoftInput(answerEditText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public void hideKeyboard(Activity activity) {
@@ -62,27 +75,10 @@ public class PostQuestionWindow extends AppCompatActivity implements View.OnClic
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void setViews() {
-        toolbar = findViewById(R.id.toolbar);
-        editText = findViewById(R.id.topicPost);
-    }
-
-    private void setUpToolBar() {
-        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
-        toolbar.setTitle("New Question");
-        setSupportActionBar(toolbar);
-    }
-
-    @Override
-    public void onClick(View v) {
-        hideKeyboard(PostQuestionWindow.this);
-        finish();
-    }
-
     @Override
     public void finish(){
         super.finish();
-        hideKeyboard(PostQuestionWindow.this);
+        hideKeyboard(AnswerWindow.this);
         overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
     }
 }

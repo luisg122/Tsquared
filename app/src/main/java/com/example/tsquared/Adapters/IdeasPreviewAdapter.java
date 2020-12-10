@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.example.tsquared.R;
 
 import java.util.ArrayList;
 
+import static androidx.recyclerview.widget.RecyclerView.VERTICAL;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class IdeasPreviewAdapter extends RecyclerView.Adapter<IdeasPreviewAdapter.IdeasPreViewHolder>
@@ -36,10 +38,26 @@ public class IdeasPreviewAdapter extends RecyclerView.Adapter<IdeasPreviewAdapte
         this.mContext   = mContext;
     }
 
+    // Disable touch detection for parent recyclerView if we use vertical nested recyclerViews
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int action = event.getAction();
+            switch(action){
+                case MotionEvent.ACTION_DOWN:
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+            }
+            return false;
+        }
+    };
+
     @NonNull
     @Override
     public IdeasPreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ideas_container, parent, false);
+
+        view.findViewById(R.id.ideas_recycler_view).setOnTouchListener(mTouchListener);
+
         return new IdeasPreViewHolder(view);
     }
 
