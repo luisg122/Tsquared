@@ -37,6 +37,7 @@ public class QuestionItemModel {
         question.question      = jsonObject.getString("Content");
         question.dateSubmitted = jsonObject.getString("DatePosted");
         question.responseNum   = jsonObject.getString("ResponseNumber");
+
         if(question.responseNum.equals("1"))       question.responseNum = question.responseNum + " Answer";
         else if(!question.responseNum.equals("1")) question.responseNum = question.responseNum + " Answers";
         if(question.isAnonymous == 1){

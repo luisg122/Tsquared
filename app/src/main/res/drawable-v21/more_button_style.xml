@@ -5,9 +5,9 @@
     <item>
         <shape>
             <corners
-                android:radius="60dp"/>
+                android:radius="20dp"/>
             <solid
-                android:color="@color/transparent"/>
+                android:color="?attr/cardBackgroundColor"/>
         </shape>
     </item>
 </ripple>

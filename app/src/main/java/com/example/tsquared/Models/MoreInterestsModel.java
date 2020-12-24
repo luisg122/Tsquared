@@ -1,24 +1,34 @@
 package com.example.tsquared.Models;
 
 public class MoreInterestsModel {
-    private int interestsImage;
+    private String interestsImageURL;
     private String interestsName;
+    private int interestID;
 
     public MoreInterestsModel(){
 
     }
 
-    public MoreInterestsModel(int interestsImage, String interestsName){
-        this.interestsImage = interestsImage;
+    public MoreInterestsModel(int interestID, String interestsImageURL, String interestsName){
+        this.interestID = interestID;
+        this.interestsImageURL = interestsImageURL;
         this.interestsName  = interestsName;
     }
 
-    public int getInterestsImage() {
-        return interestsImage;
+    public int getInterestID() {
+        return interestID;
     }
 
-    public void setInterestsImage(int interestsImage) {
-        this.interestsImage = interestsImage;
+    public void setInterestID(int interestID) {
+        this.interestID = interestID;
+    }
+
+    public String getInterestsImageURL() {
+        return interestsImageURL;
+    }
+
+    public void setInterestsImageURL(String interestsImage) {
+        this.interestsImageURL = interestsImage;
     }
 
     public String getInterestsName() {

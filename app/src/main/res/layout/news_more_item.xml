@@ -11,9 +11,9 @@
     <ImageView
         android:id="@+id/imageNewsStaggered"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="210dp"
         android:adjustViewBounds="true"
-        android:maxHeight="230dp"
+        android:maxHeight="210dp"
         android:scaleType="centerCrop"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -61,7 +61,7 @@
             android:text="Today the dow has suffered a bloodshed when job reporting had turned ut to be lower than expected"
             android:textColor="?attr/lightTextColor"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_below="@+id/source"/>
     </RelativeLayout>
 </RelativeLayout>

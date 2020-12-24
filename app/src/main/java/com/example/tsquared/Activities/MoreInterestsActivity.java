@@ -77,43 +77,43 @@ public class MoreInterestsActivity extends AppCompatActivity implements MoreInte
     private void setUpRecyclerView(){
         dummyDataSetUp();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
-        moreInterestsAdapter = new MoreInterests_Adapter(mArrayList, getApplication(), this);
-        recyclerView.setAdapter(moreInterestsAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        DividerItemDecoration divider = new
-                DividerItemDecoration(recyclerView.getContext(),
+        DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
-        divider.setDrawable((Objects.requireNonNull(ContextCompat.getDrawable(Objects.requireNonNull((this).getApplicationContext()),
+        divider.setDrawable((Objects.requireNonNull(ContextCompat.getDrawable(Objects.requireNonNull(recyclerView.getContext()),
                 R.drawable.line_divider_black))));
-
         recyclerView.addItemDecoration(divider);
+
+        moreInterestsAdapter = new MoreInterests_Adapter(mArrayList, getApplicationContext(), this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(moreInterestsAdapter);
     }
 
     private void dummyDataSetUp(){
         mArrayList = new ArrayList<>();
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Computer Science"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Computer Engineering"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Mathematics"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Real Estate"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Politics"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Climate"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Sports"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Business"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Education"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Mental Health"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Law"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Computer Science"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Computer Engineering"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Mathematics"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Real Estate"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Politics"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Climate"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Sports"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Business"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Education"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Mental Health"));
-        mArrayList.add(new MoreInterestsModel(R.drawable.blank_profile, "Law"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Computer Science"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Computer Engineering"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Mathematics"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Real Estate"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Politics"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Climate"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Sports"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Business"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Education"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Mental Health"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Law"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Computer Science"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Computer Engineering"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Mathematics"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Real Estate"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Politics"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Climate"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Sports"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Business"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Education"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Mental Health"));
+        mArrayList.add(new MoreInterestsModel(1, " ", "Law"));
     }
 
     @Override
@@ -123,12 +123,13 @@ public class MoreInterestsActivity extends AppCompatActivity implements MoreInte
     }
 
     @Override
-    public void onMoreInterestsClick() {
+    public void onMoreInterestsClick(final int position) {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(getApplicationContext(), NewsArticleContainer.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("interestID", mArrayList.get(position).getInterestID());
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }

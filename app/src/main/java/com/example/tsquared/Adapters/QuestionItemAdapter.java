@@ -31,15 +31,10 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     private Context mcontext;
     private OnNoteListener onNote;
 
-    private ArrayList<QuestionItemModel> mArrayListFull;
-    private Filter exampleFilter;
-
     public QuestionItemAdapter(ArrayList<QuestionItemModel> mArrayList, Context mcontext, OnNoteListener onNote) {
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
         this.onNote     = onNote;
-        // Want to copy off that object, not point to the same object, or reference its memory address
-        mArrayListFull  = new ArrayList<>(mArrayList);
     }
 
     @NonNull
@@ -98,44 +93,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     public Filter getFilter() {
         return null;
         //return exampleFilter;
-    }
-
-    public interface OnFindQuestionsListener {
-        void onResults(ArrayList<QuestionItemModel> results);
-    }
-
-    public void findQuestions(Context context, String query, final OnFindQuestionsListener listener) {
-        new Filter() {
-
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                ArrayList<QuestionItemModel> suggestionList = new ArrayList<>();
-                if (!(constraint == null || constraint.length() == 0)) {
-
-                    for (QuestionItemModel question : mArrayListFull) {
-                        if (question.getQuestion().toUpperCase()
-                                .startsWith(constraint.toString().toUpperCase())) {
-                            suggestionList.add(question);
-                        }
-                    }
-
-                }
-
-                FilterResults results = new FilterResults();
-                results.values = suggestionList;
-                results.count = suggestionList.size();
-
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-
-                if (listener != null) {
-                    listener.onResults((ArrayList<QuestionItemModel>) results.values);
-                }
-            }
-        }.filter(query);
     }
 
     public void swapData(ArrayList<QuestionItemModel> mNewDataSet) {

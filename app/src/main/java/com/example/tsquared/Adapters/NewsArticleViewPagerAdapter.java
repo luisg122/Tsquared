@@ -20,10 +20,12 @@ public class NewsArticleViewPagerAdapter extends RecyclerView.Adapter<NewsArticl
 
     private ArrayList<NewsArticlesViewModel> mArrayList;
     private Context mContext;
+    private OnNewsClickListener onNewsClickListener;
 
-    public NewsArticleViewPagerAdapter(ArrayList<NewsArticlesViewModel> mArrayList, Context mContext){
+    public NewsArticleViewPagerAdapter(ArrayList<NewsArticlesViewModel> mArrayList, Context mContext, OnNewsClickListener onNewsClickListener){
         this.mArrayList = mArrayList;
         this.mContext   = mContext;
+        this.onNewsClickListener = onNewsClickListener;
     }
 
 
@@ -31,7 +33,7 @@ public class NewsArticleViewPagerAdapter extends RecyclerView.Adapter<NewsArticl
     @Override
     public NewsViewPagerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_article_layout, parent, false);
-        return new NewsViewPagerViewHolder(view);
+        return new NewsViewPagerViewHolder(view, onNewsClickListener);
     }
 
     @Override
@@ -53,18 +55,32 @@ public class NewsArticleViewPagerAdapter extends RecyclerView.Adapter<NewsArticl
         return mArrayList.size();
     }
 
-    public class NewsViewPagerViewHolder extends RecyclerView.ViewHolder{
+    public class NewsViewPagerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView newsArticleImage;
         private TextView  publisher;
         private TextView  title;
         private TextView  firstLines;
+        OnNewsClickListener onNewsClickListener;
 
-        public NewsViewPagerViewHolder(@NonNull View view) {
+        public NewsViewPagerViewHolder(@NonNull View view, OnNewsClickListener onNewsClickListener) {
             super(view);
             newsArticleImage = (ImageView) view.findViewById(R.id.imageArticleContainer);
             publisher        = (TextView)  view.findViewById(R.id.source);
             title            = (TextView)  view.findViewById(R.id.title);
             firstLines       = (TextView)  view.findViewById(R.id.firstFewLines);
+
+            this.onNewsClickListener = onNewsClickListener;
+
+            newsArticleImage.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onNewsClickListener.onImageClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnNewsClickListener{
+        void onImageClick(int position);
     }
 }

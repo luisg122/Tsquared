@@ -70,11 +70,11 @@ public class MoreNewsAdapter extends RecyclerView.Adapter<MoreNewsAdapter.MoreNe
 
         @Override
         public void onClick(View v) {
-            onMoreNewsListener.onMoreNewsClick();
+            onMoreNewsListener.onMoreNewsClick(getAdapterPosition());
         }
     }
 
     public interface OnMoreNewsListener{
-        void onMoreNewsClick();
+        void onMoreNewsClick(int position);
     }
 }

@@ -6,7 +6,7 @@
             <solid
                 android:color="@color/light_gray"/>
             <corners
-                android:radius="60dp"/>
+                android:radius="20dp"/>
         </shape>
     </item>
 
@@ -14,9 +14,9 @@
         android:state_focused="true">
         <shape>
             <solid
-                android:color="@color/transparent"/>
+                android:color="?attr/cardBackgroundColor"/>
             <corners
-                android:radius="60dp"/>
+                android:radius="20dp"/>
         </shape>
     </item>
 </selector>

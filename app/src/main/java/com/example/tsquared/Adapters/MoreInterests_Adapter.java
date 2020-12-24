@@ -73,11 +73,11 @@ public class MoreInterests_Adapter extends RecyclerView.Adapter<MoreInterests_Ad
 
         @Override
         public void onClick(View v) {
-            onMoreInterestsListener.onMoreInterestsClick();
+            onMoreInterestsListener.onMoreInterestsClick(getAdapterPosition());
         }
     }
 
     public interface OnMoreInterestsListener{
-        void onMoreInterestsClick();
+        void onMoreInterestsClick(int position);
     }
 }

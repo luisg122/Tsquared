@@ -1,23 +1,25 @@
 package com.example.tsquared.Models;
 
 public class NewsHorizontalModel {
-    private int image;
+    private String imageURL;
     private String description;
+    private String URL;
 
     public NewsHorizontalModel() {
     }
 
-    public NewsHorizontalModel(int image, String description) {
-        this.image        = image;
+    public NewsHorizontalModel(String URL, String imageURL, String description) {
+        this.URL          = URL;
+        this.imageURL     = imageURL;
         this.description  = description;
     }
 
-    public int getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getDescription() {
@@ -26,5 +28,13 @@ public class NewsHorizontalModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 }

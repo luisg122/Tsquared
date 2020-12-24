@@ -1,25 +1,45 @@
 package com.example.tsquared.Models;
 
 public class MoreNewsModel {
-    private int image;
+    private String imageURL;
     private String description;
     private String sourcePublisher;
+    private String URL;
 
     public MoreNewsModel() {
     }
 
-    public MoreNewsModel(int image, String description) {
-        this.image        = image;
+    public MoreNewsModel(String URL, String imageURL, String description, String sourcePublisher) {
+        this.URL = URL;
+        this.imageURL     = imageURL;
         this.description  = description;
+        this.sourcePublisher = sourcePublisher;
     }
 
-    public int getImage() {
-        return image;
+    public String getSourcePublisher() {
+        return sourcePublisher;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setSourcePublisher(String sourcePublisher) {
+        this.sourcePublisher = sourcePublisher;
     }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
 
     public String getDescription() {
         return description;

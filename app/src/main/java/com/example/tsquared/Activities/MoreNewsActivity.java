@@ -70,22 +70,22 @@ public class MoreNewsActivity extends AppCompatActivity implements MoreNewsAdapt
 
     private void dummyDataSetUp(){
         mArrayList = new ArrayList<>();
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "The Dow Jones trends negative after opening with small gains"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "The Dow Jones trends negative after opening with small gains"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "The Dow Jones trends negative after opening with small gains"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "The Dow Jones trends negative after opening with small gains"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "The Dow Jones trends negative after opening with small gains"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "The Dow Jones trends negative after opening with small gains"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "The Dow Jones trends negative after opening with small gains"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected"));
-        mArrayList.add(new MoreNewsModel(R.drawable.blank_profile, "The Dow Jones trends negative after opening with small gains"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "The Dow Jones trends negative after opening with small gains", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "The Dow Jones trends negative after opening with small gains", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "The Dow Jones trends negative after opening with small gains", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "The Dow Jones trends negative after opening with small gains", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "The Dow Jones trends negative after opening with small gains", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "The Dow Jones trends negative after opening with small gains", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "The Dow Jones trends negative after opening with small gains", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", " ", "The Dow Jones trends negative after opening with small gains", "New York Times"));
     }
 
     @Override
@@ -95,9 +95,10 @@ public class MoreNewsActivity extends AppCompatActivity implements MoreNewsAdapt
     }
 
     @Override
-    public void onMoreNewsClick() {
-        Intent intent = new Intent(getApplicationContext(), Settings.class);
+    public void onMoreNewsClick(int position) {
+        Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("articleURL", mArrayList.get(position).getURL());
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
     }
