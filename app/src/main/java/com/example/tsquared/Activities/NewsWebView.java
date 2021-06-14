@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
@@ -18,6 +19,7 @@ public class NewsWebView extends AppCompatActivity {
     private Button back;
     private WebView webView;
     private ProgressBar progressBar;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         if(DarkSharedPref.isDark){
@@ -29,15 +31,18 @@ public class NewsWebView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_web_view);
         setUpViews();
+        setUpToolBar();
+        setToolbarListener();
         loadProgessBar();
-        initWebView("https://www.cnn.com/world/live-news/coronavirus-pandemic-10-23-20-intl/h_79116e4690bf0a72a1080d7fe5adcf01");
+        initWebView("https://www.cnbc.com/2021/06/12/bitcoin-taproot-upgrade-what-it-means.html");
         setUpButtonListeners();
     }
 
     private void setUpViews(){
-        back    = (Button)  findViewById(R.id.backButton);
+        //back    = (Button)  findViewById(R.id.backButton);
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        toolbar = (Toolbar) findViewById(R.id.siteOfNews);
     }
 
     private void loadProgessBar(){
@@ -46,10 +51,33 @@ public class NewsWebView extends AppCompatActivity {
     }
 
     private void setUpButtonListeners(){
-        back.setOnClickListener(new View.OnClickListener() {
+        /*back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });*/
+    }
+
+    private void setUpToolBar() {
+        toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
+
+        String url = "https://www.cnbc.com/2021/06/12/bitcoin-taproot-upgrade-what-it-means.html";
+        String dotCom = ".com";
+        String www = "www.";
+
+        int indexBeg = url.indexOf(www) + www.length();
+        int indexEnd = url.indexOf(dotCom) + dotCom.length();
+        toolbar.setTitle(url.substring(indexBeg, indexEnd));
+
+        setSupportActionBar(toolbar);
+    }
+
+    private void setToolbarListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -80,7 +108,7 @@ public class NewsWebView extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                //Hide the SwipeReefreshLayout
+                //Hide the SwipeRefreshLayout
                 progressBar.setVisibility(View.GONE);
             }
 

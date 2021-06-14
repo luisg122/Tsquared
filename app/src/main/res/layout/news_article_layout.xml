@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/imageArticleContainer"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:adjustViewBounds="true"
         android:maxHeight="350dp"
         android:scaleType="centerCrop"/>
@@ -22,7 +22,7 @@
         android:layout_alignBottom="@+id/imageArticleContainer"
         android:layout_marginRight="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:layout_toStartOf="@+id/dislikeArticleButton"
         android:layout_toLeftOf="@+id/dislikeArticleButton"
         android:clickable="true"
@@ -41,7 +41,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:clickable="true"
         android:focusable="true"
         app:backgroundTint="#3a434d"
@@ -73,7 +73,7 @@
                 android:padding="5dp"
                 android:text="New York Times"
                 android:textColor="?attr/lightTextColor"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -89,7 +89,7 @@
                 android:padding="5dp"
                 android:text="The dow jones has now reversed all of its early gains"
                 android:textColor="?attr/lightTextColor"
-                android:textSize="25sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:maxLines="2"
                 android:ellipsize="end"
@@ -109,7 +109,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp"
                 android:padding="5dp"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:maxLines="3"
                 android:ellipsize="end"
                 android:singleLine="false"/>
@@ -133,33 +133,56 @@
                 android:id="@+id/comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/news_button_style"
                 android:elevation="0dp"
-                android:text="Comments"
-                android:textSize="12sp"
+                android:text="comments"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:background="@drawable/news_button_style"/>
+                android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/summarizeText"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/comments"
-                android:layout_toLeftOf="@+id/comments"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:elevation="0dp"
-                android:text="Summarize"
-                android:textSize="12sp"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:background="@drawable/news_button_style"/>
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp">
+
+                <ImageButton
+                    android:id="@+id/likedButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/left_half_button"
+                    android:elevation="0dp"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/upvote_white"/>
+
+                <ImageButton
+                    android:id="@+id/disButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_toEndOf="@+id/likedButton"
+                    android:layout_toRightOf="@+id/likedButton"
+                    android:background="@drawable/right_half_button"
+                    android:elevation="0dp"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/downvote_white" />
+
+            </RelativeLayout>
+
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

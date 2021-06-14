@@ -3,7 +3,7 @@
     android:height="35dp"
     android:viewportWidth="512"
     android:viewportHeight="640">
-  <path
-      android:fillColor="?attr/tintDrawableColor"
-      android:pathData="M128,320l128,-128l128,128z"/>
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M128,320l128,-128l128,128z"/>
 </vector>

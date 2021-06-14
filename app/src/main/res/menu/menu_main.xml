@@ -10,11 +10,4 @@
         android:title="Search"
         app:actionLayout="@layout/search_menu_layout"
         app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/profilePictureMenu"
-        android:orderInCategory="2"
-        android:title="Profile"
-        app:actionLayout="@layout/profile_menu_layout"
-        app:showAsAction="always"/>
 </menu>

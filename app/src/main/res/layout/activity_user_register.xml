@@ -38,7 +38,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/blank_profile"
+                android:src="@mipmap/blank_profile"
                 android:layout_marginTop="10dp"/>
 
             <com.google.android.material.textfield.TextInputLayout

@@ -131,27 +131,9 @@ public class DrawerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.profilePictureMenu);
+
+        MenuItem menuItem = menu.findItem(R.id.search);
         View view = menuItem.getActionView();
-
-        CircleImageView profileImage = view.findViewById(R.id.toolbar_image_profile);
-        Glide.with(this)
-                .load("https://seventhqueen.com/themes/kleo/wp-content/uploads/rtMedia/users/44269/2020/07/dummy-profile.png")
-                .into(profileImage);
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent questionWindow = new Intent(getApplicationContext(), Profile.class);
-                questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                questionWindow.putExtra("Full Name", fullName);
-                startActivity(questionWindow);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                //Toast.makeText(DrawerActivity.this, "Profile", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        menuItem = menu.findItem(R.id.search);
-        view = menuItem.getActionView();
         FloatingActionButton search = view.findViewById(R.id.fabSearch);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,7 +195,6 @@ public class DrawerActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new QuestionsFragment(), "Ask");
         adapter.addFragment(new DiscoverFragment(), "Discover");
-        adapter.addFragment(new IdeasFragment(), "Ideas");
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
 

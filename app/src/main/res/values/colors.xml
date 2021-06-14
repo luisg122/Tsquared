@@ -20,7 +20,7 @@
     <color name="lightPurple">#e79aff</color>
     <color name="darkPurple">#b148d2</color>
     <color name="darkOrange">#ff7944</color>
-
+    <color name="lightCardColor">#f7f7f7</color>
     <color name="fabColorDay">#153944</color>
     <color name="tabSelected">#909dff</color>
     <color name="tabSelectedDark">#153944</color>
@@ -42,6 +42,9 @@
     <color name="dark_gray">#515151</color>
     <color name="veryDarkGray">#333333</color>
     <color name="beautifulBackground">#b8b9c7</color>
+
+    <color name="lightCommentsCardColor">#f5f5f5</color>
+    <color name="darkCommentsCardColor">#1f2b3c</color>
 
     <color name="darkMaroon">#4d0000</color>
     <color name="crimsonRed">#DC143C</color>

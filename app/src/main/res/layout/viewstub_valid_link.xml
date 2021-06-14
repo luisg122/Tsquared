@@ -18,29 +18,41 @@
         android:layout_marginRight="15dp"
         app:cardElevation="0dp"
         app:cardCornerRadius="15dp"
-        app:cardBackgroundColor="#153944">
+        app:cardBackgroundColor="?attr/fabColor">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/linkImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/blank_profile"/>
+
             <TextView
                 android:id="@+id/headLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginRight="22dp"
                 android:layout_marginBottom="5dp"
-                android:padding="5dp"
-                android:maxLines="3"
-                android:singleLine="false"
+                android:layout_toEndOf="@+id/linkImage"
+                android:layout_toRightOf="@+id/linkImage"
                 android:ellipsize="end"
-                android:textStyle="bold"
-                android:textSize="14sp"/>
+                android:maxLines="3"
+                android:padding="5dp"
+                android:singleLine="false"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,7 +72,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"/>-->
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -68,17 +80,12 @@
         android:id="@+id/submitLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/post_button_round"
-        android:backgroundTint="#153944"
-        android:text="Share"
+        android:background="@drawable/news_button_style"
         android:textAllCaps="false"
+        android:text="Share"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"/>
+        android:layout_marginHorizontal="150dp"
+        android:layout_marginVertical="30dp"/>
 </LinearLayout>

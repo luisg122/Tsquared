@@ -145,7 +145,7 @@ public class QuestionsFragment<adapter> extends Fragment
         mArrayList  = new ArrayList<>();
         for(int i = 0; i < 20; i++){
             QuestionItemModel questionItem = new QuestionItemModel("John Doe", "Mathematics", "What are polynomials and why are they important",
-                    "September 09 2020", "5", R.drawable.blank_profile);
+                    "September 09 2020", "5", R.mipmap.blank_profile);
             mArrayList.add(questionItem);
         }
     }

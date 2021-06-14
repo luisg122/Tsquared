@@ -14,5 +14,7 @@
         <attr name="moonColor"           format="color"/>
         <attr name="bubbleItemColor"     format="color"/>
         <attr name="textCategoryColor"   format="color"/>
+        <attr name="commentsSecColor"    format="color"/>
+        <attr name="webViewCardColor"    format="color"/>
     </declare-styleable>
 </resources>

@@ -19,7 +19,7 @@
         android:layout_marginStart="27dp"
         android:layout_marginLeft="27dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/blank_profile" />
+        android:src="@mipmap/blank_profile" />
 
     <TextView
         android:id="@+id/name"
@@ -47,7 +47,7 @@
         android:layout_marginStart="27dp"
         android:layout_marginLeft="27dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:text="Post a link to share"
         android:textColor="?attr/lightTextColor"
         android:textStyle="bold"

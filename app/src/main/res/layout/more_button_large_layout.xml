@@ -14,7 +14,7 @@
     <Button
         android:id="@+id/moreButton"
         android:layout_width="120dp"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:background="@drawable/more_button_style"
         android:paddingTop="0dp"
         android:paddingLeft="0dp"

@@ -150,7 +150,7 @@ public class SearchActivity extends AppCompatActivity {
                     try {
                         JSONObject object = response.getJSONObject(i);
                         QuestionItemModel question = QuestionItemModel.fromJson(object);
-                        question.setProfileImage(R.drawable.blank_profile);
+                        question.setProfileImage(R.mipmap.blank_profile);
                         questionList.add(question);
                     } catch (JSONException e) {
                         e.printStackTrace();

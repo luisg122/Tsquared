@@ -36,6 +36,8 @@ import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.tsquared.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -47,6 +49,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,11 +69,14 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
     private ViewStub viewStub;
     private LinearLayout containerOfViewStub;
     private ProgressDialog progressDialog;
-    private TextView  headLine;
-    private TextView  source;
+    private TextView headLine;
+    private ImageView image;
+    private Bitmap bitmap;
+    private TextView source;
 
-    private String    title;
-    private String    publisherSource;
+    private String title;
+    private String publisherSource;
+    private String imageSource;
 
     private LinearLayout content;
 
@@ -175,11 +181,13 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             viewStub.inflate();
 
             headLine = view.findViewById(R.id.headLine);
-            source   = view.findViewById(R.id.source);
+            image    = view.findViewById(R.id.linkImage);
             content  = view.findViewById(R.id.validLink);
 
+            //source   = view.findViewById(R.id.source);
             new Content().execute();
         }
+
         else if(checkValidLink() && (viewStub.getParent() == null)){
             containerOfViewStub.removeAllViews();
             containerOfViewStub.addView(LayoutInflater.from(getContext()).inflate(R.layout.viewstub_valid_link, containerOfViewStub, false));
@@ -228,9 +236,7 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean checkValidLink(){
         boolean isValidLink = android.util.Patterns.WEB_URL.matcher(Objects.requireNonNull(editText.getText()).toString().trim()).matches();
-        if(isValidLink && !checkIfInputIsEmpty()){
-            return true;
-        }
+        if(isValidLink && !checkIfInputIsEmpty())  return true;
         return false;
     }
 
@@ -245,13 +251,35 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             progressDialog.show();
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                //Connect to the website
-                Document document = Jsoup.connect(editText.getText().toString().trim()).get();
-                title = document.title();
-                publisherSource = document.baseUri();
+                // Connect to the website
+                Document document = Jsoup.connect(Objects.requireNonNull(editText.getText()).toString().trim()).get();
+
+                // get the title and thumbnail image of the webpage
+                boolean gotTitle = false, gotImage = false;
+                Elements elements = document.select("meta");
+                for(Element e : elements){
+                    imageSource = e.attr("content");
+                    if(e.attr("property").equalsIgnoreCase("og:image")){
+                        imageSource = e.attr("content");
+                        gotImage = true;
+                    }
+
+                    if(e.attr("property").equalsIgnoreCase("og:title")){
+                        title = e.attr("content");
+                        gotTitle = true;
+                    }
+
+                    if(gotTitle && gotImage) break;
+                }
+
+                // InputStream input = new java.net.URL(imageSource).openStream();
+                // bitmap = BitmapFactory.decodeStream(input);
+
+                //publisherSource = document.baseUri();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -259,11 +287,19 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             return null;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            Glide.with(Objects.requireNonNull(getActivity()))
+                    .load(imageSource)
+                    .error(R.drawable.ic_link)
+                    .into(image);
+
             headLine.setText(title);
-            source.setText(publisherSource);
+            //source.setText(publisherSource);
+
             content.setVisibility(View.VISIBLE);
             fab.setVisibility(View.INVISIBLE);
             progressDialog.dismiss();

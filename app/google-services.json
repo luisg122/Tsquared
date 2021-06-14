@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "265970374434",
+    "firebase_url": "https://tsquared-55391.firebaseio.com",
+    "project_id": "tsquared-55391",
+    "storage_bucket": "tsquared-55391.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265970374434:android:d6b07be98cc10c8a14377b",
+        "android_client_info": {
+          "package_name": "com.example.tsquared"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265970374434-lt5i54pjkaf3ikllk7o1qdtcas2hcqhe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tsquared",
+            "certificate_hash": "7821e9ff5cdf9fe5001f2b36841bb839f2a4649b"
+          }
+        },
+        {
+          "client_id": "265970374434-46v4crhl6cppr51b40hh5ou3g30grakh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvGgBanj_oVEyBa7xSkWyc2r7x6j4qUxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265970374434-46v4crhl6cppr51b40hh5ou3g30grakh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

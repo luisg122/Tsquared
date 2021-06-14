@@ -18,7 +18,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/blank_profile"
+            android:src="@mipmap/blank_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

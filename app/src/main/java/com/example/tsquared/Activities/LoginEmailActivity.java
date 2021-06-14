@@ -1,5 +1,6 @@
 package com.example.tsquared.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -17,6 +19,7 @@ import androidx.core.app.ActivityCompat;
 import com.example.tsquared.R;
 import com.example.tsquared.Utils.PreferenceUtils;
 import com.facebook.CallbackManager;
+import com.facebook.login.Login;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -145,12 +148,14 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
                         Intent home = new Intent(LoginEmailActivity.this, DrawerActivity.class);
                         home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(home);
+                        hideKeyboard(LoginEmailActivity.this);
+
                         // remove previous activity 'LoginActivity' from the backStack
                         // remove current activity from backStack or do not save onto the stack
-                        ActivityCompat.finishAffinity(LoginEmailActivity.this);
+                        finishAffinity();
                     }
                 }
-            }, 100);
+            }, 50);
         }
     }
 
@@ -225,28 +230,19 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
         return enteredPassword.equals(userPassword);
     }
 
-    private String capitalizeFirstCharOfEveryWordInString(String string) {
-        char[] ch = string.toCharArray();
-        for (int i = 0; i < string.length(); i++) {
-            // Find first char of a word
-            // Make sure the character does not equal a space
-            if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
-                // If such character is lower-case
-                if (ch[i] >= 'a' && ch[i] <= 'z') {
-                    // simply convert it into upper-case
-                    // refer to the ASCII table to understand this line of code
-                    ch[i] = (char) (ch[i] - 'a' + 'A');
-                }
-            } else if (ch[i] >= 'A' && ch[i] <= 'Z') {
-                ch[i] = (char) (ch[i] + 'a' - 'A');
-            }
+    public void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
         }
-        return new String(ch);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
     public void finish(){
         super.finish();
-        overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
     }
 }

@@ -36,7 +36,7 @@ public class PostQuestionWindow extends AppCompatActivity implements View.OnClic
         showSoftKeyboard();
     }
 
-    private void setListeners() {
+    private void setListeners()  {
         toolbar.setNavigationOnClickListener(this);
     }
 
