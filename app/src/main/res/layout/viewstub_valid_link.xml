@@ -27,8 +27,7 @@
                 android:id="@+id/linkImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/blank_profile"/>
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/headLine"

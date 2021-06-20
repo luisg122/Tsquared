@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">TSquared</string>
+    <string name="bookmarks_name">Bookmarks</string>
+    <string name="interests_name">Interests</string>
     <string name="facebook_app_id">202985997666708</string>
     <string name="fb_login_protocol_scheme">fb202985997666708</string>
 

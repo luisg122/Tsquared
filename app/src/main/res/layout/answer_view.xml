@@ -27,6 +27,9 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lineDiv"
                 app:srcCompat="@drawable/up_vote_vec" />
@@ -39,6 +42,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_below="@+id/upVote"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintStart_toEndOf="@+id/verticalLine"
                 app:layout_constraintTop_toBottomOf="@+id/lineDiv"
                 app:srcCompat="@drawable/down_vote_vec" />
@@ -182,6 +188,7 @@
             android:paddingBottom="10dp">
 
             <TextView
+                android:id="@+id/preViewComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

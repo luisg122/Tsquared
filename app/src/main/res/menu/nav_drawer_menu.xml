@@ -16,7 +16,7 @@
             android:title="Bookmarks"/>
 
         <item
-            android:id="@+id/Questions"
+            android:id="@+id/interests"
             android:title="Interests"/>
 
         <item

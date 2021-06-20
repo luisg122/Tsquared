@@ -10,10 +10,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,13 +55,15 @@ public class DrawerActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private CustomViewPager viewPager;
     private SwitchCompat switchToggle;
+    private Handler mDrawerActionHandler;
+
     public static ExtendedFloatingActionButton fab;
     private Runnable runnable;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(DarkSharedPref.loadNightModeState(this)){
+         if(DarkSharedPref.loadNightModeState(this)){
             setTheme(R.style.DarkTheme);
         }
         else {
@@ -74,9 +79,10 @@ public class DrawerActivity extends AppCompatActivity {
         }
         setUpDarkModeSwitch();
         setupFloatingButtonAction();
-        setProfileName(navigationView);
+        // setProfileName(navigationView);
         viewPagerInit();
         setUpDrawer();
+        initializeHandler();
         setupDrawerContent(navigationView);
     }
 
@@ -128,6 +134,10 @@ public class DrawerActivity extends AppCompatActivity {
         });
     }
 
+    private void initializeHandler(){
+        mDrawerActionHandler = new Handler(Looper.getMainLooper());
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -152,6 +162,7 @@ public class DrawerActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpDrawer() {
         setSupportActionBar(toolbar);
+        navigationView.getMenu().getItem(0).setChecked(true);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close){
@@ -226,10 +237,16 @@ public class DrawerActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        drawer.closeDrawers();
-                        return true;
+                    public boolean onNavigationItemSelected(@NonNull final MenuItem menuItem) {
+                       mDrawerActionHandler.postDelayed(new Runnable() {
+                           @Override
+                           public void run() {
+                               selectDrawerItem(menuItem);
+                           }
+                       }, 250);
+
+                       drawer.closeDrawers();
+                       return true;
                     }
                 });
     }
@@ -321,9 +338,22 @@ public class DrawerActivity extends AppCompatActivity {
 
     // when logging out, change the values of user credentials, so as to avoid keeping
     // user logged in
+    @SuppressLint("NonConstantResourceId")
     public void selectDrawerItem(MenuItem menuItem) {
         int id = menuItem.getItemId();
         switch (id) {
+            case R.id.bookmarks:
+                Intent bookmarks = new Intent(DrawerActivity.this, UserBookMarks.class);
+                startActivity(bookmarks);
+                //finish();
+                break;
+
+            case R.id.interests:
+                Intent interests = new Intent(DrawerActivity.this, UserInterests.class);
+                startActivity(interests);
+                //finish();
+                break;
+
             case R.id.logout:
                 PreferenceUtils.savePassword(null, this);
                 PreferenceUtils.saveEmail(null, this);
@@ -333,9 +363,11 @@ public class DrawerActivity extends AppCompatActivity {
 
                 DarkSharedPref.setNightModeState(false, getApplicationContext());
                 DarkSharedPref.isDark = false;
-                Intent intent = new Intent(DrawerActivity.this, LoginActivity.class);
-                startActivity(intent);
+
+                Intent logout = new Intent(DrawerActivity.this, LoginActivity.class);
+                startActivity(logout);
                 finish();
+                break;
         }
     }
 
@@ -351,6 +383,7 @@ public class DrawerActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         if(viewPager.getCurrentItem() == 0) fab.show();
+        navigationView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override
@@ -359,3 +392,23 @@ public class DrawerActivity extends AppCompatActivity {
         fab.hide();
     }
 }
+
+/*
+  @Override
+  public boolean onNavigationItemSelected(final MenuItem menuItem) {
+    // update highlighted item in the navigation menu
+    menuItem.setChecked(true);
+    mNavItemId = menuItem.getItemId();
+
+    // allow some time after closing the drawer before performing real navigation
+    // so the user can see what is happening
+    mDrawerLayout.closeDrawer(GravityCompat.START);
+    mDrawerActionHandler.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        navigate(menuItem.getItemId());
+      }
+    }, DRAWER_CLOSE_DELAY_MS);
+    return true;
+  }
+ */

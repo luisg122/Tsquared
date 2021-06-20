@@ -27,7 +27,7 @@
         app:srcCompat="@drawable/ic_check_24dp"
         app:fabSize="mini"
         app:elevation="0dp"
-        app:backgroundTint="#153944"
+        app:backgroundTint="?attr/fabColor"
         app:rippleColor="@color/dark_gray"/>
 
     <TextView

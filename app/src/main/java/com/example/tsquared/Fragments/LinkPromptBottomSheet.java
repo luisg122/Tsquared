@@ -193,8 +193,10 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             containerOfViewStub.addView(LayoutInflater.from(getContext()).inflate(R.layout.viewstub_valid_link, containerOfViewStub, false));
 
             headLine = view.findViewById(R.id.headLine);
-            source   = view.findViewById(R.id.source);
+            image    = view.findViewById(R.id.linkImage);
             content  = view.findViewById(R.id.validLink);
+
+            // source   = view.findViewById(R.id.source);
             content.setVisibility(View.INVISIBLE);
 
             new Content().execute();
@@ -292,7 +294,7 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Glide.with(Objects.requireNonNull(getActivity()))
+            Glide.with(Objects.requireNonNull(getContext()))
                     .load(imageSource)
                     .error(R.drawable.ic_link)
                     .into(image);

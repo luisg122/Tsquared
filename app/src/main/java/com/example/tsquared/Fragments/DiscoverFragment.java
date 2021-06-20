@@ -8,10 +8,10 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -52,7 +52,7 @@ public class DiscoverFragment extends Fragment
     private RecyclerView mainRv;
     private PeopleItemAdapter adapter;
     private ArrayList<PeopleItemModel> mArrayList;
-    private RelativeLayout cardView;
+    private CardView cardView;
     //private SwipeRefreshLayout swipeContainer;
 
     private ArrayList<NewsHorizontalModel> newsArrayList;
@@ -61,7 +61,6 @@ public class DiscoverFragment extends Fragment
     private RecyclerView interestsRecyclerView;
     private NewsHorizontalScrollAdapter newsHorizontalScrollAdapter;
     private InterestsHorizontalAdapter interestsHorizontalAdapter;
-    private RelativeLayout relativeLayout;
     private NestedScrollView nestedScrollView;
     private LinkPromptBottomSheet bottomSheet;
     private Handler handler;
@@ -109,9 +108,8 @@ public class DiscoverFragment extends Fragment
         newsRecyclerView       = (RecyclerView)     view.findViewById(R.id.news_horizontal_recycler_view);
         interestsRecyclerView  = (RecyclerView)     view.findViewById(R.id.interests_recycler_view);
         discoverCardImages     = (ViewPager2)       view.findViewById(R.id.discoverCardVP);
-        relativeLayout         = (RelativeLayout)   view.findViewById(R.id.relativeLayout);
         nestedScrollView       = (NestedScrollView) view.findViewById(R.id.nestedScrollView                                                                                               );
-        cardView               = (RelativeLayout)   view.findViewById(R.id.shareLink);
+        cardView               = (CardView)   view.findViewById(R.id.shareLink);
     }
 
     private void initializeHandler(){

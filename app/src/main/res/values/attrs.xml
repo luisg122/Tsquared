@@ -16,5 +16,10 @@
         <attr name="textCategoryColor"   format="color"/>
         <attr name="commentsSecColor"    format="color"/>
         <attr name="webViewCardColor"    format="color"/>
+
+        <attr name="colorNavigationItem" format="color" />
+        <attr name="colorNavigationItemSelected" format="color" />
+        <attr name="navigationColorBackground" format="color"/>
+        <attr name="drawableNavigationItemBackground" format="reference" />
     </declare-styleable>
 </resources>

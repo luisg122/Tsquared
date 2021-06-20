@@ -35,6 +35,8 @@ import com.example.tsquared.Models.AnswerModel;
 import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
+import com.example.tsquared.Utils.BlurBehind;
+import com.example.tsquared.Utils.OnBlurCompleteListener;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -51,7 +53,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import cz.msebera.android.httpclient.Header;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements AnswerAdapter.OnCommentsClickListener {
     private RecyclerView mainRv;
     private ArrayList<AnswerModel> mArrayList;
     private AnswerAdapter adapter;
@@ -152,7 +154,7 @@ public class DetailActivity extends AppCompatActivity {
     private void setUpRecyclerView() {
         dummyData();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        adapter = new AnswerAdapter(mArrayList, getApplicationContext());
+        adapter = new AnswerAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setAdapter(adapter);
         mainRv.setLayoutManager(layoutManager);
         mainRv.setNestedScrollingEnabled(false);
@@ -410,5 +412,26 @@ public class DetailActivity extends AppCompatActivity {
     public void finish(){
         super.finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+    }
+
+    @Override
+    public void OnCommentsClick(int position) {
+        BlurBehind.getInstance().execute(DetailActivity.this, new OnBlurCompleteListener() {
+            @Override
+            public void onBlurComplete() {
+                Intent intent = new Intent(DetailActivity.this, AnswerCommentsSection.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+                startActivity(intent);
+            }
+        });
+
+        BlurBehind.getInstance().setBackground(this);
     }
 }

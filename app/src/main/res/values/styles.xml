@@ -38,6 +38,11 @@
         <item name="moonColor">@color/dark_gray</item>
         <item name="bubbleItemColor">@color/light_gray</item>
         <item name="textCategoryColor">@color/DarkTopicColor</item>
+
+        <item name="colorNavigationItem">@color/menu_item_color_state</item>
+        <item name="colorNavigationItemSelected">@color/white</item>
+        <item name="navigationColorBackground">@color/navigationLight</item>
+        <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
     </style>
 
     <!-- Night Mode -->
@@ -64,6 +69,25 @@
         <item name="moonColor">@color/moonColorYellow</item>
         <item name="bubbleItemColor">@color/darkWindowBackground</item>
         <item name="textCategoryColor">@color/light_gray</item>
+
+        <item name="colorNavigationItem">@color/menu_item_color_state</item>
+        <item name="colorNavigationItemSelected">@color/white</item>
+        <item name="navigationColorBackground">@color/navigationDark</item>
+        <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
+    </style>
+
+    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemIconTint">?attr/colorNavigationItem</item>
+        <item name="itemTextColor">?attr/colorNavigationItem</item>
+        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
+    </style>
+
+    <!-- Defined a new style with three items of color. -->
+    <style name="CommentsTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
     </style>
 
     <style name="Following_Followers" parent="Theme.AppCompat.NoActionBar">

@@ -11,7 +11,7 @@
     tools:context=".Activities.DrawerActivity">
 
     <include
-        layout="@layout/app_bar_main"
+        layout="@layout/user_bookmarks_layout"
         android:visibility="visible"/>
 
     <com.google.android.material.navigation.NavigationView
@@ -68,6 +68,6 @@
         </RelativeLayout>
     </com.google.android.material.navigation.NavigationView>
 
-    
+
 </androidx.drawerlayout.widget.DrawerLayout>
-<!--#b8b9c7-->
+    <!--#b8b9c7-->

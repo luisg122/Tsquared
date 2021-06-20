@@ -21,10 +21,13 @@ import java.util.ArrayList;
 public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final ArrayList<AnswerModel> mArrayList;
     private final Context mcontext;
+    private OnCommentsClickListener onCommentsClickListener;
 
-    public AnswerAdapter(ArrayList<AnswerModel> mArrayList, Context mcontext){
+    public AnswerAdapter(ArrayList<AnswerModel> mArrayList, Context mcontext, OnCommentsClickListener onCommentsClickListener){
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
+        this.onCommentsClickListener = onCommentsClickListener;
+
         notifyDataSetChanged();
     }
 
@@ -40,7 +43,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         else{
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.answer_view, parent, false);
-            return new MyViewHolder(view);
+            return new MyViewHolder(view, onCommentsClickListener);
         }
     }
 
@@ -93,21 +96,34 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyItemInserted(mArrayList.size());
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final ImageView answerProfileImage;
         private final TextView  answerProfileName;
         private final TextView  answerProfileDate;
         private final TextView  answer;
+        private final CardView  commentsCard;
+
+        OnCommentsClickListener onCommentsClickListener;
 
         private final CardView answerProfile;
 
-        public MyViewHolder(View view){
+        public MyViewHolder(View view, OnCommentsClickListener onCommentsClickListener){
             super(view);
             answerProfileImage = (ImageView) view.findViewById(R.id.answerIV);
             answerProfileName  = (TextView)  view.findViewById(R.id.answerName);
             answerProfileDate  = (TextView)  view.findViewById(R.id.answerSubmitted);
             answer             = (TextView)  view.findViewById(R.id.answer);
             answerProfile      = (CardView)  view.findViewById(R.id.answersLayout);
+            commentsCard       = (CardView)  view.findViewById(R.id.commentsSection);
+
+            this.onCommentsClickListener = onCommentsClickListener;
+            commentsCard.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            onCommentsClickListener.OnCommentsClick(getAdapterPosition());
         }
     }
 
@@ -117,5 +133,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(view);
             promptUser = (TextView) view.findViewById(R.id.promptCreateFirstAnswer);
         }
+    }
+
+    public interface OnCommentsClickListener{
+        void OnCommentsClick(int position);
     }
 }

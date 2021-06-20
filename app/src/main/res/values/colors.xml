@@ -48,4 +48,6 @@
 
     <color name="darkMaroon">#4d0000</color>
     <color name="crimsonRed">#DC143C</color>
+    <color name="navigationLight">#9aa4f5</color>
+    <color name="navigationDark">#3e5d66</color>
 </resources>

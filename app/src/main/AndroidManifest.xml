@@ -165,6 +165,19 @@
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.AnswerCommentsSection"
+            android:theme="@style/CommentsTheme"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.UserBookMarks"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.UserInterests"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

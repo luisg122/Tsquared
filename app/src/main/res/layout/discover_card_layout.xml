@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="10dp"
-    android:background="?attr/selectableItemBackground">
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true">
 
     <com.flaviofaria.kenburnsview.KenBurnsView
         android:id="@+id/image"
@@ -15,7 +17,7 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:padding="0dp"
-        android:tint="#66000000"/>
+        android:tint="#66000000" />
 
     <TextView
         android:id="@+id/publisher"
