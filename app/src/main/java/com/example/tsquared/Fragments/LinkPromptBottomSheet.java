@@ -185,7 +185,11 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             content  = view.findViewById(R.id.validLink);
 
             //source   = view.findViewById(R.id.source);
-            new Content().execute();
+
+            // if the fragment is currently added to its activity
+            if (isAdded() && getActivity() != null) {
+                new Content().execute();
+            }
         }
 
         else if(checkValidLink() && (viewStub.getParent() == null)){
@@ -199,8 +203,12 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             // source   = view.findViewById(R.id.source);
             content.setVisibility(View.INVISIBLE);
 
-            new Content().execute();
+            // if the fragment is currently added to its activity
+            if (isAdded() && getActivity() != null) {
+                new Content().execute();
+            }
         }
+
         else if(!checkValidLink() && (viewStub.getParent() != null)){
             viewStub.setLayoutResource(R.layout.viewstub_invalid_link);
             viewStub.inflate();
@@ -208,6 +216,7 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
             content = view.findViewById(R.id.invalidLink);
             content.setVisibility(View.VISIBLE);
         }
+
         else if(!checkValidLink() && (viewStub.getParent() == null)){
             containerOfViewStub.removeAllViews();
             containerOfViewStub.addView(LayoutInflater.from(getContext()).inflate(R.layout.viewstub_invalid_link, containerOfViewStub, false));
@@ -242,6 +251,12 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         return false;
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        this.dismissAllowingStateLoss();
+    }
+
     // web scrape title and link of article from provided Url
     @SuppressLint("StaticFieldLeak")
     private class Content extends AsyncTask<Void, Void, Void> {
@@ -249,8 +264,11 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getContext());
-            progressDialog.show();
+
+            if(isAdded() && getActivity() != null) {
+                progressDialog = new ProgressDialog(requireContext());
+                progressDialog.show();
+            }
         }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -294,17 +312,20 @@ public class LinkPromptBottomSheet extends BottomSheetDialogFragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Glide.with(Objects.requireNonNull(getContext()))
-                    .load(imageSource)
-                    .error(R.drawable.ic_link)
-                    .into(image);
+            if(isAdded() && getActivity() != null) {
+                Glide.with(requireContext())
+                        .load(imageSource)
+                        .error(R.drawable.ic_link)
+                        .into(image);
 
-            headLine.setText(title);
-            //source.setText(publisherSource);
 
-            content.setVisibility(View.VISIBLE);
-            fab.setVisibility(View.INVISIBLE);
-            progressDialog.dismiss();
+                headLine.setText(title);
+                //source.setText(publisherSource);
+
+                content.setVisibility(View.VISIBLE);
+                fab.setVisibility(View.INVISIBLE);
+                progressDialog.dismiss();
+            }
         }
     }
 }

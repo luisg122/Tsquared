@@ -45,57 +45,49 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <RelativeLayout
+
+                <ImageView
+                    android:id="@+id/share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp">
+                    android:layout_toLeftOf="@+id/bookmark"
+                    android:layout_toStartOf="@+id/bookmark"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_share_24dp"/>
 
-                    <ImageButton
-                        android:id="@+id/likedButton"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/left_half_button"
-                        android:elevation="0dp"
-                        android:padding="5dp"
-                        app:srcCompat="@drawable/upvote_white"/>
-
-                    <ImageButton
-                        android:id="@+id/disButton"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_toEndOf="@+id/likedButton"
-                        android:layout_toRightOf="@+id/likedButton"
-                        android:background="@drawable/right_half_button"
-                        android:elevation="0dp"
-                        android:padding="5dp"
-                        app:srcCompat="@drawable/downvote_white" />
-
-                </RelativeLayout>
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/comments"
+                <ImageView
+                    android:id="@+id/bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/more"
+                    android:layout_toStartOf="@+id/more"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_book_mark_border"/>
+
+                <ImageView
+                    android:id="@+id/more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    app:backgroundTint="?attr/fabColor"
-                    app:elevation="0dp"
-                    app:fabSize="mini"
-                    app:icon="@drawable/ic_comment"
-                    app:srcCompat="@drawable/ic_comment" />
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_more_vert"/>
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

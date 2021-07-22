@@ -25,6 +25,4 @@ public class InterestsModel {
     public boolean isSelected(){
         return selectedValue;
     }
-
-
 }

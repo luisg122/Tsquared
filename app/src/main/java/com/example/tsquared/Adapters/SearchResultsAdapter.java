@@ -12,20 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.example.tsquared.Models.QuestionItemModel;
+import com.example.tsquared.Models.QuestionItemTextModel;
 import com.example.tsquared.R;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.MyViewHolder>
         implements Filterable {
 
 
     Context mContext;
-    ArrayList<QuestionItemModel> mData ;
-    ArrayList<QuestionItemModel> mDataFiltered ;
+    ArrayList<QuestionItemTextModel> mData ;
+    ArrayList<QuestionItemTextModel> mDataFiltered ;
 
-    public SearchResultsAdapter(ArrayList<QuestionItemModel> mData, Context mContext) {
+    public SearchResultsAdapter(ArrayList<QuestionItemTextModel> mData, Context mContext) {
         this.mContext = mContext;
         this.mData = mData;
         this.mDataFiltered = mData;
@@ -58,8 +57,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
                 }
                 else {
-                    ArrayList<QuestionItemModel> lstFiltered = new ArrayList<>();
-                    for (QuestionItemModel row : mData) {
+                    ArrayList<QuestionItemTextModel> lstFiltered = new ArrayList<>();
+                    for (QuestionItemTextModel row : mData) {
                         if (row.question.toLowerCase().contains(Key.toLowerCase())){
                             lstFiltered.add(row);
                         }
@@ -73,14 +72,14 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                mDataFiltered = (ArrayList<QuestionItemModel>) results.values;
+                mDataFiltered = (ArrayList<QuestionItemTextModel>) results.values;
                 notifyDataSetChanged();
             }
         };
     }
 
     // data filtered
-    public void swapData(ArrayList<QuestionItemModel> mNewDataSet) {
+    public void swapData(ArrayList<QuestionItemTextModel> mNewDataSet) {
         this.mDataFiltered.clear();
         this.mDataFiltered.addAll(mNewDataSet);
         notifyDataSetChanged();
@@ -96,7 +95,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         // we apply animation to views here
         // first lets create an animation for user photo
-        QuestionItemModel question = mDataFiltered.get(position);
+        QuestionItemTextModel question = mDataFiltered.get(position);
         holder.img_user.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_transition_animation));
         // lets create the animation for the whole card
         // first lets create a reference to it

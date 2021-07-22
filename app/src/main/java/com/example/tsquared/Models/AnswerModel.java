@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AnswerModel {
+    public boolean  isTextExpanded;
     public int      isAnonymous;
     public String   name;
     public String   dateAnswered;
@@ -19,7 +20,17 @@ public class AnswerModel {
         this.answer = answer;
         this.dateAnswered = dateAnswered;
 
+        isTextExpanded = false;
     }
+
+    public boolean isTextExpanded() {
+        return isTextExpanded;
+    }
+
+    public void setTextExpanded(boolean textCollapsed) {
+        isTextExpanded = textCollapsed;
+    }
+
     public static AnswerModel fromJson(JSONObject jsonObject) throws JSONException {
         AnswerModel answer   = new AnswerModel();
         answer.isAnonymous   = jsonObject.getInt("isAnonymous");

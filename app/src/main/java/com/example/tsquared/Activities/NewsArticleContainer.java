@@ -77,8 +77,18 @@ public class NewsArticleContainer extends AppCompatActivity implements NewsArtic
         for(int i = 0; i < 10; i++){
             arrayList.add(new NewsArticlesViewModel(" ", "New York Times",
                     "The dow jones has now reversed all of its early gains",
-                    "Dow Jones futures along with other major indexes were in the green but have long since reversed course",
-                    " "));
+                    "Dow Jones futures along with other major indexes were in the green but have long since reversed course. However, with unemployment on the rise, and small businesses going bankrupt, the rich have become even more rich.",
+                    "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg"));
+
+            arrayList.add(new NewsArticlesViewModel(" ", "New York Times",
+                    "The dow jones has now reversed all of its early gains",
+                    "Dow Jones futures along with other major indexes were in the green but have long since reversed course. However, with unemployment on the rise, and small businesses going bankrupt, the rich have become even more rich.",
+                    "https://www.reuters.com/resizer/vsRFGKTi9vWULwxZlnZkhbTmaLs=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/HKYMFSORGZJRHMWZ6YYOZO4MTY.jpg"));
+
+            arrayList.add(new NewsArticlesViewModel(" ", "New York Times",
+                    "The dow jones has now reversed all of its early gains",
+                    "Dow Jones futures along with other major indexes were in the green but have long since reversed course. However, with unemployment on the rise, and small businesses going bankrupt, the rich have become even more rich.",
+                    "https://insights.som.yale.edu/sites/default/files/styles/rectangle_xs/public/insights/background/What%20the%20Plunge%20in%20the%20Stock%20Market%20Means%20for%20Individual%20Investors.jpg?h=d0d46503&itok=vl15_CSn0"));
         }
     }
 

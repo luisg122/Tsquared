@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -41,8 +42,7 @@ public class MoreNewsAdapter extends RecyclerView.Adapter<MoreNewsAdapter.MoreNe
     public void onBindViewHolder(@NonNull MoreNewsViewHolder holder, int position) {
         MoreNewsModel moreNewsModel = mArrayList.get(position);
         Glide.with(mcontext)
-                .load("https://images.squarespace-cdn.com/content/v1/52a0da60e4b0dfa4e47795de/1535498535340-PVPKE7556TCT3PE81QS1/ke17ZwdGBToddI8pDm48kHJjM-Evnp5g-1kf5Yv15cUUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcpWKe3KzaCrFDKPR1a1Ob8xobjReaxMuaKtrvUDoDmPO9EsdBHei1w8jR6w0UZiby/Errigal%2C-autumn-hues-X2.jpg")
-                .transform(new CenterCrop(), new RoundedCorners(35))
+                .load(moreNewsModel.getImageURL())
                 .into(holder.iv_image);
         holder.tv_desc.setText(moreNewsModel.getDescription());
     }
@@ -70,7 +70,7 @@ public class MoreNewsAdapter extends RecyclerView.Adapter<MoreNewsAdapter.MoreNe
 
         @Override
         public void onClick(View v) {
-            onMoreNewsListener.onMoreNewsClick(getAdapterPosition());
+            onMoreNewsListener.onMoreNewsClick(getLayoutPosition());
         }
     }
 

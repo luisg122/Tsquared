@@ -1,15 +1,26 @@
 package com.example.tsquared.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
+import android.text.Layout;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
@@ -17,6 +28,10 @@ import com.example.tsquared.SharedPreference.DarkSharedPref;
 public class AnswerWindow extends AppCompatActivity{
     private Toolbar toolbar;
     private EditText answerEditText;
+    private ScrollView scrollView;
+    private LinearLayout rootView;
+    private Handler handler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -26,15 +41,35 @@ public class AnswerWindow extends AppCompatActivity{
         else {
             setTheme(R.style.AppTheme_NoActionBar);
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.answer_window);
         setViews();
+        initializeHandler();
         setUpToolBar();
         setListeners();
         showSoftKeyboard();
+        disableInnerScroll();
     }
 
-    private void setViews(){
+    private void initializeHandler() {
+        handler = new Handler(Looper.getMainLooper());
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void disableInnerScroll() {
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                answerEditText.getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
+    }
+
+    private void setViews() {
+        rootView        = (LinearLayout) findViewById(R.id.linearLayout);
+        scrollView      = (ScrollView) findViewById(R.id.scrollView);
         toolbar         = (Toolbar)  findViewById(R.id.toolbar);
         answerEditText  = (EditText) findViewById(R.id.answerToQuestion);
     }
@@ -48,20 +83,28 @@ public class AnswerWindow extends AppCompatActivity{
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                hideKeyboard(AnswerWindow.this);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onBackPressed();
+                    }
+                }, 250);
             }
         });
     }
 
     private void showSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+
         answerEditText.requestFocus();
         answerEditText.setInputType(InputType.TYPE_CLASS_TEXT |
                 InputType.TYPE_TEXT_FLAG_MULTI_LINE |
                 InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 
-        InputMethodManager imm = (InputMethodManager)getSystemService(
-                Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(answerEditText, InputMethodManager.SHOW_IMPLICIT);
+
     }
 
     public void hideKeyboard(Activity activity) {
@@ -78,7 +121,6 @@ public class AnswerWindow extends AppCompatActivity{
     @Override
     public void finish(){
         super.finish();
-        hideKeyboard(AnswerWindow.this);
         overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
     }
 }

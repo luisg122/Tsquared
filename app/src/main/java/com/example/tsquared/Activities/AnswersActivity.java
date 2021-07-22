@@ -1,71 +1,71 @@
 package com.example.tsquared.Activities;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.text.Layout;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.view.Window;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.tsquared.Adapters.AnswerAdapter;
+import com.example.tsquared.ExpandableTextView;
 import com.example.tsquared.Models.AnswerModel;
-import com.example.tsquared.Models.QuestionItemModel;
+import com.example.tsquared.Models.AnswerWithImages;
 import com.example.tsquared.R;
+import com.example.tsquared.ResizeText;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
-import com.example.tsquared.Utils.BlurBehind;
-import com.example.tsquared.Utils.OnBlurCompleteListener;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Objects;
-import cz.msebera.android.httpclient.Header;
 
-public class DetailActivity extends AppCompatActivity implements AnswerAdapter.OnCommentsClickListener {
+import static android.content.ContentValues.TAG;
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
+public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.OnCommentsClickListener {
     private RecyclerView mainRv;
-    private ArrayList<AnswerModel> mArrayList;
+    private ArrayList<Object> mArrayList;
     private AnswerAdapter adapter;
-    private CollapsingToolbarLayout collapsingToolbar;
-    private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private TextView collapsedText;
-    private FloatingActionButton fab;
-    private FloatingActionButton fabCollapsed;
-    private SwipeRefreshLayout swipeContainer;
-    private TextView loadQuestion;
+    private ExtendedFloatingActionButton fab;
     private TextView loadWindowQuestion;
+    private boolean hasScrolled;
+    private int currentPos;
+
+    private SwipeRefreshLayout swipeContainer;
+    private AppBarLayout appBarLayout;
+    private CollapsingToolbarLayout collapsingToolbar;
     private SwitchCompat anonymous;
     private String toWhatQuestion;
     private String toWhatQuestion1;
@@ -100,25 +100,28 @@ public class DetailActivity extends AppCompatActivity implements AnswerAdapter.O
             setTheme(R.style.AppTheme_NoActionBar);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.collapsingtoolbar);
+        setContentView(R.layout.answers_activity_layout);
         setViews();
-        //setUpSwipeContainer();
-        //setLayout();
+        getQuestion();
+        // setUpSwipeContainer();
+        // setLayout();
         setUpToolBar();
+        initFloatingActionButton();
         setUpRecyclerView();
     }
 
     private void setViews() {
-        //stub = (ViewStub) findViewById(R.id.layout_stub);
+        // stub = (ViewStub) findViewById(R.id.layout_stub);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer3);
         toolbar = (Toolbar) findViewById(R.id.toolbar1);
-        fab = (FloatingActionButton) findViewById(R.id.answerButton);
-        fabCollapsed = (FloatingActionButton) findViewById(R.id.answerButtonCollapsed);
-        collapsingToolbar = findViewById(R.id.collapsingToolBar);
+        fab = (ExtendedFloatingActionButton) findViewById(R.id.answerButton);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-        loadQuestion = findViewById(R.id.questionAnswerPage1);
         mainRv = (RecyclerView) findViewById(R.id.answersRV);
         collapsedText = (TextView) findViewById(R.id.collapsedText);
+    }
+
+    private void getQuestion(){
+        toWhatQuestion = getIntent().getStringExtra("question");
     }
 
     /*@RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -154,19 +157,65 @@ public class DetailActivity extends AppCompatActivity implements AnswerAdapter.O
     private void setUpRecyclerView() {
         dummyData();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        adapter = new AnswerAdapter(mArrayList, getApplicationContext(), this);
-        mainRv.setAdapter(adapter);
+
+        adapter = new AnswerAdapter(mArrayList, getApplicationContext(), this, getIntent());
         mainRv.setLayoutManager(layoutManager);
-        mainRv.setNestedScrollingEnabled(false);
         mainRv.setHasFixedSize(false);
+        mainRv.setItemViewCacheSize(20);
+        mainRv.setAdapter(adapter);
+        // design to expand and shrink the extended fab button
+
+        currentPos  = 0;
+        hasScrolled = false;
+        mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                currentPos += dy;
+                if(currentPos == 0 && !hasScrolled){
+                    collapsedText.setVisibility(INVISIBLE);
+                }
+
+                if (dy > 0) {
+                    // Scrolled Downwards
+                    hasScrolled = true;
+                    fab.shrink();
+                    collapsedText.setVisibility(VISIBLE);
+                }
+
+                else if (dy < 0) {
+                    // Scrolled Upwards
+                    hasScrolled = true;
+                    fab.extend();
+                    collapsedText.setVisibility(VISIBLE);
+                }
+            }
+        });
     }
 
     private void dummyData(){
         mArrayList  = new ArrayList<>();
         for(int i = 0; i < 20; i++){
-            AnswerModel answerItem = new AnswerModel("John Doe", "polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition, subtraction, multiplication, and non-negative integer exponentiation of variables."
+            AnswerModel answerItem = new AnswerModel("John Doe", "polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition, " +
+                    "subtraction, multiplication, and non-negative integer exponentiation of variables."
                     , "September 09 2020");
             mArrayList.add(answerItem);
+
+            String[] imageUrls = {
+                    "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg",
+                    "https://www.reuters.com/resizer/vsRFGKTi9vWULwxZlnZkhbTmaLs=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/HKYMFSORGZJRHMWZ6YYOZO4MTY.jpg",
+                    "https://insights.som.yale.edu/sites/default/files/styles/rectangle_xs/public/insights/background/What%20the%20Plunge%20in%20the%20Stock%20Market%20Means%20for%20Individual%20Investors.jpg?h=d0d46503&itok=vl15_CSn0"
+            };
+
+            AnswerWithImages answerItem1 = new AnswerWithImages("John Doe", "polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition, " +
+                    "subtraction, multiplication, and non-negative integer exponentiation of variables. However, there's a bit more to this simplistic definition, in which I " +
+                    "suggest you'd further build your very own definition of what polynomials are. polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition, " +
+                    "subtraction, multiplication, and non-negative integer exponentiation of variables. However, there's a bit more to this simplistic definition, in which I " +
+                    "suggest you'd further build your very own definition of what polynomials are. polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition."
+                    , "September 09 2020", imageUrls, 3);
+
+            mArrayList.add(answerItem1);
         }
     }
 
@@ -175,18 +224,7 @@ public class DetailActivity extends AppCompatActivity implements AnswerAdapter.O
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, AnswerWindow.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-            }
-        });
-
-        // Collapsed ToolBar Floating Action Button
-        fabCollapsed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, AnswerWindow.class);
+                Intent intent = new Intent(AnswersActivity.this, AnswerWindow.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
@@ -195,49 +233,8 @@ public class DetailActivity extends AppCompatActivity implements AnswerAdapter.O
     }
 
     private void setUpToolBar() {
-        setSupportActionBar(toolbar);
-        initFloatingActionButton();
-
-        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.TextAppearance_MyApp_Title_Collapsed);
-        collapsingToolbar.setExpandedTitleColor(R.style.TextAppearance_MyApp_Title_Expanded);
-        collapsingToolbar.setTitle("");
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    collapsingToolbar.setTitle(" ");
-                    toolbar.setTitle("");
-                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
-                    fabCollapsed.setVisibility(View.GONE);
-                    collapsedText.setVisibility(View.GONE);
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                    appBarExpanded = false;
-                }
-
-                else if (scrollRange + verticalOffset == 0) {
-                    // Collapsed Toolbar
-                    collapsingToolbar.setTitle(" ");
-                    toolbar.setTitle("");
-                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
-                    fabCollapsed.setVisibility(View.VISIBLE);
-                    collapsedText.setVisibility(View.VISIBLE);
-                    isShow = true;
-                }
-
-                else if (isShow) {
-                    // Expanded Toolbar
-                    collapsingToolbar.setTitle(" ");
-                    toolbar.setTitle("");
-                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
-                    fabCollapsed.setVisibility(View.GONE);
-                    collapsedText.setVisibility(View.GONE);
-                    isShow = false;
-                }
-            }
-        });
+        //setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -339,13 +336,6 @@ public class DetailActivity extends AppCompatActivity implements AnswerAdapter.O
         });
     }*/
 
-    private void loadQuestionData() {
-        Intent intent = getIntent();
-        String question = intent.getStringExtra("question");
-        toWhatQuestion1 = question;
-        loadQuestion.setText(question);
-    }
-
     private void loadWindowQuestion(View view) {
         Intent intent = getIntent();
         String question = intent.getStringExtra("question");
@@ -399,18 +389,21 @@ public class DetailActivity extends AppCompatActivity implements AnswerAdapter.O
     @Override
     public void onResume() {
         super.onResume();
+        fab.show();
         //shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        fab.hide();
         //shimmerFrameLayout.stopShimmer();
     }
 
     @Override
     public void finish(){
         super.finish();
+        fab.hide();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
@@ -420,18 +413,129 @@ public class DetailActivity extends AppCompatActivity implements AnswerAdapter.O
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+    }
+
+    @Override
     public void OnCommentsClick(int position) {
-        BlurBehind.getInstance().execute(DetailActivity.this, new OnBlurCompleteListener() {
-            @Override
-            public void onBlurComplete() {
-                Intent intent = new Intent(DetailActivity.this, AnswerCommentsSection.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        Intent intent = new Intent(AnswersActivity.this, AnswerCommentsSection.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-                startActivity(intent);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+    }
+
+    @Override
+    public void upVote(int position, View view) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+    }
+
+    @Override
+    public void downVote(int position, View view) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+    }
+
+    @Override
+    public void expandText(int position, View view, ExpandableTextView expandableTextView, TextView textView, ImageView imageView) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+
+        Object v = (Object) mArrayList.get(position);
+        if(v instanceof AnswerModel){
+            AnswerModel answerItem = (AnswerModel) v;
+
+            // text is collapsed and not expanded
+            if(!answerItem.isTextExpanded()){
+                expandableTextView.expand();
+                answerItem.setTextExpanded(true);
             }
-        });
 
-        BlurBehind.getInstance().setBackground(this);
+            // text is expanded and not collapsed
+            else if(answerItem.isTextExpanded()){
+                expandableTextView.collapse();
+                answerItem.setTextExpanded(false);
+            }
+
+            adapter.notifyItemChanged(position, answerItem);
+        }
+
+        else if(v instanceof AnswerWithImages) {
+            AnswerWithImages answerItem = (AnswerWithImages) v;
+
+            // text is collapsed and not expanded
+            if(!answerItem.isTextExpanded()){
+                expandableTextView.expand();
+                answerItem.setTextExpanded(true);
+            }
+
+            // text is expanded and not collapsed
+            else if(answerItem.isTextExpanded()){
+                expandableTextView.collapse();
+                answerItem.setTextExpanded(false);
+            }
+
+            adapter.notifyItemChanged(position, answerItem);
+        }
+    }
+
+    @Override
+    public void textExpanded(int position, View view, RelativeLayout relativeLayout, TextView textView, ImageView imageView) {
+
+    }
+
+    @Override
+    public void textCollapsed(int position, View view, RelativeLayout relativeLayout, TextView textView, ImageView imageView) {
+
+    }
+
+    @Override
+    public void textExceedMaxLines(int position, View view, RelativeLayout relativeLayout, TextView textView, ImageView imageView) {
+        ExpandableTextView expandableTextView = (ExpandableTextView) view;
+        Layout layout = expandableTextView.getLayout();
+        if (layout != null) {
+            int lines = layout.getLineCount();
+            if (lines > 0) {
+                int ellipsisCount = layout.getEllipsisCount(lines - 1);
+                if (ellipsisCount > 0) {
+                    relativeLayout.setVisibility(VISIBLE);
+                } else {
+                    relativeLayout.setVisibility(INVISIBLE);
+                }
+            }
+        }
     }
 }
+
+
+
+    /*private void detectScrollChange(){
+        mainRv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (scrollY > oldScrollY) {
+                    Log.i(TAG, "Scroll DOWN");
+                    collapsedText.setVisibility(View.VISIBLE);
+                    fab.shrink();
+                }
+                if (scrollY < oldScrollY) {
+                    Log.i(TAG, "Scroll UP");
+                    collapsedText.setVisibility(View.VISIBLE);
+                    fab.extend();
+                }
+
+                if (scrollY == 0) {
+                    Log.i(TAG, "TOP SCROLL");
+                    collapsedText.setVisibility(View.INVISIBLE);
+                }
+
+                if (scrollY == ( v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight() )) {
+                    Log.i(TAG, "BOTTOM SCROLL");
+                }
+            }
+        });
+    }*/

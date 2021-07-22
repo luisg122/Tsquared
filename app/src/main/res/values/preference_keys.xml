@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Preferences -->
+    <string name="pref_color_code">pref_color_code</string>
+    <string name="pref_thread_indicator">pref_thread_indicator</string>
+</resources>

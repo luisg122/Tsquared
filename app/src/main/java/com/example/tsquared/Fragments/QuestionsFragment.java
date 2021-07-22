@@ -1,42 +1,36 @@
 package com.example.tsquared.Fragments;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.cardview.widget.CardView;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.example.tsquared.Activities.DetailActivity;
+import com.example.tsquared.Activities.AnswersActivity;
 import com.example.tsquared.Activities.DrawerActivity;
-import com.example.tsquared.Activities.HideOrShowObject;
-import com.example.tsquared.Activities.PostQuestionWindow;
 import com.example.tsquared.Adapters.QuestionItemAdapter;
-import com.example.tsquared.Models.QuestionItemModel;
+import com.example.tsquared.Models.QuestionItemImageModel;
+import com.example.tsquared.Models.QuestionItemTextModel;
 import com.example.tsquared.Models.NewsHorizontalModel;
+import com.example.tsquared.Models.QuestionItemUrlModel;
 import com.example.tsquared.R;
-import com.example.tsquared.RecyclerviewListeners.CustomScrollListener;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -48,7 +42,8 @@ public class QuestionsFragment<adapter> extends Fragment
     private RecyclerView mainRv;
     private RecyclerView mainRv1;
 
-    private ArrayList<QuestionItemModel> mArrayList;
+    private ArrayList<Object> mArrayList;
+    private Handler handler;
     private ArrayList<NewsHorizontalModel> mArrayList1;
     private QuestionItemAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
@@ -81,12 +76,21 @@ public class QuestionsFragment<adapter> extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         view = inflater.inflate(R.layout.item_main, container, false);
-        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
+        setUpViews();
+        initializeHandler();
         setUpSwipeContainer();
         setUpRecyclerView();
         loadListOfQuestions();
         setUpSwipeListener();
         return view;
+    }
+
+    private void setUpViews(){
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
+    }
+
+    private void initializeHandler(){
+        handler = new Handler(Looper.getMainLooper());
     }
 
     private void setUpSwipeContainer() {
@@ -138,15 +142,25 @@ public class QuestionsFragment<adapter> extends Fragment
                 }
             }
         });
+
     }
 
 
     private void dummyData(){
         mArrayList  = new ArrayList<>();
         for(int i = 0; i < 20; i++){
-            QuestionItemModel questionItem = new QuestionItemModel("John Doe", "Mathematics", "What are polynomials and why are they important",
+            QuestionItemTextModel questionItem   = new QuestionItemTextModel("Mathematics", "What are polynomials and why are they important?",
                     "September 09 2020", "5", R.mipmap.blank_profile);
             mArrayList.add(questionItem);
+
+            QuestionItemImageModel questionItem1 = new QuestionItemImageModel("Mathematics", "What are polynomials and why are they important?",
+                    "September 09 2020", "5", "profileUrlImage", "imageUrl");
+            mArrayList.add(questionItem1);
+
+            QuestionItemUrlModel questionItem2 = new QuestionItemUrlModel("Mathematics", "Are the 2020 Tokyo Olympics going to have spectators or no?",
+                    "September 09 2020", "5", "profileUrlImage", "imageUrl", "Tokyo covid levels rises", "BBC.com");
+
+            mArrayList.add(questionItem2);
         }
     }
 
@@ -191,13 +205,13 @@ public class QuestionsFragment<adapter> extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        shimmerFrameLayout.startShimmer();
+        // shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        shimmerFrameLayout.stopShimmer();
+        // shimmerFrameLayout.stopShimmer();
     }
 
     @Override
@@ -208,12 +222,43 @@ public class QuestionsFragment<adapter> extends Fragment
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void OnNoteClick(int position) {
-        String question = mArrayList.get(position).question;
-        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("question", question);
-        startActivity(intent);
-        Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(mArrayList.get(position) instanceof QuestionItemTextModel){
+                    QuestionItemTextModel item = (QuestionItemTextModel) mArrayList.get(position);
+                    Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("question", item.getQuestion());
+                    intent.putExtra("numberOfAnswers", item.getResponseNum());
+                    intent.putExtra("type", "QuestionItemTextModel");
+                    startActivity(intent);
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+
+                else if(mArrayList.get(position) instanceof  QuestionItemImageModel){
+                    QuestionItemImageModel item = (QuestionItemImageModel) mArrayList.get(position);
+                    Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("question", item.getQuestion());
+                    intent.putExtra("numberOfAnswers", item.getResponseNum());
+                    intent.putExtra("type", "QuestionItemImageModel");
+                    startActivity(intent);
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+
+                else {
+                    QuestionItemUrlModel item = (QuestionItemUrlModel) mArrayList.get(position);
+                    Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("question", item.getQuestion());
+                    intent.putExtra("numberOfAnswers", item.getResponseNum());
+                    intent.putExtra("type", "QuestionItemUrlModel");
+                    startActivity(intent);
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+            }
+        }, 100);
     }
 
     @Override

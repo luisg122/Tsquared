@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="?attr/appBarColor">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar1"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/collapsedText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:text="What is the idea behind scrum and how is it efficiently applied?"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:visibility="invisible"/>
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <include
+            layout="@layout/activity_detail"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/answerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="40dp"
+        android:theme="@style/MyMaterialTheme"
+        android:text="answer"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_add_white_24dp"
+        app:rippleColor="@color/light_gray"
+        app:iconTint="@color/white"
+        app:backgroundTint="?attr/fabColor"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

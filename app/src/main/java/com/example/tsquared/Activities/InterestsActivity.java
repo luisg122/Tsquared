@@ -154,17 +154,14 @@ public class InterestsActivity extends AppCompatActivity implements InterestsAda
     @SuppressLint("SetTextI18n")
     @Override
     public void onCheckedClick(int position, CompoundButton buttonView, boolean isChecked) {
-        boolean selected = false;
         InterestsModel interests = mArrayList.get(position);
-        if(interests.isSelected()) selected = true;
-
         interests.setSelected(isChecked);
 
         // if check button has not been checked before but it is checked NOW, then add to arrayList
-        if(isChecked && !selected) numberOfCheckItems.add(1);
+        if(isChecked && !interests.isSelected()) numberOfCheckItems.add(1);
 
         // if check button has been selected before but it is 'unchecked' NOW, then remove from the arrayList
-        if(!isChecked && selected) numberOfCheckItems.remove(numberOfCheckItems.size() - 1);
+        if(!isChecked && interests.isSelected()) numberOfCheckItems.remove(numberOfCheckItems.size() - 1);
 
         keepTrackNum.setText(numberOfCheckItems.size() + "/5");
     }

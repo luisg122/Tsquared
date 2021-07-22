@@ -15,41 +15,54 @@
         app:cardCornerRadius="0dp"
         app:cardBackgroundColor="?attr/cardBackgroundColor">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/upVote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lineDiv"
-                app:srcCompat="@drawable/up_vote_vec" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/downVote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_below="@+id/upVote"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintStart_toEndOf="@+id/verticalLine"
-                app:layout_constraintTop_toBottomOf="@+id/lineDiv"
-                app:srcCompat="@drawable/down_vote_vec" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/answerIV"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@mipmap/blank_profile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+
+                <TextView
+                    android:id="@+id/answerSubmitted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Answered 12/6/2019"
+                    android:textColor="?attr/lightTextColor"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@+id/answerIV"
+                    app:layout_constraintTop_toBottomOf="@+id/answerName" />
+
+                <TextView
+                    android:id="@+id/answerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Brian Doe"
+                    android:textColor="?attr/lightTextColor"
+                    app:layout_constraintStart_toEndOf="@+id/answerIV"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.example.tsquared.ExpandableTextView
                 android:id="@+id/answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,117 +72,142 @@
                 android:ellipsize="end"
                 android:ems="10"
 
-                android:gravity="start|top"
                 android:lineSpacingExtra="3dp"
-                android:maxLines="100"
+                android:maxLines="5"
                 android:minLines="1"
                 android:singleLine="false"
                 android:text="Scrum is an agile process framework for managing complex knowledge work in Software Development"
                 android:textColor="?attr/textColor"
                 android:textSize="16sp"
-
                 android:theme="@style/MyMaterialTheme"
-                app:fontFamily="sans-serif"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/answerSubmitted" />
+                android:autoLink="web"
+                android:linksClickable="true"
+                android:requiresFadingEdge="vertical"
+                android:fadingEdgeLength="150dp"
 
-            <TextView
-                android:id="@+id/answerName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="16dp"
-                android:text="Brian Doe"
-                android:textColor="?attr/lightTextColor"
-                app:layout_constraintStart_toEndOf="@+id/answerIV"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:animation_duration="100"
+                app:fontFamily="sans-serif" />
 
-            <TextView
-                android:id="@+id/numberOfUpVotes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="15"
-                android:textSize="13sp"
-                android:textColor="?attr/textColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/upVote"
-                app:layout_constraintTop_toBottomOf="@+id/lineDiv" />
+                <RelativeLayout
+                    android:id="@+id/readMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp">
 
-            <TextView
-                android:id="@+id/answerSubmitted"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:text="Answered 12/6/2019"
-                android:textColor="?attr/lightTextColor"
-                android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/answerIV"
-                app:layout_constraintTop_toBottomOf="@+id/answerName" />
+                    <TextView
+                        android:id="@+id/readMorePrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_toStartOf="@+id/seeMoreImage"
+                        android:layout_toLeftOf="@+id/seeMoreImage"
+                        android:text="Read More"
+                        android:textColor="?attr/fabColor"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
-            <View
-                android:id="@+id/verticalLine"
-                android:layout_width="0.7dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/line_divider_black"
-                app:layout_constraintStart_toEndOf="@+id/numberOfUpVotes"
-                app:layout_constraintTop_toBottomOf="@+id/lineDiv" />
+                    <ImageView
+                        android:id="@+id/seeMoreImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        app:srcCompat="@drawable/ic_arrow_drop_down_24dp"/>
+            </RelativeLayout>
 
             <View
                 android:id="@+id/lineDiv"
                 android:layout_width="match_parent"
                 android:layout_height="0.7dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/line_divider_black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/answer" />
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/line_divider_black" />
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/lineDiv"
-                app:layout_constraintEnd_toEndOf="parent">
-                <Button
-                    android:id="@+id/three_dots"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="?attr/selectableItemBackground"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <ImageView
+                    android:id="@+id/upVote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_more"
-                    android:layout_gravity="center"/>
-            </FrameLayout>
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/up_vote_vec" />
 
+                <TextView
+                    android:id="@+id/numberOfUpVotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="15"
+                    android:textSize="13sp"
+                    android:textColor="?attr/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/upVote"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/answerIV"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:src="@mipmap/blank_profile"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:id="@+id/verticalLine"
+                    android:layout_width="0.7dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@drawable/line_divider_black"
+                    app:layout_constraintStart_toEndOf="@+id/numberOfUpVotes"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/downVote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@+id/upVote"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintStart_toEndOf="@+id/verticalLine"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/down_vote_vec" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <Button
+                        android:id="@+id/three_dots"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="?attr/selectableItemBackground"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_more"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView

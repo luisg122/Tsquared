@@ -1,7 +1,6 @@
 package com.example.tsquared.Activities;
 
 import android.app.AlertDialog;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.example.tsquared.Adapters.QuestionItemAdapter;
-import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -37,18 +34,14 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
 
     private Button post;
     private ImageView cancel;
-    private SwitchCompat anonymous;
     private RequestQueue mRequestQueue;
 
-    private TextView postName;
     private TextView postCollege;
     private EditText topic;
     private EditText topicPost;
 
-    private String topicString;
+    private String postName;
     private String topicPostString;
-    private String postedByString;
-    private String collegeString;
     private boolean isAnon;
 
     private AlertDialog alertDialog;
@@ -68,26 +61,15 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setViews() {
-        postName    = (TextView)     findViewById(R.id.postName);
-        //postCollege = (TextView)     findViewById(R.id.postCollegeName);
-        //topic       = (EditText)     findViewById(R.id.topic);
         topicPost   = (EditText)     findViewById(R.id.topicPost);
-        //post        = (Button)       findViewById(R.id.submitPostButton);
-        //cancel      = (ImageView)    findViewById(R.id.cancelSubmitButton);
-        anonymous   = (SwitchCompat) findViewById(R.id.questionAnonymous);
     }
 
     private void setListeners(){
-        //post.setOnClickListener(this);
         cancel.setOnClickListener(this);
-        anonymous.setOnCheckedChangeListener(this);
     }
 
     private void loadFullNameAndCollege(){
-        String fullName = getIntent().getStringExtra("Full Name");
-        String college  = getIntent().getStringExtra("College");
-        postName.setText(fullName);
-        //postCollege.setText(college);
+        postName = getIntent().getStringExtra("Full Name");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -110,8 +92,6 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
             /*case R.id.cancelSubmitButton:
                 QuestionWindow.this.finish();
                 break;*/
-            case R.id.questionAnonymous:
-                break;
         }
     }
 
@@ -123,12 +103,9 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean getInfo() {
-        postedByString  = Objects.requireNonNull(postName.getText().toString());
-        collegeString   = Objects.requireNonNull(postCollege.getText().toString());
-        topicString     = Objects.requireNonNull(topic.getText().toString());
         topicPostString = Objects.requireNonNull(topicPost.getText().toString());
 
-        if(topicString.trim().isEmpty() || topicPostString.trim().isEmpty()){
+        if(topicPostString.trim().isEmpty()){
             return false;
         }
         return true;
@@ -137,12 +114,11 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
     private void takeDataToPost(){
 
         params = new RequestParams();
-        params.put("postedBy", postedByString);
+        params.put("postedBy", postName);
         params.put("content", topicPostString);
-        params.put("topic", topicString);
 
         if(isAnon) params.put("isAnonymous", 1);
-        else if(!isAnon) params.put("isAnonymous", 0);
+        else params.put("isAnonymous", 0);
 
         client = new AsyncHttpClient();
 

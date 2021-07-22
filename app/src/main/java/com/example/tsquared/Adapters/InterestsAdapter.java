@@ -15,7 +15,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tsquared.Models.InterestsModel;
-import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
 
 import java.util.ArrayList;
@@ -50,8 +49,7 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         holder.checked.setChecked(interests.isSelected());
     }
 
-    private void setAnimation(View viewToAnimate, int position)
-    {
+    private void setAnimation(View viewToAnimate, int position) {
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition)
         {
@@ -84,7 +82,7 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            onCheckClickListener.onCheckedClick(getAdapterPosition(), buttonView, isChecked);
+            onCheckClickListener.onCheckedClick(getLayoutPosition(), buttonView, isChecked);
         }
     }
 

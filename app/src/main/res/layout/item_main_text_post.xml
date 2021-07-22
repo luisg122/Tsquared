@@ -84,27 +84,12 @@
             app:layout_constraintTop_toBottomOf="@+id/lineDiv" />
 
         <TextView
-            android:id="@+id/QuestionName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="15dp"
-            android:text="Asked by John Doe"
-            android:textColor="?attr/textColor"
-            android:textSize="13sp"
-            android:textStyle="normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bubbleTag" />
-
-        <TextView
             android:id="@+id/questionContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:background="@color/transparent"
@@ -123,7 +108,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.432"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/QuestionName" />
+            app:layout_constraintTop_toBottomOf="@+id/bubbleTag" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/forumImage"
@@ -201,3 +186,21 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
+<!--
+
+
+        <TextView
+            android:id="@+id/QuestionName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:text="Asked by John Doe"
+            android:textColor="?attr/textColor"
+            android:textSize="13sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bubbleTag" />
+-->

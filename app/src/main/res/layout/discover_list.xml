@@ -19,10 +19,38 @@
             layout="@layout/share_link"/>
         <include
             layout="@layout/discover_card"/>
-        <include
-            layout="@layout/news_horizontal_scroll"/>
-        <include
-            layout="@layout/interests_horizontal_scroll"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="?attr/cardBackgroundColor"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="0dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/headlineTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:padding="5dp"
+                    android:text="Headlines"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="?attr/lightTextColor"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/newsRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/headlineTV"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 
@@ -31,11 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/people_list_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
 
@@ -52,3 +75,10 @@ tools:duration="1000">
         layout="@layout/shimmer_placeholder1"/>
 </LinearLayout>
 </com.facebook.shimmer.ShimmerFrameLayout>-->
+
+
+
+    <!---<include
+        layout="@layout/news_horizontal_scroll"/>
+    <include
+        layout="@layout/interests_horizontal_scroll"/>-->

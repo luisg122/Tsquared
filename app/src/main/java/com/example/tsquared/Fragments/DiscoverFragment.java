@@ -1,10 +1,12 @@
 package com.example.tsquared.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,27 +14,33 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.tsquared.Activities.DrawerActivity;
 import com.example.tsquared.Activities.MoreInterestsActivity;
 import com.example.tsquared.Activities.MoreNewsActivity;
 import com.example.tsquared.Activities.NewsArticleContainer;
 import com.example.tsquared.Activities.NewsWebView;
 import com.example.tsquared.Adapters.DiscoverViewPagerAdapter;
 import com.example.tsquared.Adapters.InterestsHorizontalAdapter;
+import com.example.tsquared.Adapters.MoreNewsAdapter;
 import com.example.tsquared.Adapters.NewsHorizontalScrollAdapter;
 import com.example.tsquared.Adapters.PeopleItemAdapter;
 import com.example.tsquared.Models.DiscoverImageModel;
 import com.example.tsquared.Models.InterestsHorizontalModel;
+import com.example.tsquared.Models.MoreNewsModel;
 import com.example.tsquared.Models.NewsHorizontalModel;
 import com.example.tsquared.Models.PeopleItemModel;
 import com.example.tsquared.R;
 import com.example.tsquared.ViewPagerTransition.DepthPageTransformer;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
@@ -44,23 +52,16 @@ import java.util.TimerTask;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DiscoverFragment extends Fragment
-        implements NewsHorizontalScrollAdapter.OnNewsListener, InterestsHorizontalAdapter.OnInterestListener,
-                   NewsHorizontalScrollAdapter.NewsMoreClickListener, InterestsHorizontalAdapter.InterestsMoreClickListener,
-                   DiscoverViewPagerAdapter.OnImageClickListener{
+        implements DiscoverViewPagerAdapter.OnImageClickListener, MoreNewsAdapter.OnMoreNewsListener{
 
     private View view;
-    private RecyclerView mainRv;
-    private PeopleItemAdapter adapter;
-    private ArrayList<PeopleItemModel> mArrayList;
     private CardView cardView;
     //private SwipeRefreshLayout swipeContainer;
 
-    private ArrayList<NewsHorizontalModel> newsArrayList;
-    private ArrayList<InterestsHorizontalModel> interestsArrayList;
     private RecyclerView newsRecyclerView;
-    private RecyclerView interestsRecyclerView;
-    private NewsHorizontalScrollAdapter newsHorizontalScrollAdapter;
-    private InterestsHorizontalAdapter interestsHorizontalAdapter;
+    private MoreNewsAdapter newsAdapter;
+    private ArrayList<MoreNewsModel> mArrayList;
+
     private NestedScrollView nestedScrollView;
     private LinkPromptBottomSheet bottomSheet;
     private Handler handler;
@@ -75,9 +76,7 @@ public class DiscoverFragment extends Fragment
     AsyncHttpClient client;
     String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showPeople";
 
-    public DiscoverFragment() {
-
-    }
+    public DiscoverFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,21 +91,17 @@ public class DiscoverFragment extends Fragment
         initializeHandler();
         invokeLinkBottomSheet();
         setUpDiscoverViewPager();
-        loadUpNewsRecyclerView();
-        loadUpInterestsRecyclerView();
+        setUpRecyclerView();
         //setUpSwipeContainer();
         //setUpRecyclerView();
         //loadListOfPeople();
         //setUpSwipeListener();
 
-        ViewCompat.setNestedScrollingEnabled(newsRecyclerView, false);
-        ViewCompat.setNestedScrollingEnabled(interestsRecyclerView, false);
         return view;
     }
 
     private void setUpViews() {
-        newsRecyclerView       = (RecyclerView)     view.findViewById(R.id.news_horizontal_recycler_view);
-        interestsRecyclerView  = (RecyclerView)     view.findViewById(R.id.interests_recycler_view);
+        newsRecyclerView       = (RecyclerView)     view.findViewById(R.id.newsRV);
         discoverCardImages     = (ViewPager2)       view.findViewById(R.id.discoverCardVP);
         nestedScrollView       = (NestedScrollView) view.findViewById(R.id.nestedScrollView                                                                                               );
         cardView               = (CardView)   view.findViewById(R.id.shareLink);
@@ -122,8 +117,7 @@ public class DiscoverFragment extends Fragment
             public void onClick(View v) {
                 if(bottomSheet == null || !bottomSheet.isVisible()){
                     bottomSheet = new LinkPromptBottomSheet();
-                    assert getFragmentManager() != null;
-                    bottomSheet.show(getFragmentManager(), "TAG");
+                    bottomSheet.show(requireActivity().getSupportFragmentManager(), bottomSheet.getTag());
                 }
             }
         });
@@ -168,122 +162,63 @@ public class DiscoverFragment extends Fragment
     private void dummyDiscoverImages(){
         discoverImages = new ArrayList<>();
         DiscoverImageModel discoverImageModel;
-        discoverImageModel = new DiscoverImageModel("https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://www.freewalldownload.com/amazing-river-wallpaper/picture-green-river-desktop-wallpapers-images-hd-download.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://insights.som.yale.edu/sites/default/files/styles/rectangle_xs/public/insights/background/What%20the%20Plunge%20in%20the%20Stock%20Market%20Means%20for%20Individual%20Investors.jpg?h=d0d46503&itok=vl15_CSn", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://www.reuters.com/resizer/vsRFGKTi9vWULwxZlnZkhbTmaLs=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/HKYMFSORGZJRHMWZ6YYOZO4MTY.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://www.freewalldownload.com/amazing-river-wallpaper/picture-green-river-desktop-wallpapers-images-hd-download.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://insights.som.yale.edu/sites/default/files/styles/rectangle_xs/public/insights/background/What%20the%20Plunge%20in%20the%20Stock%20Market%20Means%20for%20Individual%20Investors.jpg?h=d0d46503&itok=vl15_CSn", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://www.freewalldownload.com/amazing-river-wallpaper/picture-green-river-desktop-wallpapers-images-hd-download.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://www.reuters.com/resizer/vsRFGKTi9vWULwxZlnZkhbTmaLs=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/HKYMFSORGZJRHMWZ6YYOZO4MTY.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://www.freewalldownload.com/amazing-river-wallpaper/picture-green-river-desktop-wallpapers-images-hd-download.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://insights.som.yale.edu/sites/default/files/styles/rectangle_xs/public/insights/background/What%20the%20Plunge%20in%20the%20Stock%20Market%20Means%20for%20Individual%20Investors.jpg?h=d0d46503&itok=vl15_CSn", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://www.reuters.com/resizer/vsRFGKTi9vWULwxZlnZkhbTmaLs=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/HKYMFSORGZJRHMWZ6YYOZO4MTY.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
-        discoverImageModel = new DiscoverImageModel("https://www.freewalldownload.com/amazing-river-wallpaper/picture-green-river-desktop-wallpapers-images-hd-download.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
+        discoverImageModel = new DiscoverImageModel("https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "New York Times", "Congress rushes to push hugh relief stimulus package");
         discoverImages.add(discoverImageModel);
     }
 
-    private void loadUpNewsRecyclerView(){
-        fillDummyNewsRecyclerView();
-        RecyclerView.RecycledViewPool sharedPool = new RecyclerView.RecycledViewPool();
-        newsHorizontalScrollAdapter = new NewsHorizontalScrollAdapter(newsArrayList, getApplicationContext(), this, this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        linearLayoutManager.setInitialPrefetchItemCount(10);        // would only want 10 items in the horizontal scroll
-        newsRecyclerView.setLayoutManager(linearLayoutManager);
-        newsRecyclerView.setRecycledViewPool(sharedPool);
-        newsRecyclerView.setHasFixedSize(true);
-        newsRecyclerView.setAdapter(newsHorizontalScrollAdapter);
+    private void setUpRecyclerView(){
+        dummyDataSetUp();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+        newsAdapter = new MoreNewsAdapter(mArrayList, getApplicationContext(), this);
+        newsRecyclerView.setLayoutManager(layoutManager);
         newsRecyclerView.setNestedScrollingEnabled(false);
 
+        DividerItemDecoration divider = new DividerItemDecoration(newsRecyclerView.getContext(),
+                DividerItemDecoration.VERTICAL);
+        divider.setDrawable((Objects.requireNonNull(ContextCompat.getDrawable(Objects.requireNonNull(newsRecyclerView.getContext()),
+                R.drawable.line_divider_black))));
+        newsRecyclerView.addItemDecoration(divider);
+        newsRecyclerView.setAdapter(newsAdapter);
     }
 
-    private void loadUpInterestsRecyclerView(){
-        fillDummyInterestsRecyclerView();
-        RecyclerView.RecycledViewPool sharedPool = new RecyclerView.RecycledViewPool();
-        interestsHorizontalAdapter = new InterestsHorizontalAdapter(interestsArrayList, getApplicationContext(), this, this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        linearLayoutManager.setInitialPrefetchItemCount(10);       // would only want 10 items in the horizontal scroll
-        interestsRecyclerView.setLayoutManager(linearLayoutManager);
-        interestsRecyclerView.setRecycledViewPool(sharedPool);
-        interestsRecyclerView.setHasFixedSize(true);
-        interestsRecyclerView.setAdapter(interestsHorizontalAdapter);
-        interestsRecyclerView.setNestedScrollingEnabled(false);
+    private void dummyDataSetUp(){
+        mArrayList = new ArrayList<>();
+        mArrayList.add(new MoreNewsModel(" ", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "The Dow Jones trends negative after opening with small gains", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "The Dow Jones trends negative after opening with small gains", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "New York Times"));
+        mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
+        mArrayList.add(new MoreNewsModel(" ", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "The Dow Jones trends negative after opening with small gains", "New York Times"));
     }
 
-    private void fillDummyNewsRecyclerView(){
-        newsArrayList = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            newsArrayList.add(new NewsHorizontalModel(" "," ", "The Dow Jones trends negative after opening with small gains"));
-        }
-    }
-
-    private void fillDummyInterestsRecyclerView(){
-        interestsArrayList = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            interestsArrayList.add(new InterestsHorizontalModel(1, " ", "Computer Science"));
-        }
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void OnInterestClick(final int position) {
-        // must pass interest id
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(getApplicationContext(), NewsArticleContainer.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("interestID", interestsArrayList.get(position).getInterestID());
-                startActivity(intent);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        }, 150);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void OnNewsClick(final int position) {
-        // must pass url of article
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("articleURL", newsArrayList.get(position).getURL());
-                startActivity(intent);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-            }
-        }, 150);
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void OnNewsMoreButtonClick() {
-        Intent intent = new Intent(getApplicationContext(), MoreNewsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void OnInterestsMoreButtonClick() {
-        Intent intent = new Intent(getApplicationContext(), MoreInterestsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
 
     @Override
     public void onImageClick(final int position) {
@@ -295,9 +230,18 @@ public class DiscoverFragment extends Fragment
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtra("position", position);
                 startActivity(intent);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         }, 150);
+    }
+
+    @Override
+    public void onMoreNewsClick(int position) {
+        Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("articleURL", mArrayList.get(position).getURL());
+        startActivity(intent);
+        requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
     }
 
     @Override

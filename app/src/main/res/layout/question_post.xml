@@ -14,58 +14,18 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/floating_dialog_post"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/anonymousSection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/cardBackgroundColor">
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/questionAnonymous"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginBottom="3dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:theme="@style/Switch_style" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="7dp"
-                android:text="Anonymous"
-                android:textColor="?attr/lightTextColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/questionAnonymous" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/tile_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/line_divider_black"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/anonymousSection"
+            android:layout_height="?actionBarSize"
+            android:background="?attr/appBarColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:titleTextColor="@color/white"
+            app:titleMarginStart="15dp"/>
 
-        <!--###########################################################################-->
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -91,6 +51,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginTop="20dp"
                     android:background="@color/transparent"
                     android:textColorHighlight="@color/mainButton"
                     android:ems="10"
@@ -118,6 +79,7 @@
                         android:layout_height="match_parent">
 
                         <Button
+                            android:id="@+id/addButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"

@@ -2,7 +2,8 @@
     android:width="35dp"
     android:height="35dp"
     android:viewportWidth="512"
-    android:viewportHeight="640">
+    android:viewportHeight="640"
+    android:tint="?attr/tintDrawableColor">
   <path
       android:fillColor="?attr/tintDrawableColor"
       android:pathData="M128,320l128,-128l128,128z"/>

@@ -20,24 +20,27 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:text="John Doe"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/checkOutProfile"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+
+    <Button
         android:id="@+id/checkOutProfile"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/dialog_select"
         android:text="view your profile"
-        android:textColor="#ffffff"
-        android:textSize="17sp"
-        android:typeface="serif"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 

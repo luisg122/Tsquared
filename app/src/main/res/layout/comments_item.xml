@@ -4,28 +4,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginBottom="5dp">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/threeDots"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <Button
-            android:id="@+id/three_dots"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="?attr/selectableItemBackground"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_more_vert"
-            android:layout_gravity="center"/>
-    </FrameLayout>
+        app:srcCompat="@drawable/ic_more_vert" />
+
+    <ImageView
+        android:id="@+id/reply"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/threeDots"
+        app:layout_constraintTop_toBottomOf="@+id/commentContent"
+        app:srcCompat="@drawable/ic_reply_24" />
+
 
     <ImageView
         android:id="@+id/upVote"
@@ -40,7 +53,7 @@
         android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
-        app:srcCompat="@drawable/upvote_white" />
+        app:srcCompat="@drawable/up_vote_vec" />
 
     <ImageView
         android:id="@+id/downVote"
@@ -55,7 +68,7 @@
         android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/numberOfUpVotes"
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
-        app:srcCompat="@drawable/downvote_white" />
+        app:srcCompat="@drawable/down_vote_vec" />
 
     <ImageView
         android:id="@+id/subComments"
@@ -65,10 +78,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="12dp"
-        android:padding="2dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+        android:padding="2dp"
         app:layout_constraintStart_toEndOf="@+id/downVote"
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
         app:srcCompat="@drawable/ic_comments_sub" />
@@ -81,7 +94,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="13dp"
         android:text="3"
-        android:textColor="@color/white"
+        android:textColor="?attr/lightTextColor"
         android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/subComments"
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
@@ -92,19 +105,19 @@
         android:id="@+id/replies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:text="3 Replies"
-        android:textStyle="normal"
-        android:textSize="12sp"
-        android:textColor="#b2b2ff"
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
-        android:visibility="visible"
-        android:background="?attr/selectableItemBackground"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+        android:padding="2dp"
+        android:text="3 Replies"
+        android:textColor="?attr/fabColor"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/upVote"
@@ -116,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:ellipsize="end"
@@ -128,8 +141,8 @@
         android:minLines="1"
         android:singleLine="false"
         android:text="Scrum is an agile process framework for managing complex knowledge work in Software Development"
-        android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textColor="?attr/lightTextColor"
+        android:textSize="14sp"
 
         app:fontFamily="sans-serif"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +157,7 @@
         android:layout_marginLeft="14dp"
         android:layout_marginTop="15dp"
         android:text="Brian Doe"
-        android:textColor="@color/white"
+        android:textColor="?attr/lightTextColor"
         android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/commentIV"
         app:layout_constraintTop_toTopOf="parent"
@@ -158,7 +171,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="13dp"
         android:text="15"
-        android:textColor="@color/white"
+        android:textColor="?attr/lightTextColor"
         android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/upVote"
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
@@ -172,7 +185,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:text="12/6/2019"
-        android:textColor="@color/white"
+        android:textColor="?attr/lightTextColor"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -189,5 +202,4 @@
         android:src="@mipmap/blank_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

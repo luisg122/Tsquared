@@ -3,6 +3,7 @@ package com.example.tsquared.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
@@ -18,9 +19,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
+import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
@@ -56,6 +63,7 @@ public class DrawerActivity extends AppCompatActivity {
     private CustomViewPager viewPager;
     private SwitchCompat switchToggle;
     private Handler mDrawerActionHandler;
+    private AlertDialog alertDialog;
 
     public static ExtendedFloatingActionButton fab;
     private Runnable runnable;
@@ -80,6 +88,8 @@ public class DrawerActivity extends AppCompatActivity {
         setUpDarkModeSwitch();
         setupFloatingButtonAction();
         // setProfileName(navigationView);
+        viewProfileListener();
+
         viewPagerInit();
         setUpDrawer();
         initializeHandler();
@@ -252,11 +262,56 @@ public class DrawerActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else
-            super.onBackPressed();
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            openDialog();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void openDialog(){
+        // Change from AlertDialog to Dialog for more compact features
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialog);
+        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
+        View view2 = layoutInflaterAndroid.inflate(R.layout.alert_dialog, null);
+        TextView textView = (TextView) view2.findViewById(R.id.Quitprompt);
+
+        textView.setText("Do you want to exit the app?");
+
+        builder.setCustomTitle(view2);
+        builder.setCancelable(true);
+
+        alertDialog = builder.create();
+        alertDialog.show();
+
+        Window window = alertDialog.getWindow();
+        assert window != null;
+        window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        Button quitButton = (Button) alertDialog.findViewById(R.id.continueButton);
+        Button continueButton = (Button) alertDialog.findViewById(R.id.quitButton);
+
+        assert quitButton != null;
+        quitButton.setText("Yes");
+
+        assert continueButton != null;
+        continueButton.setText("No");
+
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        quitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                finish();
+            }
+        });
     }
 
     @Override
@@ -304,36 +359,32 @@ public class DrawerActivity extends AppCompatActivity {
             profileName = (TextView) headerView.findViewById(R.id.profileName);
             profileName.setText(fullName);
         }
+    }
 
-        else if(intent.hasExtra("map1")){
-            HashMap<String, String> hashMap;
-            hashMap = (HashMap<String, String>)intent.getSerializableExtra("map1");
-            String firstName = hashMap.get("First Name");
-            String lastName  = hashMap.get("Last Name");
-            college          = hashMap.get("College");
-            email            = hashMap.get("Email");
-            firstNameofUser  = firstName;
 
-            assert firstName != null;
-            assert lastName  != null;
-            fullName = firstName + " " + lastName;
+    private void viewProfileListener(){
+        View headerView = navigationView.getHeaderView(0);
+        Button viewProfile = (Button) headerView.findViewById(R.id.checkOutProfile);
+        viewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Handler handler = new Handler(Looper.getMainLooper());
 
-            View headerView = navigationView.getHeaderView(0);
-            profileName = (TextView) headerView.findViewById(R.id.profileName);
-            profileName.setText(fullName);
-        }
-        else if (!(intent.hasExtra("map") || intent.hasExtra("map1"))){
-            String firstName = PreferenceUtils.getFirstName(this);
-            String lastName  = PreferenceUtils.getLastName(this);
-            college          = PreferenceUtils.getCollege(this);
-            email            = PreferenceUtils.getEmail(this);
-            firstNameofUser  = firstName;
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
 
-            fullName = firstName + " " + lastName;
-            View headerView = navigationView.getHeaderView(0);
-            profileName = (TextView) headerView.findViewById(R.id.profileName);
-            profileName.setText(fullName);
-        }
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(DrawerActivity.this, Profile.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    }
+                }, 250);
+            }
+        });
     }
 
     // when logging out, change the values of user credentials, so as to avoid keeping
@@ -391,24 +442,12 @@ public class DrawerActivity extends AppCompatActivity {
         super.onPause();
         fab.hide();
     }
+
+    @Override
+    public void finish(){
+        super.finish();
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
 }
-
-/*
-  @Override
-  public boolean onNavigationItemSelected(final MenuItem menuItem) {
-    // update highlighted item in the navigation menu
-    menuItem.setChecked(true);
-    mNavItemId = menuItem.getItemId();
-
-    // allow some time after closing the drawer before performing real navigation
-    // so the user can see what is happening
-    mDrawerLayout.closeDrawer(GravityCompat.START);
-    mDrawerActionHandler.postDelayed(new Runnable() {
-      @Override
-      public void run() {
-        navigate(menuItem.getItemId());
-      }
-    }, DRAWER_CLOSE_DELAY_MS);
-    return true;
-  }
- */

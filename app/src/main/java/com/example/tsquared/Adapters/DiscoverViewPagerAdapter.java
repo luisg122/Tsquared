@@ -73,7 +73,7 @@ public class DiscoverViewPagerAdapter extends RecyclerView.Adapter<DiscoverViewP
 
         @Override
         public void onClick(View v) {
-            onImageClickListener.onImageClick(getAdapterPosition());
+            onImageClickListener.onImageClick(getLayoutPosition());
         }
     }
 

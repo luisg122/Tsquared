@@ -5,63 +5,95 @@
     android:id="@+id/moreNewsLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="25dp"
     android:background="?attr/selectableItemBackground">
 
-    <ImageView
-        android:id="@+id/imageNewsStaggered"
-        android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:adjustViewBounds="true"
-        android:maxHeight="210dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"/>
-
-    <RelativeLayout
+    <TextView
+        android:id="@+id/source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageNewsStaggered"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
+        android:text="New York Times"
+        android:textColor="?attr/lightTextColor"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:singleLine="true"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageNewsStaggered"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/source"
+        android:src="@mipmap/blank_profile"/>
 
-        <TextView
-            android:id="@+id/source"
+    <TextView
+        android:id="@+id/textViewStaggered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        android:padding="5dp"
+        android:maxLines="3"
+        android:singleLine="false"
+        android:ellipsize="end"
+        android:text="Today the dow has suffered a bloodshed when job reporting had turned ut to be lower than expected"
+        android:textColor="?attr/lightTextColor"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:lineSpacingExtra="3dp"
+        android:layout_below="@+id/source"
+        android:layout_toLeftOf="@+id/imageNewsStaggered"
+        android:layout_toStartOf="@+id/imageNewsStaggered"/>
+
+    <TextView
+        android:id="@+id/datePublished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewStaggered"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="25dp"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="07-14"
+        android:textColor="?attr/lightTextColor"
+        android:textSize="12sp"
+        android:textStyle="normal" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/imageNewsStaggered"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
+        <Button
+            android:id="@+id/three_dots"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New York Times"
-            android:textColor="?attr/lightTextColor"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:padding="5dp"
-            android:singleLine="true"/>
-
-        <TextView
-            android:id="@+id/textViewStaggered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_horizontal"
-            android:padding="5dp"
-            android:maxLines="2"
-            android:singleLine="false"
-            android:ellipsize="end"
-            android:text="Today the dow has suffered a bloodshed when job reporting had turned ut to be lower than expected"
-            android:textColor="?attr/lightTextColor"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_below="@+id/source"/>
-    </RelativeLayout>
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_more"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 </RelativeLayout>

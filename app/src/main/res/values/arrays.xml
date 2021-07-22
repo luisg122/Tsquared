@@ -19,4 +19,18 @@
         <item>learn</item>
     </string-array>
 
+    <!-- Color codes -->
+    <array name="color_codes">
+        <item>@color/lightPurple</item>
+        <item>@color/light_gray</item>
+        <item>@color/groupButton</item>
+        <item>@color/pressedSub</item>
+        <item>@color/ideasPrompt</item>
+        <item>@color/moonColorYellow</item>
+        <item>@color/title_text_color</item>
+        <item>@color/placeholder</item>
+        <item>@color/card_bg</item>
+        <item>@color/darkOrange</item>
+    </array>
+
 </resources>

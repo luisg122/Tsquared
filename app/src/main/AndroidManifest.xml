@@ -62,7 +62,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.DetailActivity"
+            android:name=".Activities.AnswersActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -167,8 +167,13 @@
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.AnswerCommentsSection"
-            android:theme="@style/CommentsTheme"
             android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.ReplyComments"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:windowIsFloating="false"
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.UserBookMarks"

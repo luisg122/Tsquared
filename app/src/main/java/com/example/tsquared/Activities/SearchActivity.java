@@ -1,15 +1,10 @@
 package com.example.tsquared.Activities;
 
-import android.animation.Animator;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import androidx.annotation.RequiresApi;
@@ -22,7 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.tsquared.Adapters.SearchResultsAdapter;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
 import com.example.tsquared.Fragments.SearchQuestionsFragment;
-import com.example.tsquared.Models.QuestionItemModel;
+import com.example.tsquared.Models.QuestionItemTextModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.google.android.material.tabs.TabLayout;
@@ -43,7 +38,7 @@ import static java.util.Objects.requireNonNull;
 public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView imageView;
-    private ArrayList<QuestionItemModel> questionList;
+    private ArrayList<QuestionItemTextModel> questionList;
     private View background;
     private RequestParams params;
     private AsyncHttpClient client;
@@ -51,7 +46,7 @@ public class SearchActivity extends AppCompatActivity {
 
     RecyclerView mainRv;
     SearchResultsAdapter adapter;
-    ArrayList<QuestionItemModel> mArrayList;
+    ArrayList<QuestionItemTextModel> mArrayList;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -145,11 +140,11 @@ public class SearchActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
                 Log.e("Keywords Found In ", response.toString());
-                ArrayList<QuestionItemModel> questionList = new ArrayList<>();
+                ArrayList<QuestionItemTextModel> questionList = new ArrayList<>();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject object = response.getJSONObject(i);
-                        QuestionItemModel question = QuestionItemModel.fromJson(object);
+                        QuestionItemTextModel question = QuestionItemTextModel.fromJson(object);
                         question.setProfileImage(R.mipmap.blank_profile);
                         questionList.add(question);
                     } catch (JSONException e) {

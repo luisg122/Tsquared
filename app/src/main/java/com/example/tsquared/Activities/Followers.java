@@ -7,12 +7,19 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.example.tsquared.R;
+import com.example.tsquared.SharedPreference.DarkSharedPref;
 
 public class Followers extends AppCompatActivity {
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedBundleState){
+        if(DarkSharedPref.isDark){
+            setTheme(R.style.DarkTheme);
+        }
+        else {
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
         super.onCreate(savedBundleState);
         setContentView(R.layout.list_following_followers);
         setViews();

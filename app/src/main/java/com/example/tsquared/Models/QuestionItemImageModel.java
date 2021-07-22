@@ -1,36 +1,54 @@
 package com.example.tsquared.Models;
 
-import android.graphics.drawable.Drawable;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class QuestionItemModel {
-
+public class QuestionItemImageModel {
     public  int      isAnonymous;
     public  String   name;
     public  String   topic;
     public  String   question;
     public  String   dateSubmitted;
     public  String   responseNum;
-    public  int profileImage;
+    public  String   profileImage;
+    public  String   imageContent;
 
-    QuestionItemModel() {
+    QuestionItemImageModel() {
 
     }
-    public QuestionItemModel(String name, String topic, String question,
-                             String dateSubmitted, String responseNum, int profileImage){
-        this.name     = name;
+    public QuestionItemImageModel(String topic, String question,
+                                 String dateSubmitted, String responseNum, String profileImage, String imageContent){
         this.topic    = topic;
         this.question = question;
         this.dateSubmitted = dateSubmitted;
         this.responseNum   = responseNum;
         this.profileImage  = profileImage;
+        this.imageContent  = imageContent;
 
+        if(this.responseNum.equals("1"))
+            this.responseNum = this.responseNum + " Answer";
+        else
+            this.responseNum = this.responseNum + " Answers";
     }
 
-    public static QuestionItemModel fromJson(JSONObject jsonObject) throws JSONException {
-        QuestionItemModel question = new QuestionItemModel();
+    public String getImageContent() {
+        return imageContent;
+    }
+
+    public void setImageContent(String imageContent) {
+        this.imageContent = imageContent;
+    }
+
+    public int getIsAnonymous() {
+        return isAnonymous;
+    }
+
+    public void setIsAnonymous(int isAnonymous) {
+        this.isAnonymous = isAnonymous;
+    }
+
+    public static QuestionItemTextModel fromJson(JSONObject jsonObject) throws JSONException {
+        QuestionItemTextModel question = new QuestionItemTextModel();
         question.isAnonymous   = jsonObject.getInt("isAnonymous");
         question.name          = jsonObject.getString("PostedBy");
         question.topic         = jsonObject.getString("QuestionDetails");
@@ -89,11 +107,11 @@ public class QuestionItemModel {
         this.dateSubmitted = dateSubmitted;
     }
 
-    public int getProfileImage() {
+    public String getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(int profileImage) {
+    public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
 

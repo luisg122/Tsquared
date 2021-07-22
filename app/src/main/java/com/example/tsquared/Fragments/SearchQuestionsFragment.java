@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tsquared.Adapters.SearchResultsAdapter;
-import com.example.tsquared.Models.QuestionItemModel;
+import com.example.tsquared.Models.QuestionItemTextModel;
 import com.example.tsquared.R;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class SearchQuestionsFragment extends Fragment {
     private View view;
     RecyclerView mainRv;
     SearchResultsAdapter adapter;
-    ArrayList<QuestionItemModel> mArrayList;
+    ArrayList<QuestionItemTextModel> mArrayList;
 
     public SearchQuestionsFragment(){}
     @Override

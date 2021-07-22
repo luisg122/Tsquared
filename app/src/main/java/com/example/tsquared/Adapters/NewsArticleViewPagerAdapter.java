@@ -1,6 +1,7 @@
 package com.example.tsquared.Adapters;
 
 import android.content.Context;
+import android.graphics.BlurMaskFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tsquared.Models.NewsArticlesViewModel;
 import com.example.tsquared.R;
+import com.example.tsquared.Utils.BlurTransformation;
 
 import java.util.ArrayList;
 
@@ -41,9 +44,15 @@ public class NewsArticleViewPagerAdapter extends RecyclerView.Adapter<NewsArticl
         NewsArticlesViewModel newsArticlesViewModel = mArrayList.get(position);
         // it would probably be a wise idea to fully understand the Glide dependency
         Glide.with(mContext)
-                .load("https://images.squarespace-cdn.com/content/v1/52a0da60e4b0dfa4e47795de/1535498535340-PVPKE7556TCT3PE81QS1/ke17ZwdGBToddI8pDm48kHJjM-Evnp5g-1kf5Yv15cUUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcpWKe3KzaCrFDKPR1a1Ob8xobjReaxMuaKtrvUDoDmPO9EsdBHei1w8jR6w0UZiby/Errigal%2C-autumn-hues-X2.jpg")
+                .load(newsArticlesViewModel.getImageOfNewsArticle())
                 .fitCenter()
                 .into(holder.newsArticleImage);
+
+        Glide.with(mContext)
+                .load(newsArticlesViewModel.getImageOfNewsArticle())
+                .transform(new BlurTransformation(mContext))
+                .into(holder.blurredImage);
+
 
         holder.publisher.setText(newsArticlesViewModel.source);
         holder.title.setText(newsArticlesViewModel.titleOfNewsArticle);
@@ -57,21 +66,25 @@ public class NewsArticleViewPagerAdapter extends RecyclerView.Adapter<NewsArticl
 
     public class NewsViewPagerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView newsArticleImage;
+        private ImageView blurredImage;
         private TextView  publisher;
         private TextView  title;
         private TextView  firstLines;
+        private CardView  readMore;
         OnNewsClickListener onNewsClickListener;
 
         public NewsViewPagerViewHolder(@NonNull View view, OnNewsClickListener onNewsClickListener) {
             super(view);
             newsArticleImage = (ImageView) view.findViewById(R.id.imageArticleContainer);
+            blurredImage     = (ImageView) view.findViewById(R.id.blurredImage);
             publisher        = (TextView)  view.findViewById(R.id.source);
             title            = (TextView)  view.findViewById(R.id.title);
             firstLines       = (TextView)  view.findViewById(R.id.firstFewLines);
+            readMore         = (CardView)  view.findViewById(R.id.clickToReadMore);
 
             this.onNewsClickListener = onNewsClickListener;
 
-            newsArticleImage.setOnClickListener(this);
+            readMore.setOnClickListener(this);
         }
 
         @Override

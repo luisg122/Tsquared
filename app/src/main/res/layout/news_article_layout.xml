@@ -10,51 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:adjustViewBounds="true"
-        android:maxHeight="350dp"
-        android:scaleType="centerCrop"/>
+        android:maxHeight="250dp"
+        android:scaleType="centerCrop"
+        android:background="?android:attr/selectableItemBackground" />
 
     <!-- Section regarding information of the article (like a preview) -->
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/likeArticleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageArticleContainer"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="20dp"
-        android:layout_toStartOf="@+id/dislikeArticleButton"
-        android:layout_toLeftOf="@+id/dislikeArticleButton"
-        android:clickable="true"
-        android:focusable="true"
-        app:backgroundTint="#3a434d"
-        app:elevation="0dp"
-        app:fabSize="mini"
-        app:srcCompat="@drawable/ic_share_24dp"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/dislikeArticleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageArticleContainer"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="20dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:backgroundTint="#3a434d"
-        app:elevation="0dp"
-        app:fabSize="mini"
-        app:srcCompat="@drawable/ic_bookmarks"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_article_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="0dp"
         android:layout_below="@id/imageArticleContainer"
+        android:layout_above="@+id/clickToReadMore"
         app:cardElevation="0dp"
         app:cardCornerRadius="0dp"
         app:cardBackgroundColor="?attr/cardBackgroundColor">
@@ -69,11 +37,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="25dp"
                 android:padding="5dp"
                 android:text="New York Times"
                 android:textColor="?attr/lightTextColor"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -85,7 +53,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:padding="5dp"
                 android:text="The dow jones has now reversed all of its early gains"
                 android:textColor="?attr/lightTextColor"
@@ -101,89 +69,156 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
                 android:layout_marginTop="5dp"
-                android:text="Dow Jones futures along with other major indexes were in the green but have long since reversed course"
+                android:lineSpacingExtra="3dp"
+                android:text="Dow Jones futures along with other major indexes were in the green but have long since reversed course. However, with unemployment on the rise, and small businesses going bankrupt, the rich have become even more rich."
                 android:textColor="?attr/lightTextColor"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="15dp"
                 android:padding="5dp"
                 android:textSize="15sp"
-                android:maxLines="3"
+                android:maxLines="5"
                 android:ellipsize="end"
                 android:singleLine="false"/>
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- buttons section (possibly a text-summarizer feature -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/clickToReadMore"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:layout_below="@+id/card_view_article_info"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="0dp"
-        app:cardBackgroundColor="?attr/cardBackgroundColor">
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="0dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/comments"
+            <ImageView
+                android:id="@+id/blurredImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:tint="#66000000"/>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
+                android:text="Tap here to read more . . ."
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginVertical="20dp"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/news_button_style"
-                android:elevation="0dp"
-                android:text="comments"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp">
-
-                <ImageButton
-                    android:id="@+id/likedButton"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:background="@drawable/left_half_button"
-                    android:elevation="0dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/upvote_white"/>
-
-                <ImageButton
-                    android:id="@+id/disButton"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_toEndOf="@+id/likedButton"
-                    android:layout_toRightOf="@+id/likedButton"
-                    android:background="@drawable/right_half_button"
-                    android:elevation="0dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/downvote_white" />
-
-            </RelativeLayout>
-
-
+                app:srcCompat="@drawable/ic_right_arrow"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
+
+<!--
+<androidx.cardview.widget.CardView
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_marginTop="0dp"
+android:layout_below="@+id/card_view_article_info"
+app:cardElevation="0dp"
+app:cardCornerRadius="0dp"
+app:cardBackgroundColor="?attr/cardBackgroundColor">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/lineDiv"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/line_divider_black"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/lineDiv"
+        android:layout_marginTop="45dp">
+
+        <ImageButton
+            android:id="@+id/likedButton"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/left_half_button"
+            android:elevation="0dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/upvote_white" />
+
+        <ImageButton
+            android:id="@+id/disButton"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/likedButton"
+            android:layout_toRightOf="@+id/likedButton"
+            android:background="@drawable/right_half_button"
+            android:elevation="0dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/downvote_white" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/likeArticleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lineDiv"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_toStartOf="@+id/dislikeArticleButton"
+        android:layout_toLeftOf="@+id/dislikeArticleButton"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="?attr/fabColor"
+        app:rippleColor="@color/light_gray"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_share_24dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/dislikeArticleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lineDiv"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="?attr/fabColor"
+        app:rippleColor="@color/light_gray"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_bookmarks" />
+</RelativeLayout>
+</androidx.cardview.widget.CardView>
+-->
