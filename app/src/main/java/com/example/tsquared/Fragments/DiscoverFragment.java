@@ -60,7 +60,7 @@ public class DiscoverFragment extends Fragment
 
     private RecyclerView newsRecyclerView;
     private MoreNewsAdapter newsAdapter;
-    private ArrayList<MoreNewsModel> mArrayList;
+    private ArrayList<Object> mArrayList;
 
     private NestedScrollView nestedScrollView;
     private LinkPromptBottomSheet bottomSheet;
@@ -89,8 +89,8 @@ public class DiscoverFragment extends Fragment
         view = inflater.inflate(R.layout.discover_list, container, false);
         setUpViews();
         initializeHandler();
-        invokeLinkBottomSheet();
-        setUpDiscoverViewPager();
+        //invokeLinkBottomSheet();
+        //setUpDiscoverViewPager();
         setUpRecyclerView();
         //setUpSwipeContainer();
         //setUpRecyclerView();
@@ -102,15 +102,16 @@ public class DiscoverFragment extends Fragment
 
     private void setUpViews() {
         newsRecyclerView       = (RecyclerView)     view.findViewById(R.id.newsRV);
-        discoverCardImages     = (ViewPager2)       view.findViewById(R.id.discoverCardVP);
-        nestedScrollView       = (NestedScrollView) view.findViewById(R.id.nestedScrollView                                                                                               );
-        cardView               = (CardView)   view.findViewById(R.id.shareLink);
+        // discoverCardImages     = (ViewPager2)       view.findViewById(R.id.discoverCardVP);
+        // nestedScrollView       = (NestedScrollView) view.findViewById(R.id.nestedScrollView                                                                                               );
+        // cardView               = (CardView)   view.findViewById(R.id.shareLink);
     }
 
     private void initializeHandler(){
         handler = new Handler(Looper.getMainLooper());
     }
 
+    /*
     private void invokeLinkBottomSheet(){
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +123,8 @@ public class DiscoverFragment extends Fragment
             }
         });
     }
+
+    
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setUpDiscoverViewPager() {
@@ -157,7 +160,7 @@ public class DiscoverFragment extends Fragment
             }
             discoverCardImages.setCurrentItem(discoverCardImages.getCurrentItem() + 1, true);
         }
-    };
+    };*/
 
     private void dummyDiscoverImages(){
         discoverImages = new ArrayList<>();
@@ -184,23 +187,37 @@ public class DiscoverFragment extends Fragment
         discoverImages.add(discoverImageModel);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setUpRecyclerView(){
         dummyDataSetUp();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         newsAdapter = new MoreNewsAdapter(mArrayList, getApplicationContext(), this);
         newsRecyclerView.setLayoutManager(layoutManager);
-        newsRecyclerView.setNestedScrollingEnabled(false);
 
-        DividerItemDecoration divider = new DividerItemDecoration(newsRecyclerView.getContext(),
+        /*DividerItemDecoration divider = new DividerItemDecoration(newsRecyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
         divider.setDrawable((Objects.requireNonNull(ContextCompat.getDrawable(Objects.requireNonNull(newsRecyclerView.getContext()),
                 R.drawable.line_divider_black))));
-        newsRecyclerView.addItemDecoration(divider);
+        newsRecyclerView.addItemDecoration(divider);*/
+
         newsRecyclerView.setAdapter(newsAdapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void dummyDataSetUp(){
         mArrayList = new ArrayList<>();
+
+        // setup the share link component
+        // mArrayList.add(new LinkPromptBottomSheet());
+
+        // setup the data for the viewpager component
+        // dummyDiscoverImages();
+        // mArrayList.add(discoverImages);
+
+        // headline prompt
+        mArrayList.add("Headlines");
+
+        // lastly, setup the data for today's headlines
         mArrayList.add(new MoreNewsModel(" ", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
         mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "New York Times"));
         mArrayList.add(new MoreNewsModel(" ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
@@ -236,10 +253,19 @@ public class DiscoverFragment extends Fragment
     }
 
     @Override
+    public void shareLinkClick(int position, LinkPromptBottomSheet bottomSheet) {
+        if(bottomSheet == null || !bottomSheet.isAdded()){
+            bottomSheet = new LinkPromptBottomSheet();
+            bottomSheet.show(requireActivity().getSupportFragmentManager(), bottomSheet.getTag());
+        }
+    }
+
+    @Override
     public void onMoreNewsClick(int position) {
+        MoreNewsModel moreNewsModel = (MoreNewsModel) mArrayList.get(position);
         Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("articleURL", mArrayList.get(position).getURL());
+        intent.putExtra("articleURL", moreNewsModel.getURL());
         startActivity(intent);
         requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
     }

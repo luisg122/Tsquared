@@ -158,7 +158,7 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         dummyData();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 
-        adapter = new AnswerAdapter(mArrayList, getApplicationContext(), this, getIntent());
+        adapter = new AnswerAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setLayoutManager(layoutManager);
         mainRv.setHasFixedSize(false);
         mainRv.setItemViewCacheSize(20);
@@ -196,6 +196,8 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
 
     private void dummyData(){
         mArrayList  = new ArrayList<>();
+
+        mArrayList.add(getIntent());
         for(int i = 0; i < 20; i++){
             AnswerModel answerItem = new AnswerModel("John Doe", "polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition, " +
                     "subtraction, multiplication, and non-negative integer exponentiation of variables."
@@ -507,6 +509,27 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
                 }
             }
         }
+    }
+
+    @Override
+    public void imageOneClick(int position, int imagePos) {
+        Intent intent = new Intent(AnswersActivity.this, AnswerImagesActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void imageTwoClick(int position, int imagePos) {
+        Intent intent = new Intent(AnswersActivity.this, AnswerImagesActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void moreImageClick(int position, int imagePos) {
+        Intent intent = new Intent(AnswersActivity.this, AnswerImagesActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 }
 

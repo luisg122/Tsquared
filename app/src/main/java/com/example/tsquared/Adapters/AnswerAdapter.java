@@ -44,7 +44,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private int lastPosition = -1;
 
 
-    public AnswerAdapter(ArrayList<Object> mArrayList, Context mcontext, OnCommentsClickListener onCommentsClickListener, Intent intent){
+    public AnswerAdapter(ArrayList<Object> mArrayList, Context mcontext, OnCommentsClickListener onCommentsClickListener){
         this.mArrayList = mArrayList;
         this.mcontext   = mcontext;
         this.onCommentsClickListener = onCommentsClickListener;
@@ -218,7 +218,10 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemViewType(int position){
         if(!mArrayList.isEmpty()) {
             Object obj = mArrayList.get(position);
-            if (position == 0) return R.layout.answer_item_question;
+            if (position == 0) {
+                intent = (Intent) mArrayList.get(position);  // get the Intent
+                return R.layout.answer_item_question;
+            }
 
             else if (obj instanceof AnswerModel) return R.layout.answer_view;
 
@@ -404,6 +407,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             commentsCard.setOnClickListener(this);
             upVote.setOnClickListener(this);
             downVote.setOnClickListener(this);
+            image1.setOnClickListener(this);
+            image2.setOnClickListener(this);
+            moreImages.setOnClickListener(this);
         }
 
 
@@ -414,6 +420,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             else if(id == R.id.commentsSection) onCommentsClickListener.OnCommentsClick(getLayoutPosition());
             else if(id == R.id.upVote) onCommentsClickListener.upVote(getLayoutPosition(), v);
             else if(id == R.id.downVote) onCommentsClickListener.downVote(getLayoutPosition(), v);
+            else if(id == R.id.image1) onCommentsClickListener.imageOneClick(getLayoutPosition(), 0);
+            else if(id == R.id.image2) onCommentsClickListener.imageTwoClick(getLayoutPosition(), 1);
+            else if(id == R.id.moreImages) onCommentsClickListener.moreImageClick(getLayoutPosition(), 2);
         }
 
         @Override
@@ -448,6 +457,10 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void textExpanded(int position, View view, RelativeLayout relativeLayout, TextView textView, ImageView imageView);
         void textCollapsed(int position, View view, RelativeLayout relativeLayout, TextView textView, ImageView imageView);
         void textExceedMaxLines(int position, View view, RelativeLayout relativeLayout, TextView textView, ImageView imageView);
+
+        void imageOneClick(int position, int imagePos);
+        void imageTwoClick(int position, int imagePos);
+        void moreImageClick(int position, int imagePos);
 
     }
 }

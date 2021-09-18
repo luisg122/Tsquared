@@ -36,12 +36,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AnswerCommentsSection extends AppCompatActivity implements CommentsAdapter.OnReplyListener {
-    private ArrayList<CommentsModel> comments;
+    private ArrayList<Object> comments;
     private CommentsAdapter adapter;
     private RecyclerView recyclerView;
     private Toolbar toolbar;
     private Handler handler;
-    private ConstraintLayout addComment;
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -59,7 +58,6 @@ public class AnswerCommentsSection extends AppCompatActivity implements Comments
         setUpViews();
         setUpToolbar();
         setUpToolbarListener();
-        postCommentListener();
         setUpRecyclerView();
         initializeHandler();
     }
@@ -67,7 +65,6 @@ public class AnswerCommentsSection extends AppCompatActivity implements Comments
     private void setUpViews(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.commentsList);
-        addComment = (ConstraintLayout) findViewById(R.id.postCommentPrompt);
     }
 
     private void setUpToolbar() {
@@ -81,19 +78,6 @@ public class AnswerCommentsSection extends AppCompatActivity implements Comments
             @Override
             public void onClick(View v) {
                 onBackPressed();
-            }
-        });
-    }
-
-    private void postCommentListener(){
-        addComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CommentBottomSheet bottomSheet = null;
-                if(bottomSheet == null || !bottomSheet.isVisible()){
-                    bottomSheet = new CommentBottomSheet();
-                    bottomSheet.show(getSupportFragmentManager(), "ReplyBottomSheet");
-                }
             }
         });
     }
@@ -123,18 +107,34 @@ public class AnswerCommentsSection extends AppCompatActivity implements Comments
 
     private void dummyDataSetUp(){
         comments = new ArrayList<>();
+        comments.add(new CommentBottomSheet());
         for(int i = 0; i < 10; i++){
             comments.add(new CommentsModel("John Smith", "07/11/2021", "I agree with this answer, however I feel like it's too elementary"));
         }
     }
 
     @Override
+    public void onPostCommentClick(int position, CommentBottomSheet commentBottomSheet) {
+        if(commentBottomSheet == null || !commentBottomSheet.isAdded()){
+            commentBottomSheet = new CommentBottomSheet();
+            commentBottomSheet.show(getSupportFragmentManager(), "ReplyBottomSheet");
+        }
+    }
+
+    @Override
     public void onReplyClick(int position) {
+        CommentsModel commentsModel = (CommentsModel) comments.get(position);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(AnswerCommentsSection.this, ReplyComments.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("commentId", "39320");
+                intent.putExtra("name", commentsModel.getName());
+                intent.putExtra("date", commentsModel.getDate());
+                intent.putExtra("comment", commentsModel.getComment());
+                intent.putExtra("numberOfUpVotes", commentsModel.getNumberOfUpvotes());
+                intent.putExtra("numberOfReplies", commentsModel.getReplies());
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

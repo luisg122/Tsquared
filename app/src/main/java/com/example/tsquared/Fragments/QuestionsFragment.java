@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class QuestionsFragment<adapter> extends Fragment
+public class QuestionsFragment extends Fragment
         implements QuestionItemAdapter.OnNoteListener {
 
     private View view;
@@ -63,9 +63,7 @@ public class QuestionsFragment<adapter> extends Fragment
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
     public  static  final int REQUEST_CODE_ADD_NOTE = 1;
 
-    public QuestionsFragment(){
-
-    }
+    public QuestionsFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -229,6 +227,7 @@ public class QuestionsFragment<adapter> extends Fragment
                     QuestionItemTextModel item = (QuestionItemTextModel) mArrayList.get(position);
                     Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("questionId", "1234");
                     intent.putExtra("question", item.getQuestion());
                     intent.putExtra("numberOfAnswers", item.getResponseNum());
                     intent.putExtra("type", "QuestionItemTextModel");
@@ -240,6 +239,7 @@ public class QuestionsFragment<adapter> extends Fragment
                     QuestionItemImageModel item = (QuestionItemImageModel) mArrayList.get(position);
                     Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("questionId", "1234");
                     intent.putExtra("question", item.getQuestion());
                     intent.putExtra("numberOfAnswers", item.getResponseNum());
                     intent.putExtra("type", "QuestionItemImageModel");
@@ -251,6 +251,7 @@ public class QuestionsFragment<adapter> extends Fragment
                     QuestionItemUrlModel item = (QuestionItemUrlModel) mArrayList.get(position);
                     Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("questionId", "1234");
                     intent.putExtra("question", item.getQuestion());
                     intent.putExtra("numberOfAnswers", item.getResponseNum());
                     intent.putExtra("type", "QuestionItemUrlModel");

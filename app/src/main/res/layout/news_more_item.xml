@@ -1,99 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/moreNewsLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/source"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New York Times"
-        android:textColor="?attr/lightTextColor"
-        android:textSize="12sp"
-        android:textStyle="normal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:padding="5dp"
-        android:singleLine="true"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageNewsStaggered"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/source"
-        android:src="@mipmap/blank_profile"/>
-
-    <TextView
-        android:id="@+id/textViewStaggered"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/moreNewsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="0dp"
-        android:padding="5dp"
-        android:maxLines="3"
-        android:singleLine="false"
-        android:ellipsize="end"
-        android:text="Today the dow has suffered a bloodshed when job reporting had turned ut to be lower than expected"
-        android:textColor="?attr/lightTextColor"
-        android:textStyle="bold"
-        android:textSize="13sp"
-        android:lineSpacingExtra="3dp"
-        android:layout_below="@+id/source"
-        android:layout_toLeftOf="@+id/imageNewsStaggered"
-        android:layout_toStartOf="@+id/imageNewsStaggered"/>
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:cardBackgroundColor="?attr/cardBackgroundColor"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/datePublished"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewStaggered"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="25dp"
-        android:padding="5dp"
-        android:singleLine="true"
-        android:text="07-14"
-        android:textColor="?attr/lightTextColor"
-        android:textSize="12sp"
-        android:textStyle="normal" />
+            <TextView
+                android:id="@+id/source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New York Times"
+                android:textColor="?attr/lightTextColor"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:singleLine="true"/>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/imageNewsStaggered"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true">
-        <Button
-            android:id="@+id/three_dots"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_more"
-            android:layout_gravity="center"/>
-    </FrameLayout>
-</RelativeLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageNewsStaggered"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/source"
+                android:src="@mipmap/blank_profile"/>
+
+            <TextView
+                android:id="@+id/textViewStaggered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp"
+                android:padding="5dp"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:ellipsize="end"
+                android:text="Today the dow has suffered a bloodshed when job reporting had turned ut to be lower than expected"
+                android:textColor="?attr/lightTextColor"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_below="@+id/source"
+                android:layout_toLeftOf="@+id/imageNewsStaggered"
+                android:layout_toStartOf="@+id/imageNewsStaggered"/>
+
+            <TextView
+                android:id="@+id/datePublished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewStaggered"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="25dp"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:text="07-14"
+                android:textColor="?attr/lightTextColor"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/imageNewsStaggered"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true">
+                <Button
+                    android:id="@+id/three_dots"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_more"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

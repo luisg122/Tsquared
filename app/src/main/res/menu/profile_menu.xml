@@ -7,7 +7,6 @@
     <item
         android:id="@+id/profilePictureMenu"
         android:orderInCategory="1"
-        android:title="button"
-        app:actionLayout="@layout/profile_button"
-        app:showAsAction="always"/>
+        android:title="Settings"
+        app:showAsAction="collapseActionView"/>
 </menu>

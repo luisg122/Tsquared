@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.tsquared.Adapters.CommentsAdapter;
 import com.example.tsquared.Adapters.CommentsRepliesAdapter;
@@ -30,12 +31,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ReplyComments extends AppCompatActivity implements CommentsRepliesAdapter.IconListener{
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private ArrayList<CommentsRepliesModel> replies;
+    private ArrayList<Object> replies;
     private CommentsRepliesAdapter adapter;
-    private ConstraintLayout addReplyComment;
-    private ImageView upVote;
-    private ImageView downVote;
-    private ImageView more;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -50,18 +48,12 @@ public class ReplyComments extends AppCompatActivity implements CommentsRepliesA
         setUpViews();
         setUpToolbar();
         setUpToolbarListener();
-        setUpMainCommentListeners();
-        postReplyComment();
         setUpRecyclerView();
     }
 
     private void setUpViews(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.replies);
-        addReplyComment = (ConstraintLayout) findViewById(R.id.postReplyPrompt);
-        upVote = (ImageView) findViewById(R.id.upVote);
-        downVote = (ImageView) findViewById(R.id.downVote);
-        more = (ImageView) findViewById(R.id.threeDots);
     }
 
     private void setUpToolbar(){
@@ -79,6 +71,83 @@ public class ReplyComments extends AppCompatActivity implements CommentsRepliesA
         });
     }
 
+    private void setUpRecyclerView(){
+        dummyDataSetUp();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new CommentsRepliesAdapter(replies, getApplicationContext(), this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void dummyDataSetUp(){
+        replies = new ArrayList<>();
+        replies.add(getIntent());
+        replies.add(new ReplyBottomSheet());
+        for(int i = 0; i < 10; i++){
+            replies.add(new CommentsRepliesModel("John Smith", "07/11/2021", "I agree with this answer, however I feel like it's too elementary"));
+        }
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    @Override
+    public void replyClick(int position, ReplyCommentBottomSheet bottomSheet) {
+        if(bottomSheet == null || !bottomSheet.isAdded()) {
+            bottomSheet = new ReplyCommentBottomSheet();
+            bottomSheet.show(getSupportFragmentManager(), "ReplyBottomSheet");
+        }
+    }
+
+    @Override
+    public void upVote(int position, View view, TextView textView) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+    }
+
+    @Override
+    public void downVote(int position, View view, TextView textView) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+    }
+
+    @Override
+    public void more(int position, View view) {
+
+    }
+
+    @Override
+    public void mainCommentUpVote(int position, View view, TextView textView) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+    }
+
+    @Override
+    public void mainCommentDownVote(int position, View view, TextView textView) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+    }
+
+    @Override
+    public void mainCommentMore(int position, View view) {
+
+    }
+
+    @Override
+    public void postReplyComment(int position, ReplyBottomSheet replyBottomSheet) {
+        if(replyBottomSheet == null || !replyBottomSheet.isAdded()){
+            replyBottomSheet = new ReplyBottomSheet();
+            replyBottomSheet.show(getSupportFragmentManager(), "ReplyBottomSheet");
+        }
+    }
+}
+
+
+/*
     private void setUpMainCommentListeners(){
         upVote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,60 +171,4 @@ public class ReplyComments extends AppCompatActivity implements CommentsRepliesA
             }
         });
     }
-
-    private void postReplyComment(){
-        addReplyComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ReplyBottomSheet bottomSheet = null;
-                if(bottomSheet == null || !bottomSheet.isVisible()){
-                    bottomSheet = new ReplyBottomSheet();
-                    bottomSheet.show(getSupportFragmentManager(), "ReplyBottomSheet");
-                }
-            }
-        });
-    }
-
-    private void setUpRecyclerView(){
-        dummyDataSetUp();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new CommentsRepliesAdapter(replies, getApplicationContext(), this);
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void dummyDataSetUp(){
-        replies = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            replies.add(new CommentsRepliesModel("John Smith", "07/11/2021", "I agree with this answer, however I feel like it's too elementary"));
-        }
-    }
-
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-
-    @Override
-    public void replyClick(int position) {
-        ReplyCommentBottomSheet bottomSheet = null;
-        if(bottomSheet == null || !bottomSheet.isVisible()) {
-            bottomSheet = new ReplyCommentBottomSheet();
-            bottomSheet.show(getSupportFragmentManager(), "ReplyBottomSheet");
-        }
-    }
-
-    @Override
-    public void upVote(int position, View view) {
-        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibe.vibrate(80);
-    }
-
-    @Override
-    public void downVote(int position, View view) {
-        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibe.vibrate(80);
-    }
-}
+ */

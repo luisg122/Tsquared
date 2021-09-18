@@ -1,6 +1,7 @@
 package com.example.tsquared.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.tsquared.Fragments.ReplyBottomSheet;
+import com.example.tsquared.Fragments.ReplyCommentBottomSheet;
 import com.example.tsquared.Models.CommentsModel;
 import com.example.tsquared.Models.CommentsRepliesModel;
 import com.example.tsquared.R;
@@ -15,36 +18,84 @@ import com.example.tsquared.R;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CommentsRepliesAdapter extends RecyclerView.Adapter<CommentsRepliesAdapter.CommentsReliesVH> {
-    private ArrayList<CommentsRepliesModel> mArrayList;
+public class CommentsRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private ArrayList<Object> mArrayList;
     private Context mContext;
+    private Intent intent;
+    private ReplyBottomSheet replyBottomSheet;
     private IconListener iconListener;
 
-    public CommentsRepliesAdapter(ArrayList<CommentsRepliesModel> mArrayList, Context mContext, IconListener iconListener){
+    public CommentsRepliesAdapter(ArrayList<Object> mArrayList, Context mContext, IconListener iconListener){
         this.mArrayList = mArrayList;
         this.mContext = mContext;
         this.iconListener = iconListener;
     }
+    private void loadCommentsData(MainCommentVH dataHolder) {
+        String name = intent.getStringExtra("name");
+        String date = intent.getStringExtra("date");
+        String comment = intent.getStringExtra("comment");
+        String upVotes = intent.getStringExtra("numberOfUpVotes");
+        String replies = intent.getStringExtra("numberOfReplies");
+
+        dataHolder.name.setText(name);
+        dataHolder.date.setText(date);
+        dataHolder.comment.setText(comment);
+    }
 
     @NonNull
     @Override
-    public CommentsReliesVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comments_item, parent, false);
-        return new CommentsReliesVH(view, iconListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+
+        if(viewType == R.layout.comment_main_to_reply){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_main_to_reply, parent, false);
+            return new MainCommentVH(view, iconListener);
+        }
+
+        else if(viewType == R.layout.comment_reply_prompt){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_reply_prompt, parent, false);
+            return new CommentReplyPrompt(view, iconListener, replyBottomSheet);
+        }
+
+        else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comments_item, parent, false);
+            return new CommentsRepliesVH(view, iconListener);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommentsReliesVH holder, int position) {
-        CommentsRepliesModel commentsModel = mArrayList.get(position);
-        Glide.with(mContext)
-                .load("https://seventhqueen.com/themes/kleo/wp-content/uploads/rtMedia/users/44269/2020/07/dummy-profile.png")
-                .into(holder.commentsProfileImage);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Object item = mArrayList.get(position);
+        if(holder.getItemViewType() == R.layout.comment_main_to_reply){
+            MainCommentVH dataHolder = (MainCommentVH) holder;
+            Glide.with(mContext)
+                    .load("https://seventhqueen.com/themes/kleo/wp-content/uploads/rtMedia/users/44269/2020/07/dummy-profile.png")
+                    .into(dataHolder.commentsProfileImage);
 
-        holder.name.setText(commentsModel.getName());
-        holder.date.setText(commentsModel.getDate());
-        holder.comment.setText(commentsModel.getComment());
+            loadCommentsData(dataHolder);
+        }
+
+        else if(holder.getItemViewType() == R.layout.comment_reply_prompt){
+            CommentReplyPrompt dataHolder = (CommentReplyPrompt) holder;
+            Glide.with(mContext)
+                    .load("https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")
+                    .into(dataHolder.profileImage);
+        }
+
+        else if(holder.getItemViewType() == R.layout.comments_item){
+            CommentsRepliesModel commentsModel = (CommentsRepliesModel) item;
+            CommentsRepliesVH dataHolder = (CommentsRepliesVH) holder;
+            Glide.with(mContext)
+                    .load("https://seventhqueen.com/themes/kleo/wp-content/uploads/rtMedia/users/44269/2020/07/dummy-profile.png")
+                    .into(dataHolder.commentsProfileImage);
+
+            dataHolder.name.setText(commentsModel.getName());
+            dataHolder.date.setText(commentsModel.getDate());
+            dataHolder.comment.setText(commentsModel.getComment());
+        }
     }
 
     @Override
@@ -52,21 +103,102 @@ public class CommentsRepliesAdapter extends RecyclerView.Adapter<CommentsReplies
         return mArrayList.size();
     }
 
-    public class CommentsReliesVH extends RecyclerView.ViewHolder implements View.OnClickListener{
+    @Override
+    public int getItemViewType(int position){
+        if(position == 0) {
+            intent = (Intent) mArrayList.get(position);
+            return R.layout.comment_main_to_reply;
+        }
+        else if(position == 1) {
+            replyBottomSheet = (ReplyBottomSheet) mArrayList.get(position);
+            return R.layout.comment_reply_prompt;
+        }
+        else return R.layout.comments_item;
+    }
+
+    public class MainCommentVH extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private final ImageView commentsProfileImage;
+        private final ImageView upVote;
+        private final ImageView downVote;
+        private final ImageView subComments;
+        private final ImageView more;
+        private final TextView numberOfUpVotes;
+        private final TextView numberOfReplies;
+        private final TextView name;
+        private final TextView date;
+        private final TextView comment;
+
+        IconListener iconListener;
+        public MainCommentVH(View view, IconListener iconListener){
+            super(view);
+            commentsProfileImage = (ImageView) view.findViewById(R.id.commentIV);
+            upVote = (ImageView) view.findViewById(R.id.upVote);
+            downVote = (ImageView) view.findViewById(R.id.downVote);
+            subComments = (ImageView) view.findViewById(R.id.subComments);
+            more = (ImageView) view.findViewById(R.id.threeDots);
+            numberOfUpVotes = (TextView) view.findViewById(R.id.numberOfUpVotes);
+            numberOfReplies = (TextView) view.findViewById(R.id.numberOfReplies);
+            name = (TextView) view.findViewById(R.id.commentName);
+            date = (TextView) view.findViewById(R.id.commentSubmitted);
+            comment = (TextView) view.findViewById(R.id.commentContent);
+
+            this.iconListener = iconListener;
+            upVote.setOnClickListener(this);
+            downVote.setOnClickListener(this);
+            more.setOnClickListener(this);
+        }
+
+        @Override 
+        public void onClick(View view) {
+            int id = view.getId();
+            if(id == R.id.upVote) iconListener.mainCommentUpVote(getLayoutPosition(), view, numberOfUpVotes);
+            else if(id == R.id.downVote) iconListener.mainCommentDownVote(getLayoutPosition(), view, numberOfUpVotes);
+            else if(id == R.id.more) iconListener.mainCommentMore(getLayoutPosition(), view);
+        }
+    }
+
+    public class CommentReplyPrompt extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private final ConstraintLayout postReplyToComment;
+        private final ImageView profileImage;
+        private final TextView  prompt;
+        private ReplyBottomSheet replyBottomSheet;
+
+        IconListener iconListener;
+        public CommentReplyPrompt(View view, IconListener iconListener, ReplyBottomSheet replyBottomSheet){
+            super(view);
+            postReplyToComment = (ConstraintLayout) view.findViewById(R.id.postReplyPrompt);
+            profileImage       = (ImageView) view.findViewById(R.id.postCommentIV);
+            prompt             = (TextView) view.findViewById(R.id.promptComment);
+            this.replyBottomSheet = replyBottomSheet;
+
+            this.iconListener  = iconListener;
+            postReplyToComment.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            iconListener.postReplyComment(getLayoutPosition(), replyBottomSheet);
+        }
+    }
+
+    public class CommentsRepliesVH extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final ImageView commentsProfileImage;
         private final ImageView upVote;
         private final ImageView downVote;
         private final ImageView subComments;
         private final ImageView replyIV;
+        private final ImageView more;
         private final TextView comment;
         private final TextView name;
         private final TextView date;
         private final TextView replies;
         private final TextView numberOfUpVotes;
         private final TextView numberOfReplies;
+
+        private ReplyCommentBottomSheet bottomSheet;
         IconListener iconListener;
 
-        public CommentsReliesVH(View view, IconListener iconListener){
+        public CommentsRepliesVH(View view, IconListener iconListener){
             super(view);
             comment = (TextView) view.findViewById(R.id.commentContent);
             name    = (TextView) view.findViewById(R.id.commentName);
@@ -78,6 +210,7 @@ public class CommentsRepliesAdapter extends RecyclerView.Adapter<CommentsReplies
             upVote = (ImageView) view.findViewById(R.id.upVote);
             downVote = (ImageView) view.findViewById(R.id.downVote);
             subComments = (ImageView) view.findViewById(R.id.subComments);
+            more = (ImageView) view.findViewById(R.id.threeDots);
             replyIV = (ImageView) view.findViewById(R.id.reply);
             replyIV.setOnClickListener(this);
             upVote.setOnClickListener(this);
@@ -95,15 +228,22 @@ public class CommentsRepliesAdapter extends RecyclerView.Adapter<CommentsReplies
         @Override
         public void onClick(View view) {
             int id = view.getId();
-            if(id == R.id.reply) iconListener.replyClick(getLayoutPosition());
-            else if(id == R.id.upVote) iconListener.upVote(getLayoutPosition(), view);
-            else if(id == R.id.downVote) iconListener.upVote(getLayoutPosition(), view);
+            if(id == R.id.reply) iconListener.replyClick(getLayoutPosition(), bottomSheet);
+            else if(id == R.id.upVote) iconListener.upVote(getLayoutPosition(), view, numberOfUpVotes);
+            else if(id == R.id.downVote) iconListener.upVote(getLayoutPosition(), view, numberOfUpVotes);
         }
     }
 
     public interface IconListener{
-        void replyClick(int position);
-        void upVote(int position, View view);
-        void downVote(int position, View view);
+        void replyClick(int position, ReplyCommentBottomSheet bottomSheet);
+        void upVote(int position, View view, TextView textView);
+        void downVote(int position, View view, TextView textView);
+        void more(int position, View view);
+
+        void mainCommentUpVote(int position, View view, TextView textView);
+        void mainCommentDownVote(int position, View view, TextView textView);
+        void mainCommentMore(int position, View view);
+
+        void postReplyComment(int position, ReplyBottomSheet replyBottomSheet);
     }
 }

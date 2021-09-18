@@ -11,21 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:background="?attr/appBarColor">
+        android:background="?attr/appBarColor"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/appBarColor"
-            app:scrimAnimationDuration="600"
-            app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed">
+            app:scrimAnimationDuration="500"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/customProfileLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="?actionBarSize"
                 android:layout_marginBottom="0dp"
                 android:orientation="vertical"
                 android:padding="0dp"
@@ -34,21 +36,16 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
                     android:src="@mipmap/blank_profile" />
 
                 <TextView
                     android:id="@+id/profileName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/profileImage"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
                     android:layout_marginStart="30dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="20dp"
@@ -56,49 +53,36 @@
                     android:text="Brian Doe"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_anchorGravity="bottom|center" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/profileDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/profileName"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:gravity="start|top"
-                    android:maxLines="100"
+                    android:maxLines="5"
                     android:minLines="1"
                     android:singleLine="false"
                     android:text="Recent College graduate looking for new opportunities in software engineering "
                     android:textColor="@color/white"
                     android:textSize="13sp"
-                    android:textStyle="normal"
-                    app:layout_anchorGravity="bottom|center" />
+                    android:textStyle="normal"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/profileDescription"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="0dp"
                     android:orientation="vertical">
                     <View
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="0.7dp"
+                        android:layout_height="0.5dp"
                         android:background="@drawable/line_divider" />
                     <LinearLayout
-                        style="?android:buttonBarStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -110,7 +94,7 @@
                             android:layout_weight="1"
                             android:textAllCaps="false"
                             android:textSize="13sp"
-                            android:text="Following"
+                            android:text="14 Following"
                             android:textStyle="normal"
                             android:textColor="@color/light_gray"/>
                         <View
@@ -118,7 +102,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginTop="0dp"
                             android:layout_height="match_parent"
-                            android:layout_width="0.7dp"/>
+                            android:layout_width="0.5dp"/>
 
                         <Button
                             android:id="@+id/followersButton"
@@ -128,34 +112,32 @@
                             android:layout_weight="1"
                             android:textAllCaps="false"
                             android:textSize="13sp"
-                            android:text="Followers"
+                            android:text="1.4k Followers"
                             android:textStyle="normal"
                             android:textColor="@color/light_gray"/>
                     </LinearLayout>
                 </LinearLayout>
-            </RelativeLayout>
+            </LinearLayout>
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar1"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin">
+                android:layout_height="?actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal">
+                    android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/collapsedText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:layout_toStartOf="@+id/answerButtonCollapsed"
-                        android:layout_toLeftOf="@+id/answerButtonCollapsed"
                         android:text="Brian Doe"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textColor="@color/white"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:visibility="gone"/>
+                        android:visibility="invisible"/>
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -167,14 +149,14 @@
             android:layout_below="@+id/toolbar1"
             android:layout_gravity="bottom"
             app:tabGravity="fill"
-            app:tabMode="scrollable"
-            app:tabPaddingEnd="16dp"
-            app:tabPaddingStart="16dp"
-            app:tabTextAppearance="@style/TabLayoutStyle2"
             app:tabIndicatorColor="@color/white"
+            app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/light_gray"
-            app:tabIndicatorHeight="3dp"/>
+            app:tabPaddingStart="16dp"
+            app:tabPaddingEnd="16dp"
+            app:tabIndicatorHeight="2dp"
+            app:tabTextAppearance="@style/TabLayoutStyle2"/>
     </com.google.android.material.appbar.AppBarLayout>
     <com.example.tsquared.ViewPager.CustomViewPager
             android:id="@+id/mainViewPager1"

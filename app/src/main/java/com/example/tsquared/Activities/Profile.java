@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
+import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.Fragments.userQuestions;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
@@ -69,7 +70,7 @@ public class Profile extends AppCompatActivity {
 
     private void setUpProfileImage(){
         Glide.with(this)
-                .load("https://seventhqueen.com/themes/kleo/wp-content/uploads/rtMedia/users/44269/2020/07/dummy-profile.png")
+                .load("https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")
                 .into(profilePic);
     }
 
@@ -77,18 +78,22 @@ public class Profile extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.profile_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.profilePictureMenu);
-        View view = menuItem.getActionView();
-        settings  = view.findViewById(R.id.settingsButton);
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Profile.this, Settings.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-            }
-        });
+        menuItem.getActionView();
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.profilePictureMenu){
+            Intent intent = new Intent(Profile.this, Settings.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setButtonClicks(){
@@ -117,6 +122,7 @@ public class Profile extends AppCompatActivity {
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.TextAppearance_MyApp_Title_Collapsed);
         collapsingToolbar.setExpandedTitleColor(R.style.TextAppearance_MyApp_Title_Expanded);
         collapsingToolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -126,8 +132,7 @@ public class Profile extends AppCompatActivity {
                 if (scrollRange == -1) {
                     collapsingToolbar.setTitle(" ");
                     toolbar.setTitle(" ");
-                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
-                    collapsedTV.setVisibility(View.GONE);
+                    collapsedTV.setVisibility(View.INVISIBLE);
                     scrollRange = appBarLayout.getTotalScrollRange();
                     appBarExpanded = false;
                 }
@@ -136,8 +141,6 @@ public class Profile extends AppCompatActivity {
                     // Collapsed Toolbar
                     collapsingToolbar.setTitle(" ");
                     collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
-                    toolbar.setTitle(" ");
-                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
                     collapsedTV.setVisibility(View.VISIBLE);
                     isShow = true;
                 }
@@ -146,12 +149,12 @@ public class Profile extends AppCompatActivity {
                     // Expanded Toolbar
                     collapsingToolbar.setTitle(" ");
                     toolbar.setTitle("");
-                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
-                    collapsedTV.setVisibility(View.GONE);
+                    collapsedTV.setVisibility(View.INVISIBLE);
                     isShow = false;
                 }
             }
         });
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,10 +173,10 @@ public class Profile extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new userQuestions(), "Questions");
-        adapter.addFragment(new userQuestions(), "Answers");
-        adapter.addFragment(new userQuestions(), "Articles");
-        adapter.addFragment(new userQuestions(), "Likes");
+        adapter.addFragment(new QuestionsFragment(), "Questions");
+        adapter.addFragment(new QuestionsFragment(), "Answers");
+        adapter.addFragment(new QuestionsFragment(), "Articles");
+        adapter.addFragment(new QuestionsFragment(), "Likes");
         viewPager.setAdapter(adapter);
     }
 

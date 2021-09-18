@@ -183,6 +183,11 @@
             android:name=".Activities.UserInterests"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Activities.AnswerImagesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AnswerWithImagesTheme"
+            tools:ignore="LockedOrientationActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

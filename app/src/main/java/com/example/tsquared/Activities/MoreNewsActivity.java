@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.tsquared.Adapters.MoreNewsAdapter;
+import com.example.tsquared.Fragments.LinkPromptBottomSheet;
 import com.example.tsquared.Models.MoreNewsModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
@@ -39,12 +40,22 @@ public class MoreNewsActivity extends AppCompatActivity implements MoreNewsAdapt
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_more_layout);
-        setUpViews();
-        setUpToolbar();
-        setUpRecyclerView();
+        //setUpViews();
+        //setUpToolbar();
+        //setUpRecyclerView();
     }
 
-    private void setUpViews(){
+    @Override
+    public void shareLinkClick(int position, LinkPromptBottomSheet bottomSheet) {
+
+    }
+
+    @Override
+    public void onMoreNewsClick(int position) {
+
+    }
+
+    /*private void setUpViews(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         rv = (RecyclerView) findViewById(R.id.recyclerview);
     }
@@ -95,11 +106,16 @@ public class MoreNewsActivity extends AppCompatActivity implements MoreNewsAdapt
     }
 
     @Override
+    public void shareLinkClick(int position, LinkPromptBottomSheet bottomSheet) {
+
+    }
+
+    @Override
     public void onMoreNewsClick(int position) {
         Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("articleURL", mArrayList.get(position).getURL());
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-    }
+    }*/
 }

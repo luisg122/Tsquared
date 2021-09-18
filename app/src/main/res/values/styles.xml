@@ -43,6 +43,8 @@
         <item name="colorNavigationItemSelected">@color/white</item>
         <item name="navigationColorBackground">@color/navigationLight</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
+
+        <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
     </style>
 
     <!-- Night Mode -->
@@ -74,6 +76,8 @@
         <item name="colorNavigationItemSelected">@color/white</item>
         <item name="navigationColorBackground">@color/navigationDark</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
+
+        <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
     </style>
 
     <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
@@ -90,12 +94,17 @@
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
     </style>
 
+    <style name="ActionButtonOverflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/white</item>
+    </style>
+
     <!-- Defined a new style with three items of color. -->
-    <style name="CommentsTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AnswerWithImagesTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimaryDark">@color/black</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/veryDarkGray</item>
     </style>
 
     <style name="Following_Followers" parent="Theme.AppCompat.NoActionBar">

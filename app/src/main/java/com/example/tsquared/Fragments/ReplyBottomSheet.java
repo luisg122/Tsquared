@@ -18,7 +18,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.tsquared.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -34,6 +36,7 @@ public class ReplyBottomSheet extends BottomSheetDialogFragment {
     private View view;
     private EditText editText;
     private ImageButton respondButton;
+    private ImageView profileImage;
     private Handler handler;
     private long delay = 500;  // half-second
     private long last_text_edit = 0;
@@ -53,7 +56,7 @@ public class ReplyBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         view = inflater.inflate(R.layout.comment_bottom_sheet, container, false);
 
-        //getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         Objects.requireNonNull(getDialog()).setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
@@ -65,6 +68,7 @@ public class ReplyBottomSheet extends BottomSheetDialogFragment {
         });
 
         setUpViews();
+        setUpProfileImage();
         modifyHintText();
         initializeHandler();
         showSoftKeyboard();
@@ -74,8 +78,15 @@ public class ReplyBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void setUpViews(){
+        profileImage = view.findViewById(R.id.imageIV);
         editText = view.findViewById(R.id.commentText);
         respondButton = view.findViewById(R.id.respondButton);
+    }
+
+    private void setUpProfileImage(){
+        Glide.with(profileImage.getContext())
+                .load("https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")
+                .into(profileImage);
     }
 
     private void modifyHintText(){

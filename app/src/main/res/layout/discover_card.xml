@@ -5,7 +5,7 @@
     android:id="@+id/discoverCard"
     android:layout_width="match_parent"
     android:layout_height="185dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginVertical="10dp"
     android:background="?attr/selectableItemBackground">
     
     <androidx.viewpager2.widget.ViewPager2
