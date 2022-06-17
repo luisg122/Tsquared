@@ -1,5 +1,9 @@
 package com.example.tsquared.Activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -19,7 +24,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,25 +35,18 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.arlib.floatingsearchview.FloatingSearchView;
-import com.bumptech.glide.Glide;
-import com.example.tsquared.Fragments.IdeasFragment;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
 import com.example.tsquared.Fragments.DiscoverFragment;
-import com.example.tsquared.Utils.PreferenceUtils;
 import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.R;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
-import com.facebook.share.Share;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DrawerActivity extends AppCompatActivity {
     NavigationView navigationView;
@@ -64,9 +61,13 @@ public class DrawerActivity extends AppCompatActivity {
     private SwitchCompat switchToggle;
     private Handler mDrawerActionHandler;
     private AlertDialog alertDialog;
+    private QuestionsFragment questionsFragment;
+    private DiscoverFragment discoverFragment;
 
     public static ExtendedFloatingActionButton fab;
     private Runnable runnable;
+
+    LoadNewQuestionListener loadNewQuestionListener;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -79,6 +80,18 @@ public class DrawerActivity extends AppCompatActivity {
         }
 
         super.onCreate(savedInstanceState);
+
+        // restore fragment state after changing theme
+        if(savedInstanceState != null){
+            questionsFragment = (QuestionsFragment) getSupportFragmentManager().getFragment(savedInstanceState, "questionsFragment");
+            discoverFragment  = new DiscoverFragment();
+        }
+
+        else {
+            questionsFragment = new QuestionsFragment();
+            discoverFragment  = new DiscoverFragment();
+        }
+
         setContentView(R.layout.drawer_activity);
         setUpViews();
 
@@ -132,16 +145,36 @@ public class DrawerActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                //loadNameAndCollege();
+                // loadNameAndCollege();
                 Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
                 questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                //questionWindow.putExtra("Full Name", fullName);
-                //questionWindow.putExtra("College", college);
-                startActivity(questionWindow);
+                // questionWindow.putExtra("Full Name", fullName);
+                // questionWindow.putExtra("College", college);
+                activityResultLauncher.launch(questionWindow);
+
                 // Slide activity upwards
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
             }
         });
+    }
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Here, no request code
+                        Intent data = result.getData();
+
+                        if(loadNewQuestionListener != null)
+                            loadNewQuestionListener.insertNewQuestion(data);
+                    }
+                }
+            });
+
+    public void setListener(LoadNewQuestionListener loadNewQuestionListener) {
+        this.loadNewQuestionListener = loadNewQuestionListener;
     }
 
     private void initializeHandler(){
@@ -214,8 +247,8 @@ public class DrawerActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new QuestionsFragment(), "Ask");
-        adapter.addFragment(new DiscoverFragment(), "Discover");
+        adapter.addFragment(questionsFragment, "Ask");
+        adapter.addFragment(discoverFragment, "Discover");
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
 
@@ -277,7 +310,7 @@ public class DrawerActivity extends AppCompatActivity {
         View view2 = layoutInflaterAndroid.inflate(R.layout.alert_dialog, null);
         TextView textView = (TextView) view2.findViewById(R.id.Quitprompt);
 
-        textView.setText("Do you want to exit the app?");
+        textView.setText(R.string.quit_option_prompt);
 
         builder.setCustomTitle(view2);
         builder.setCancelable(true);
@@ -293,10 +326,10 @@ public class DrawerActivity extends AppCompatActivity {
         Button continueButton = (Button) alertDialog.findViewById(R.id.quitButton);
 
         assert quitButton != null;
-        quitButton.setText("Yes");
+        quitButton.setText(R.string.option_yes);
 
         assert continueButton != null;
-        continueButton.setText("No");
+        continueButton.setText(R.string.option_no);
 
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,7 +348,7 @@ public class DrawerActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
         if(toggle.onOptionsItemSelected(item)){
             return true;
         }
@@ -396,28 +429,11 @@ public class DrawerActivity extends AppCompatActivity {
             case R.id.bookmarks:
                 Intent bookmarks = new Intent(DrawerActivity.this, UserBookMarks.class);
                 startActivity(bookmarks);
-                //finish();
                 break;
 
             case R.id.interests:
                 Intent interests = new Intent(DrawerActivity.this, UserInterests.class);
                 startActivity(interests);
-                //finish();
-                break;
-
-            case R.id.logout:
-                PreferenceUtils.savePassword(null, this);
-                PreferenceUtils.saveEmail(null, this);
-                PreferenceUtils.saveLastName(null, this);
-                PreferenceUtils.saveFirstName(null, this);
-                PreferenceUtils.saveCollege(null, this);
-
-                DarkSharedPref.setNightModeState(false, getApplicationContext());
-                DarkSharedPref.isDark = false;
-
-                Intent logout = new Intent(DrawerActivity.this, LoginActivity.class);
-                startActivity(logout);
-                finish();
                 break;
         }
     }
@@ -449,5 +465,26 @@ public class DrawerActivity extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+    }
+
+    public interface LoadNewQuestionListener{
+        void insertNewQuestion(Intent questionData);
+    }
+
+    // This callback is called only when there is a saved instance that is previously saved by using
+    // onSaveInstanceState(). We restore some state in onCreate(), while we can optionally restore
+    // other state here, possibly usable after onStart() has completed.
+    // The savedInstanceState Bundle is same as the one used in onCreate().
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    // saving state of fragments when dark mode is applied
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        getSupportFragmentManager().putFragment(savedInstanceState, "questionsFragment", questionsFragment);
     }
 }

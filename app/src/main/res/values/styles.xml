@@ -17,7 +17,7 @@
 
     <!-- Theme of the toolbar mostly used in all activities of the app -->
     <style name="AppTheme.NoActionBar">
-        <item name="colorPrimaryDark">@color/mainColor</item>
+        <item name="colorPrimaryDark">@color/darkMainColor</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
@@ -28,20 +28,22 @@
         <item name="webViewCardColor">@color/lightCardColor</item>
         <item name="textColor">@color/black</item>
         <item name="lightTextColor">@color/dark_gray</item>
-        <item name="fabColor">@color/fabColorDay</item>
+        <item name="fabColor">@color/mainColor</item>
         <item name="bottomSheetColor">@color/mainColor</item>
-        <item name="iconLayoutColor">@color/tabSelected</item>
-        <item name="appBarColor">@color/mainColor</item>
+        <item name="iconLayoutColor">@color/tabSelectedDark</item>
+        <item name="appBarColor">@color/darkMainColor</item>
         <item name="lineDividerColor">@color/light_gray</item>
         <item name="ideasPrompt">@color/ideasPrompt</item>
-        <item name="tintDrawableColor">@color/black</item>
+        <item name="tintDrawableColor">@color/dark_gray</item>
         <item name="moonColor">@color/dark_gray</item>
         <item name="bubbleItemColor">@color/light_gray</item>
         <item name="textCategoryColor">@color/DarkTopicColor</item>
+        <item name="followPromptColor">@color/blue</item>
+        <item name="checkBoxColor">@color/mainButton</item>
 
         <item name="colorNavigationItem">@color/menu_item_color_state</item>
         <item name="colorNavigationItemSelected">@color/white</item>
-        <item name="navigationColorBackground">@color/navigationLight</item>
+        <item name="navigationColorBackground">@color/navigationDark</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
 
         <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
@@ -69,8 +71,11 @@
         <item name="ideasPrompt">@color/ideasPromptDark</item>
         <item name="tintDrawableColor">@color/white</item>
         <item name="moonColor">@color/moonColorYellow</item>
-        <item name="bubbleItemColor">@color/darkWindowBackground</item>
+        <item name="bubbleItemColor">@color/darkBubbleColor</item>
         <item name="textCategoryColor">@color/light_gray</item>
+        <item name="followPromptColor">@color/lightBlue</item>
+        <item name="checkBoxColor">@color/lightBlue</item>
+
 
         <item name="colorNavigationItem">@color/menu_item_color_state</item>
         <item name="colorNavigationItemSelected">@color/white</item>
@@ -232,10 +237,10 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/white</item>
+    <!--<style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/dark_gray</item>
         <item name="colorControlActivated">@color/mainButton</item>
-    </style>
+    </style>-->
 
     <style name="error_appearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/mainButton</item>
@@ -248,8 +253,8 @@
     </style>
 
     <style name="backgroundColorForSignIn" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimaryDark">@color/mainColor</item>
-        <item name="android:windowBackground">@color/mainColor</item>
+        <item name="colorPrimaryDark">@color/darkMainColor</item>
+        <item name="android:windowBackground">@color/darkMainColor</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 

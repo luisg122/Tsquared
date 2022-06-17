@@ -40,15 +40,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/searchToolBar1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
             app:tabGravity="fill"
-            app:tabMode="scrollable"
-            app:tabPaddingEnd="16dp"
-            app:tabPaddingStart="16dp"
-            app:tabTextAppearance="@style/TabLayoutStyle"
             app:tabIndicatorColor="@color/white"
+            app:tabMode="scrollable"
+            app:tabBackground="@drawable/tab_selector"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/light_gray"
-            app:tabIndicatorHeight="3dp"/>
+            app:tabPaddingStart="16dp"
+            app:tabPaddingEnd="16dp"
+            app:tabIndicatorHeight="0dp"
+            app:tabRippleColor="@null"
+            app:tabTextAppearance="@style/TabLayoutStyle2" />
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/mainViewPager"

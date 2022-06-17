@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tsquared.Adapters.SearchResultsAdapter;
 import com.example.tsquared.Models.QuestionItemTextModel;
 import com.example.tsquared.R;
 
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 public class SearchQuestionsFragment extends Fragment {
     private View view;
     RecyclerView mainRv;
-    SearchResultsAdapter adapter;
+    // SearchResultsAdapter adapter;
     ArrayList<QuestionItemTextModel> mArrayList;
 
     public SearchQuestionsFragment(){}
@@ -45,8 +44,8 @@ public class SearchQuestionsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 RecyclerView.VERTICAL, false);
 
-        adapter = new SearchResultsAdapter(mArrayList, getContext());
-        mainRv.setAdapter(adapter);
-        mainRv.setLayoutManager(layoutManager);
+        // adapter = new SearchResultsAdapter(mArrayList, getContext());
+        // mainRv.setAdapter(adapter);
+        // mainRv.setLayoutManager(layoutManager);
     }
 }

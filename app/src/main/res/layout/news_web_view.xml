@@ -1,94 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/siteOfNews"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         android:background="?attr/webViewCardColor"
-        app:titleTextColor="?attr/textColor"/>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:indeterminate="true"
-        android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <WebView
-            android:id="@+id/webView"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/siteOfNews"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="?actionBarSize"
-            app:layout_constraintBottom_toTopOf="@+id/buttonsSection"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:layout_height="?actionBarSize"
+            app:titleTextColor="?attr/textColor"
+            app:layout_scrollFlags="scroll|enterAlways"/>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/buttonsSection"
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="30dp"
-            app:cardBackgroundColor="?attr/webViewCardColor">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:layout_height="10dp"
+            android:indeterminate="true"
+            android:visibility="visible"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
+    <com.example.tsquared.CustomWebView
+        android:id="@+id/webView"
+        android:layout_below="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/buttonsSection"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="30dp"
+        app:cardBackgroundColor="?attr/webViewCardColor"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/arrow_back_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true">
+                <Button
+                    android:id="@+id/arrow_back"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="?attr/selectableItemBackground"/>
                 <ImageView
-                    android:id="@+id/share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/bookmark"
-                    android:layout_toStartOf="@+id/bookmark"
-                    android:layout_marginVertical="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:srcCompat="@drawable/ic_share_24dp"/>
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_arrow_back"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
 
+            <FrameLayout
+                android:id="@+id/arrow_next_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/arrow_back_container"
+                android:layout_toRightOf="@+id/arrow_back_container">
+                <Button
+                    android:id="@+id/arrow_next"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="?attr/selectableItemBackground"/>
                 <ImageView
-                    android:id="@+id/bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/more"
-                    android:layout_toStartOf="@+id/more"
-                    android:layout_marginVertical="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:srcCompat="@drawable/ic_book_mark_border"/>
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_arrow_next"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
 
-                <ImageView
+            <FrameLayout
+                android:id="@+id/moreOptionsContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true">
+                <Button
                     android:id="@+id/more"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="?attr/selectableItemBackground"/>
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginVertical="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:srcCompat="@drawable/ic_more_vert"/>
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_more_vert"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
 
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

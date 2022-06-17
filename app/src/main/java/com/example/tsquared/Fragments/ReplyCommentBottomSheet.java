@@ -2,12 +2,14 @@ package com.example.tsquared.Fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.tsquared.Activities.AnswerCommentsSection;
+import com.example.tsquared.Activities.ReplyComments;
 import com.example.tsquared.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -39,8 +43,11 @@ public class ReplyCommentBottomSheet extends BottomSheetDialogFragment {
     private long last_text_edit = 0;
     private Runnable input_finish_checker;
 
-    public ReplyCommentBottomSheet(){
-
+    LoadNewReplyToUserListener loadNewReplyToUserListener;
+    String nameToRespond;
+    public ReplyCommentBottomSheet(LoadNewReplyToUserListener loadNewReplyToUserListener, String nameToRespond){
+        this.loadNewReplyToUserListener = loadNewReplyToUserListener;
+        this.nameToRespond = nameToRespond;
     }
 
     @Override
@@ -122,6 +129,7 @@ public class ReplyCommentBottomSheet extends BottomSheetDialogFragment {
                         @Override
                         public void run() {
                             respondButton.setVisibility(View.VISIBLE);
+                            submitButtonListener();
                         }
                     }, 10);
                 } else{
@@ -129,5 +137,39 @@ public class ReplyCommentBottomSheet extends BottomSheetDialogFragment {
                 }
             }
         });
+    }
+
+    private void submitButtonListener(){
+        respondButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String commentData = nameToRespond + ", " + editText.getText().toString().trim();
+                Intent intent = new Intent();
+                intent.putExtra("comment", commentData);
+                loadNewReplyToUserListener.insertReplyToUserComment(intent);
+                dismiss();
+            }
+        });
+    }
+
+    public interface LoadNewReplyToUserListener{
+        void insertReplyToUserComment(Intent questionData);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e( "Fragment is visible", "Fragment is visible");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("Fragment is not visible", "Fragment is not visible");
+    }
+
+    @Override
+    public void dismiss(){
+        super.dismiss();
     }
 }

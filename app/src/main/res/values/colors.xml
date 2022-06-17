@@ -24,7 +24,8 @@
     <color name="fabColorDay">#153944</color>
     <color name="tabSelected">#909dff</color>
     <color name="tabSelectedDark">#153944</color>
-    <color name="darkWindowBackground">#1d2838</color>
+    <color name="darkWindowBackground">#232e3d</color>
+    <color name="darkBubbleColor">#1c242e</color>
     <color name="darkCardBackground">#263449</color>
     <color name="ideasPrompt">#fbf6f5</color>
     <color name="ideasPromptDark">#4f314f</color>
@@ -46,8 +47,11 @@
     <color name="lightCommentsCardColor">#f5f5f5</color>
     <color name="darkCommentsCardColor">#1f2b3c</color>
 
+    <color name="blue">#1F51FF</color>
+    <color name="lightBlue">#40B5AD</color>
     <color name="darkMaroon">#4d0000</color>
     <color name="crimsonRed">#DC143C</color>
+    <color name="green">#32CD32</color>
     <color name="navigationLight">#9aa4f5</color>
     <color name="navigationDark">#3e5d66</color>
 </resources>

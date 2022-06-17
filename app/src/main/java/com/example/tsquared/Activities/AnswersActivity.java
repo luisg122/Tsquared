@@ -1,58 +1,66 @@
 package com.example.tsquared.Activities;
 
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.widget.NestedScrollView;
+import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.text.Layout;
 import android.util.Log;
+import android.view.TouchDelegate;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.tsquared.Adapters.AnswerAdapter;
 import com.example.tsquared.ExpandableTextView;
+import com.example.tsquared.Fragments.MoreOptionsAnswers;
+import com.example.tsquared.Fragments.MoreOptionsQuestions;
+import com.example.tsquared.Fragments.TopicsBottomSheet;
 import com.example.tsquared.Models.AnswerModel;
 import com.example.tsquared.Models.AnswerWithImages;
 import com.example.tsquared.R;
-import com.example.tsquared.ResizeText;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-import static android.content.ContentValues.TAG;
-import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.OnCommentsClickListener {
+    private int saveClickCounter;
+    private Handler handler;
+
     private RecyclerView mainRv;
     private ArrayList<Object> mArrayList;
     private AnswerAdapter adapter;
@@ -88,7 +96,6 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
     String URL  = "http://207.237.59.117:8080/TSquared/platform?todo=showAnswers";
     String URL1 = "http://207.237.59.117:8080/TSquared/platform?todo=postAnswer";
     String ANONYMOUS = "Anonymous";
-    boolean appBarExpanded = true;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -102,6 +109,7 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.answers_activity_layout);
         setViews();
+        initializeHandler();
         getQuestion();
         // setUpSwipeContainer();
         // setLayout();
@@ -118,6 +126,10 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         mainRv = (RecyclerView) findViewById(R.id.answersRV);
         collapsedText = (TextView) findViewById(R.id.collapsedText);
+    }
+
+    private void initializeHandler(){
+        handler = new Handler(Looper.getMainLooper());
     }
 
     private void getQuestion(){
@@ -163,32 +175,32 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         mainRv.setHasFixedSize(false);
         mainRv.setItemViewCacheSize(20);
         mainRv.setAdapter(adapter);
-        // design to expand and shrink the extended fab button
 
-        currentPos  = 0;
-        hasScrolled = false;
         mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int currPos = 0;
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                currentPos += dy;
-                if(currentPos == 0 && !hasScrolled){
+                // detect if recyclerview has reached the top
+                currPos += dy;
+                if(currPos == 0){
                     collapsedText.setVisibility(INVISIBLE);
                 }
 
-                if (dy > 0) {
-                    // Scrolled Downwards
-                    hasScrolled = true;
-                    fab.shrink();
-                    collapsedText.setVisibility(VISIBLE);
-                }
+                else{
+                    if (dy > 0) {
+                        // Scrolled Downwards
+                        fab.shrink();
+                        collapsedText.setVisibility(VISIBLE);
+                    }
 
-                else if (dy < 0) {
-                    // Scrolled Upwards
-                    hasScrolled = true;
-                    fab.extend();
-                    collapsedText.setVisibility(VISIBLE);
+                    else if (dy < 0) {
+                        // Scrolled Upwards
+                        fab.extend();
+                        collapsedText.setVisibility(VISIBLE);
+                    }
                 }
             }
         });
@@ -201,7 +213,7 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         for(int i = 0; i < 20; i++){
             AnswerModel answerItem = new AnswerModel("John Doe", "polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition, " +
                     "subtraction, multiplication, and non-negative integer exponentiation of variables."
-                    , "September 09 2020");
+                    , "Sept 09 2020", 15);
             mArrayList.add(answerItem);
 
             String[] imageUrls = {
@@ -215,24 +227,43 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
                     "suggest you'd further build your very own definition of what polynomials are. polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition, " +
                     "subtraction, multiplication, and non-negative integer exponentiation of variables. However, there's a bit more to this simplistic definition, in which I " +
                     "suggest you'd further build your very own definition of what polynomials are. polynomial is an expression consisting of variables and coefficients, that involves only the operations of addition."
-                    , "September 09 2020", imageUrls, 3);
+                    , "Sept 09 2020", imageUrls, 13);
 
             mArrayList.add(answerItem1);
         }
     }
 
     public void initFloatingActionButton(){
-        // Expanded ToolBar Floating Action Button
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AnswersActivity.this, AnswerWindow.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                activityResultLauncher.launch(intent);
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
             }
         });
     }
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Here, no request code
+                        Intent data = result.getData();
+                        assert data != null;
+                        String answer = data.getStringExtra("Answer");
+                        AnswerModel answerItem = new AnswerModel("Luis Gualpa", answer, "Oct 30 2021", 2);
+                        mArrayList.add(1, answerItem);
+                        adapter.notifyItemInserted(1);
+
+                        // do database stuff here, need the email address to associate question with user
+                        // where to store the user email however
+                    }
+                }
+            });
 
     private void setUpToolBar() {
         //setSupportActionBar(toolbar);
@@ -429,16 +460,223 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
     }
 
-    @Override
-    public void upVote(int position, View view) {
-        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibe.vibrate(80);
+
+
+    private void setButtonColor(View view, Boolean toChangeColor, boolean like){
+        final ImageView button = (ImageView) view;
+
+        Integer upvoteColor   = (Integer) getResources().getColor(R.color.green);
+        Integer downVoteColor = (Integer) getResources().getColor(R.color.crimsonRed);
+
+        Integer darkModeDefaultColor  = (Integer) getResources().getColor(R.color.white);
+        Integer lightModeDefaultColor = (Integer) getResources().getColor(R.color.black);
+
+        Integer originalColor = DarkSharedPref.isDark ? darkModeDefaultColor : lightModeDefaultColor;
+
+        Integer changedColor  = like ? upvoteColor : downVoteColor;
+
+
+        ValueAnimator buttonColorAnim = null;
+        if(toChangeColor) {
+            // create a color value animator
+            buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), originalColor, changedColor);
+
+            buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animator) {
+                    button.setColorFilter((Integer) animator.getAnimatedValue());
+                }
+            });
+
+        }
+
+        else {
+            // create a color value animator
+            buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), changedColor, originalColor);
+
+            buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animator) {
+                    button.setColorFilter((Integer) animator.getAnimatedValue());
+                }
+            });
+
+        }
+        buttonColorAnim.setStartDelay(50);
+        buttonColorAnim.start();
     }
 
     @Override
-    public void downVote(int position, View view) {
+    public void upVote(int position, View view, ImageView downVote) {
         final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibe.vibrate(80);
+
+        Object v = (Object) mArrayList.get(position);
+        if(v instanceof AnswerModel){
+            AnswerModel answerItem = (AnswerModel) v;
+
+            // Answer has not been upVoted
+            if(!answerItem.isUpVoted()){
+                if(answerItem.isDownVoted()){
+                    answerItem.incrementNumberOfVotes();
+                    answerItem.setDownVoted(false);
+                    setButtonColor(downVote, false, false);
+                }
+
+                answerItem.incrementNumberOfVotes();
+                answerItem.setUpVoted(true);
+                setButtonColor(view, true, true);
+            }
+
+            // Answer has been upVoted previously
+            else if(answerItem.isUpVoted()){
+                answerItem.decrementNumberOfVotes();
+                answerItem.setUpVoted(false);
+                setButtonColor(view, false, true);
+            }
+
+            adapter.notifyItemChanged(position, answerItem);
+        }
+
+        else if(v instanceof AnswerWithImages) {
+            AnswerWithImages answerItem = (AnswerWithImages) v;
+
+            // Answer has not been upVoted
+            if(!answerItem.isUpVoted()){
+                if(answerItem.isDownVoted()){
+                    answerItem.incrementNumberOfVotes();
+                    setButtonColor(downVote, false, false);
+                    answerItem.setDownVoted(false);
+                }
+
+                answerItem.incrementNumberOfVotes();
+                answerItem.setUpVoted(true);
+                setButtonColor(view, true, true);
+            }
+
+            // Answer has been upVoted previously
+            else if(answerItem.isUpVoted()){
+                answerItem.decrementNumberOfVotes();
+                answerItem.setUpVoted(false);
+                setButtonColor(view, false, true);
+            }
+
+            adapter.notifyItemChanged(position, answerItem);
+        }
+    }
+
+    @Override
+    public void downVote(int position, View view, ImageView upVote) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+
+        Object v = (Object) mArrayList.get(position);
+        if(v instanceof AnswerModel){
+            AnswerModel answerItem = (AnswerModel) v;
+
+            // Answer has not been downVoted
+            if(!answerItem.isDownVoted()){
+                if(answerItem.isUpVoted()){
+                    answerItem.decrementNumberOfVotes();
+                    answerItem.setUpVoted(false);
+                    setButtonColor(upVote, false, true);
+                }
+
+                answerItem.decrementNumberOfVotes();
+                answerItem.setDownVoted(true);
+                setButtonColor(view, true, false);
+            }
+
+            // Answer has been downVoted previously
+            else if(answerItem.isDownVoted()){
+                answerItem.incrementNumberOfVotes();
+                answerItem.setDownVoted(false);
+                setButtonColor(view, false, false);
+            }
+
+            adapter.notifyItemChanged(position, answerItem);
+        }
+
+        else if(v instanceof AnswerWithImages) {
+            AnswerWithImages answerItem = (AnswerWithImages) v;
+
+            // Answer has not been downVoted
+            if(!answerItem.isDownVoted()) {
+                if(answerItem.isUpVoted()){
+                    answerItem.decrementNumberOfVotes();
+                    answerItem.setUpVoted(false);
+                    setButtonColor(upVote, false, true);
+                }
+
+                answerItem.decrementNumberOfVotes();
+                answerItem.setDownVoted(true);
+                setButtonColor(view, true, false);
+            }
+
+            // Answer has been downVoted previously
+            else if(answerItem.isDownVoted()){
+                answerItem.incrementNumberOfVotes();
+                answerItem.setDownVoted(false);
+                setButtonColor(view, false, false);
+            }
+
+            adapter.notifyItemChanged(position, answerItem);
+        }
+    }
+
+    void expandTouchArea(View delegate, int extraPadding){
+        final View parent = (View) delegate.getParent();
+        parent.post( new Runnable() {
+            // Post in the parent's message queue to make sure the parent
+            // lays out its children before we call getHitRect()
+            public void run() {
+                final Rect rect = new Rect();
+                delegate.getHitRect(rect);
+                rect.top -= extraPadding;
+                rect.left -= extraPadding;
+                rect.right += extraPadding;
+                rect.bottom += extraPadding;
+                parent.setTouchDelegate( new TouchDelegate(rect, delegate));
+            }
+        });
+    }
+
+    @Override
+    public void follow(int position, View view) {
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(80);
+
+        // expand touch area of view
+        expandTouchArea(view, 70);
+
+        Object v = mArrayList.get(position);
+        if(v instanceof AnswerModel){
+            AnswerModel answerItem = (AnswerModel) v;
+
+            if(!answerItem.isFollowing()){
+                answerItem.setFollowing(true);
+            }
+
+            else if(answerItem.isFollowing){
+                answerItem.setFollowing(false);
+            }
+
+            adapter.notifyItemChanged(position, answerItem);
+        }
+
+        else if(v instanceof  AnswerWithImages){
+            AnswerWithImages answerItem = (AnswerWithImages) v;
+
+            if(!answerItem.isFollowing()){
+                answerItem.setFollowing(true);
+            }
+
+            else if(answerItem.isFollowing){
+                answerItem.setFollowing(false);
+            }
+
+            adapter.notifyItemChanged(position, answerItem);
+        }
     }
 
     @Override
@@ -496,17 +734,32 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
 
     @Override
     public void textExceedMaxLines(int position, View view, RelativeLayout relativeLayout, TextView textView, ImageView imageView) {
+        Object v = (Object) mArrayList.get(position);
+
+        boolean textAlreadyExpanded = false;
+        if(v instanceof AnswerModel){
+            AnswerModel answerItem = (AnswerModel) v;
+
+            textAlreadyExpanded = answerItem.isTextExpanded();
+        }
+
+        else if(v instanceof AnswerWithImages){
+            AnswerWithImages answerItem = (AnswerWithImages) v;
+
+            textAlreadyExpanded = answerItem.isTextExpanded();
+        }
+
         ExpandableTextView expandableTextView = (ExpandableTextView) view;
         Layout layout = expandableTextView.getLayout();
         if (layout != null) {
             int lines = layout.getLineCount();
-            if (lines > 0) {
-                int ellipsisCount = layout.getEllipsisCount(lines - 1);
-                if (ellipsisCount > 0) {
-                    relativeLayout.setVisibility(VISIBLE);
-                } else {
-                    relativeLayout.setVisibility(INVISIBLE);
-                }
+
+            int ellipsisCount = layout.getEllipsisCount(lines - 1);
+
+            if ((ellipsisCount > 0 || lines > 5) && !textAlreadyExpanded) {
+                relativeLayout.setVisibility(VISIBLE);
+            } else {
+                relativeLayout.setVisibility(INVISIBLE);
             }
         }
     }
@@ -531,34 +784,37 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
-}
 
+    @Override
+    public void moreOptions(int position) {
+        // At this position, we have our question
+        if(position == 0){
+            if(saveClickCounter++ == 0){
+                MoreOptionsQuestions bottomSheet = new MoreOptionsQuestions();
+                bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
 
-
-    /*private void detectScrollChange(){
-        mainRv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-                if (scrollY > oldScrollY) {
-                    Log.i(TAG, "Scroll DOWN");
-                    collapsedText.setVisibility(View.VISIBLE);
-                    fab.shrink();
-                }
-                if (scrollY < oldScrollY) {
-                    Log.i(TAG, "Scroll UP");
-                    collapsedText.setVisibility(View.VISIBLE);
-                    fab.extend();
-                }
-
-                if (scrollY == 0) {
-                    Log.i(TAG, "TOP SCROLL");
-                    collapsedText.setVisibility(View.INVISIBLE);
-                }
-
-                if (scrollY == ( v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight() )) {
-                    Log.i(TAG, "BOTTOM SCROLL");
-                }
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveClickCounter = 0;
+                    }
+                }, 1000);
             }
-        });
-    }*/
+
+            return;
+        }
+
+        // At other positions, we have our answers to our question
+        if(saveClickCounter++ == 0){
+            MoreOptionsAnswers bottomSheet = new MoreOptionsAnswers();
+            bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    saveClickCounter = 0;
+                }
+            }, 1000);
+        }
+    }
+}

@@ -7,7 +7,12 @@ import org.json.JSONObject;
 
 public class AnswerModel {
     public boolean  isTextExpanded;
+    public boolean  isAnswerUpVoted;
+    public boolean  isAnswerDownVoted;
+    public boolean  isFollowing;
+
     public int      isAnonymous;
+    public int      numberOfVotes;
     public String   name;
     public String   dateAnswered;
     public String   answer;
@@ -15,34 +20,48 @@ public class AnswerModel {
 
     public AnswerModel(){}
 
-    public AnswerModel(String name, String answer, String dateAnswered){
+    public AnswerModel(String name, String answer, String dateAnswered, int numberOfVotes){
         this.name = name;
         this.answer = answer;
         this.dateAnswered = dateAnswered;
+        this.numberOfVotes = numberOfVotes;
 
         isTextExpanded = false;
+        isAnswerUpVoted  = false;
+        isAnswerDownVoted = false;
+        isFollowing = false;
     }
 
     public boolean isTextExpanded() {
         return isTextExpanded;
     }
 
-    public void setTextExpanded(boolean textCollapsed) {
-        isTextExpanded = textCollapsed;
+    public void setTextExpanded(boolean isTextCollapsed) {
+        this.isTextExpanded = isTextCollapsed;
     }
 
-    public static AnswerModel fromJson(JSONObject jsonObject) throws JSONException {
-        AnswerModel answer   = new AnswerModel();
-        answer.isAnonymous   = jsonObject.getInt("isAnonymous");
-        answer.name          = jsonObject.getString("RepliedBy");
-        answer.answer        = jsonObject.getString("Text");
-        answer.dateAnswered  = jsonObject.getString("DateReplied");
+    public boolean isUpVoted(){
+        return isAnswerUpVoted;
+    }
 
-        if(answer.isAnonymous == 1){
-            answer.name = "Anonymous";
-        }
-        answer.name  = capitalizeFirstCharOfEveryWordInString(answer.name);
-        return answer;
+    public void setUpVoted(boolean isAnswerUpVoted){
+        this.isAnswerUpVoted = isAnswerUpVoted;
+    }
+
+    public boolean isDownVoted(){
+        return isAnswerDownVoted;
+    }
+
+    public void setDownVoted(boolean isAnswerDownVoted){
+        this.isAnswerDownVoted = isAnswerDownVoted;
+    }
+
+    public void setFollowing(boolean isFollowing){
+        this.isFollowing = isFollowing;
+    }
+
+    public boolean isFollowing(){
+        return isFollowing;
     }
 
     public String getProfileImage() {
@@ -53,33 +72,30 @@ public class AnswerModel {
         this.profileImage = profileImage;
     }
 
-    private static String capitalizeFirstCharOfEveryWordInString(String string){
-        char[] ch = string.toCharArray();
-        for(int i = 0; i < string.length(); i++) {
-            // Find first char of a word
-            // Make sure the character does not equal a space
-            if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
-                // If such character is lower-case
-                if (ch[i] >= 'a' && ch[i] <= 'z') {
-                    // simply convert it into upper-case
-                    // refer to the ASCII table to understand this line of code
-                    ch[i] = (char) (ch[i] - 'a' + 'A');
-                }
-            }
-            else if (ch[i] >= 'A' && ch[i] <= 'Z'){
-                ch[i] = (char) (ch[i] + 'a' - 'A');
-            }
-        }
-        return new String(ch);
+    public void incrementNumberOfVotes(){
+        numberOfVotes++;
     }
 
-}
+    public void decrementNumberOfVotes(){
+        numberOfVotes--;
+    }
 
-    /*AnswerModel(String name, String dateAnswered, String answer, Drawable profileImage){
-        this.name = name;
-        this.dateAnswered = dateAnswered;
-        this.answer = answer;
-        this.profileImage = profileImage;
+    public void setIsAnonymous(int isAnonymous) {
+        this.isAnonymous = isAnonymous;
+    }
+
+    public boolean isAnswerAnonymous(int isAnonymous){
+        if(isAnonymous == 1) return true;
+
+        return false;
+    }
+
+    public void setNumberOfVotes(int numberOfVotes) {
+        this.numberOfVotes = numberOfVotes;
+    }
+
+    public int getNumberOfVotes(){
+        return numberOfVotes;
     }
 
     public String getName() {
@@ -106,10 +122,19 @@ public class AnswerModel {
         this.answer = answer;
     }
 
-    public Drawable getProfileImage() {
-        return profileImage;
-    }
+    public static AnswerModel fromJson(JSONObject jsonObject) throws JSONException {
+        AnswerModel answer   = new AnswerModel();
+        answer.isAnonymous   = jsonObject.getInt("isAnonymous");
+        answer.name          = jsonObject.getString("RepliedBy");
+        answer.answer        = jsonObject.getString("Text");
+        answer.dateAnswered  = jsonObject.getString("DateReplied");
+        // must make a server call to determine if answer has been up-voted or down-voted
+        // must make a server call to determine the total number of votes an answer has
 
-    public void setProfileImage(Drawable profileImage) {
-        this.profileImage = profileImage;
-    }*/
+        if(answer.isAnonymous == 1){
+            answer.name = "Anonymous";
+        }
+
+        return answer;
+    }
+}

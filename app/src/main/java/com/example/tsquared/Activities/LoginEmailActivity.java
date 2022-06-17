@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -57,6 +59,8 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
         initializeHandler();
         setListeners();
         setUpToolBar();
+        password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
     }
 
     private void setViews() {
@@ -132,8 +136,6 @@ public class LoginEmailActivity extends AppCompatActivity implements View.OnClic
     private void setListeners() {
         login.setOnClickListener(this);
     }
-
-
 
     @Override
     public void onClick(View v) {

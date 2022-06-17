@@ -9,10 +9,17 @@ import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.tsquared.Adapters.UserAnswersAdapter;
+import com.example.tsquared.Adapters.UserArticlesAdapter;
+import com.example.tsquared.Fragments.MoreOptionsArticles;
+import com.example.tsquared.Models.MoreNewsModel;
+import com.example.tsquared.Models.UserArticleModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.Utils.PreferenceUtils;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -21,13 +28,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class UserBookMarks extends AppCompatActivity {
+import static com.facebook.FacebookSdk.getApplicationContext;
+
+public class UserBookMarks extends AppCompatActivity implements UserArticlesAdapter.OnMoreNewsListener {
     public DrawerLayout drawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     private Handler mDrawerActionHandler;
+    private int saveClickCounter;
+
+    private RecyclerView articlesRV;
+    private UserArticlesAdapter articlesAdapter;
+    private ArrayList<UserArticleModel> mArrayList;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -44,12 +60,14 @@ public class UserBookMarks extends AppCompatActivity {
         setUpDrawer();
         initializeHandler();
         setupDrawerContent(navigationView);
+        setUpRecyclerView();
     }
 
     private void setUpViews(){
         navigationView  = findViewById(R.id.navView);
         toolbar         = findViewById(R.id.searchToolBar);
         drawer          = findViewById(R.id.drawer_layout);
+        articlesRV      = findViewById(R.id.recyclerview);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -123,21 +141,23 @@ public class UserBookMarks extends AppCompatActivity {
                 Intent interests = new Intent(UserBookMarks.this, UserInterests.class);
                 startActivity(interests);
                 break;
+        }
+    }
 
-            case R.id.logout:
-                PreferenceUtils.savePassword(null, this);
-                PreferenceUtils.saveEmail(null, this);
-                PreferenceUtils.saveLastName(null, this);
-                PreferenceUtils.saveFirstName(null, this);
-                PreferenceUtils.saveCollege(null, this);
+    private void setUpRecyclerView(){
+        dummyDataSetUp();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+        articlesAdapter = new UserArticlesAdapter(mArrayList, this);
+        articlesRV.setLayoutManager(layoutManager);
 
-                DarkSharedPref.setNightModeState(false, getApplicationContext());
-                DarkSharedPref.isDark = false;
+        articlesRV.setAdapter(articlesAdapter);
+    }
 
-                Intent logout = new Intent(UserBookMarks.this, LoginActivity.class);
-                startActivity(logout);
-                ActivityCompat.finishAffinity(UserBookMarks.this);
-                break;
+    private void dummyDataSetUp(){
+        mArrayList = new ArrayList<>();
+
+        for(int i = 0; i < 10; i++){
+            mArrayList.add(new UserArticleModel("https://www.cnn.com/2022/01/20/politics/biden-russia-putin-ukraine-incursion/index.html", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
         }
     }
 
@@ -145,5 +165,30 @@ public class UserBookMarks extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         navigationView.getMenu().getItem(1).setChecked(true);
+    }
+
+    @Override
+    public void onMoreNewsClick(int position) {
+        UserArticleModel moreNewsModel = (UserArticleModel) mArrayList.get(position);
+        Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("articleURL", moreNewsModel.getURL());
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+    }
+
+    @Override
+    public void onMoreIconClick(int position) {
+        if(saveClickCounter++ == 0){
+            MoreOptionsArticles bottomSheet = new MoreOptionsArticles();
+            bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+
+            mDrawerActionHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    saveClickCounter = 0;
+                }
+            }, 1000);
+        }
     }
 }

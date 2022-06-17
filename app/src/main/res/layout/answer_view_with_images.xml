@@ -57,9 +57,35 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="16dp"
                     android:text="Brian Doe"
+                    android:textSize="12sp"
                     android:textColor="?attr/lightTextColor"
                     app:layout_constraintStart_toEndOf="@+id/answerIV"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/circle_dot"
+                    android:layout_width="2dp"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/circle_dot"
+                    app:layout_constraintStart_toEndOf="@+id/answerName"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/followingPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Follow"
+                        android:textSize="12sp"
+                        android:textColor="?attr/followPromptColor"
+                        app:layout_constraintStart_toEndOf="@id/circle_dot"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.example.tsquared.ExpandableTextView
@@ -67,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
 

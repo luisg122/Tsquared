@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -54,14 +53,14 @@ public class QuestionWindow extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.question_post);
+        setContentView(R.layout.question_window);
         setViews();
         loadFullNameAndCollege();
         setListeners();
     }
 
     private void setViews() {
-        topicPost   = (EditText)     findViewById(R.id.topicPost);
+        topicPost   = (EditText)  findViewById(R.id.topicPost);
     }
 
     private void setListeners(){

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,16 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tsquared.Adapters.MoreInterests_Adapter;
-import com.example.tsquared.Adapters.MoreNewsAdapter;
 import com.example.tsquared.Models.MoreInterestsModel;
-import com.example.tsquared.Models.MoreNewsModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MoreInterestsActivity extends AppCompatActivity implements MoreInterests_Adapter.OnMoreInterestsListener{
     private Toolbar toolbar;

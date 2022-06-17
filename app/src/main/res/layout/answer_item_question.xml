@@ -38,7 +38,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_below="@+id/questionForm"
                 android:textStyle="bold"
                 android:textColor="?attr/lightTextColor"
                 android:textSize="18sp"
@@ -48,6 +47,7 @@
                 android:maxLines="100"
                 android:ellipsize="end"
                 android:singleLine="false"
+                android:lineSpacingExtra="3dp"
                 android:text="What is the idea behind scrum and how is it efficiently applied?"
                 app:fontFamily="sans-serif"/>
 

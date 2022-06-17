@@ -3,6 +3,8 @@ package com.example.tsquared.Activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -24,6 +27,7 @@ import androidx.core.widget.NestedScrollView;
 
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
+import com.google.android.material.snackbar.Snackbar;
 
 public class AnswerWindow extends AppCompatActivity{
     private Toolbar toolbar;
@@ -31,6 +35,7 @@ public class AnswerWindow extends AppCompatActivity{
     private ScrollView scrollView;
     private LinearLayout rootView;
     private Handler handler;
+    private Button submit;
 
 
     @Override
@@ -72,6 +77,7 @@ public class AnswerWindow extends AppCompatActivity{
         scrollView      = (ScrollView) findViewById(R.id.scrollView);
         toolbar         = (Toolbar)  findViewById(R.id.toolbar);
         answerEditText  = (EditText) findViewById(R.id.answerToQuestion);
+        submit          = (Button) findViewById(R.id.submitAnswer);
     }
 
     private void setUpToolBar() {
@@ -89,7 +95,35 @@ public class AnswerWindow extends AppCompatActivity{
                     public void run() {
                         onBackPressed();
                     }
-                }, 250);
+                }, 200);
+            }
+        });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(AnswerWindow.this);
+
+                String answer = answerEditText.getText().toString().trim();
+                if(answer.isEmpty()){
+                    Snackbar snackbar = Snackbar.make(submit, "Cannot leave fields empty", Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("Action", null);
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor((Integer) (Integer) getResources().getColor(R.color.mainColor));
+                    snackbar.show();
+                }
+
+                else {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent();
+                            intent.putExtra("Answer", answer);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    }, 200);
+                }
             }
         });
     }
@@ -104,7 +138,6 @@ public class AnswerWindow extends AppCompatActivity{
                 InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 
         imm.showSoftInput(answerEditText, InputMethodManager.SHOW_IMPLICIT);
-
     }
 
     public void hideKeyboard(Activity activity) {

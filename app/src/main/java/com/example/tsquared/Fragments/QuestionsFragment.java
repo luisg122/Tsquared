@@ -1,5 +1,6 @@
 package com.example.tsquared.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,22 +32,27 @@ import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 
-import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class QuestionsFragment extends Fragment
-        implements QuestionItemAdapter.OnNoteListener {
+        implements QuestionItemAdapter.OnNoteListener, DrawerActivity.LoadNewQuestionListener{
+
+    public static Boolean bottomSheetOpen = false;
+    public static Boolean bottomSheetOpenTopics = false;
+
+    private int saveClickCounter;
 
     private View view;
     private RecyclerView mainRv;
-    private RecyclerView mainRv1;
-
     private ArrayList<Object> mArrayList;
     private Handler handler;
-    private ArrayList<NewsHorizontalModel> mArrayList1;
     private QuestionItemAdapter adapter;
+
     private SwipeRefreshLayout swipeContainer;
     private FloatingSearchView mSearchView;
+    private ArrayList<NewsHorizontalModel> mArrayList1;
+    private RecyclerView mainRv1;
+
     public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
 
 
@@ -73,7 +78,7 @@ public class QuestionsFragment extends Fragment
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        view = inflater.inflate(R.layout.item_main, container, false);
+        view = inflater.inflate(R.layout.questions_list, container, false);
         setUpViews();
         initializeHandler();
         setUpSwipeContainer();
@@ -140,7 +145,6 @@ public class QuestionsFragment extends Fragment
                 }
             }
         });
-
     }
 
 
@@ -148,7 +152,7 @@ public class QuestionsFragment extends Fragment
         mArrayList  = new ArrayList<>();
         for(int i = 0; i < 20; i++){
             QuestionItemTextModel questionItem   = new QuestionItemTextModel("Mathematics", "What are polynomials and why are they important?",
-                    "September 09 2020", "5", R.mipmap.blank_profile);
+                    "September 09 2020", "5");
             mArrayList.add(questionItem);
 
             QuestionItemImageModel questionItem1 = new QuestionItemImageModel("Mathematics", "What are polynomials and why are they important?",
@@ -263,10 +267,63 @@ public class QuestionsFragment extends Fragment
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
+    public void OnMoreIconClick(int position) {
+        if(saveClickCounter++ == 0){
+            MoreOptionsQuestions bottomSheet = new MoreOptionsQuestions();
+            bottomSheet.show(requireActivity().getSupportFragmentManager(), bottomSheet.getTag());
 
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    saveClickCounter = 0;
+                }
+            }, 1000);
+        }
+
+    }
+
+    @Override
+    public void OnMoreTopics(int position) {
+        if(saveClickCounter++ == 0){
+            TopicsBottomSheet bottomSheet = new TopicsBottomSheet();
+            bottomSheet.show(requireActivity().getSupportFragmentManager(), bottomSheet.getTag());
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    saveClickCounter = 0;
+                }
+            }, 1000);
+        }
+    }
+
+    @Override
+    public void insertNewQuestion(Intent questionData) {
+        if(mArrayList == null || adapter == null) return;
+
+        assert questionData != null;
+        String question = questionData.getStringExtra("Question");
+        QuestionItemTextModel questionItem = new QuestionItemTextModel("Music", question, "Oct 30 2021", "5");
+        mArrayList.add(0, questionItem);
+        adapter.notifyItemInserted(0);
+
+        // do database stuff here, need the email address to associate question with user
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        // savedInstanceState.putParcelableArrayList("questions", mArrayList);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            ((DrawerActivity) requireActivity()).setListener(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

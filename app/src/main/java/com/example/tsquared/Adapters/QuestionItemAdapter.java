@@ -2,16 +2,14 @@ package com.example.tsquared.Adapters;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -44,18 +42,18 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        if(viewType == 0){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_text_post, parent, false);
+        if(viewType == R.layout.question_with_text_post){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_with_text_post, parent, false);
             return new MyViewHolder(view, onNote);
         }
 
-        else if(viewType == 1){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_image_post, parent, false);
+        else if(viewType == R.layout.question_with_image_post){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_with_image_post, parent, false);
             return new MyImageViewHolder(view, onNote);
         }
 
         else{
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_link_post, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_with_link_post, parent, false);
             return new MyUrlViewHolder(view, onNote);
         }
     }
@@ -67,9 +65,15 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position){
-        // Just as an example, return 0 or 2 depending on position
-        // Note that unlike in ListView adapters, types don't have to be contiguous
-        return position % 3;
+        Object obj = mArrayList.get(position);
+
+        if (obj instanceof QuestionItemTextModel) return R.layout.question_with_text_post;
+
+        else if(obj instanceof QuestionItemImageModel) return R.layout.question_with_image_post;
+
+        else if (obj instanceof QuestionItemUrlModel) return R.layout.question_with_link_post;
+
+        return -1;
     }
 
     @Override
@@ -83,30 +87,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             dataViewHolder.tv_question.setText(question.question);
             dataViewHolder.tv_dateSubmitted.setText(question.dateSubmitted);
             dataViewHolder.tv_responses.setText(question.responseNum);
-            dataViewHolder.moreIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(mcontext, dataViewHolder.moreIcon);
-                    popupMenu.inflate(R.menu.menu_scrolling);
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.follow_info:
-                                    Toast.makeText(mcontext, "Following Question", Toast.LENGTH_LONG).show();
-                                    break;
-                                case R.id.bookmark:
-                                    Toast.makeText(mcontext, "Question Bookmarked", Toast.LENGTH_LONG).show();
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-                    popupMenu.show();
-                }
-            });
             Log.d("MyAdapter", "position: " + position);
         }
 
@@ -122,30 +102,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             dataViewHolder.tv_question.setText(question.question);
             dataViewHolder.tv_dateSubmitted.setText(question.dateSubmitted);
             dataViewHolder.tv_responses.setText(question.responseNum);
-            dataViewHolder.moreIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(mcontext, dataViewHolder.moreIcon);
-                    popupMenu.inflate(R.menu.menu_scrolling);
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.follow_info:
-                                    Toast.makeText(mcontext, "Following Question", Toast.LENGTH_LONG).show();
-                                    break;
-                                case R.id.bookmark:
-                                    Toast.makeText(mcontext, "Question Bookmarked", Toast.LENGTH_LONG).show();
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-                    popupMenu.show();
-                }
-            });
             Log.d("MyAdapter", "position: " + position);
         }
 
@@ -163,30 +119,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             dataViewHolder.urlSource.setText(question.source);
             dataViewHolder.tv_dateSubmitted.setText(question.dateSubmitted);
             dataViewHolder.tv_responses.setText(question.responseNum);
-            dataViewHolder.moreIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(mcontext, dataViewHolder.moreIcon);
-                    popupMenu.inflate(R.menu.menu_scrolling);
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.follow_info:
-                                    Toast.makeText(mcontext, "Following Question", Toast.LENGTH_LONG).show();
-                                    break;
-                                case R.id.bookmark:
-                                    Toast.makeText(mcontext, "Question Bookmarked", Toast.LENGTH_LONG).show();
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-                    popupMenu.show();
-                }
-            });
             Log.d("MyAdapter", "position: " + position);
         }
     }
@@ -216,7 +148,9 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
         private final CardView  cardViewLayout;
+        private final RelativeLayout topics;
         private final Button moreIcon;
+
         OnNoteListener onNoteListener;
 
         public MyViewHolder(View view, OnNoteListener onNoteListener) {
@@ -228,19 +162,22 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
             moreIcon         = view.findViewById(R.id.three_dots);
-            this.onNoteListener = onNoteListener;
+            cardViewLayout   = view.findViewById(R.id.cardViewLayout);
+            topics = view.findViewById(R.id.topicTags);
 
-            cardViewLayout = view.findViewById(R.id.cardViewLayout);
+            this.onNoteListener = onNoteListener;
             cardViewLayout.setOnClickListener(this);
+            moreIcon.setOnClickListener(this);
+            topics.setOnClickListener(this);
         }
         @Override
         public void onClick(View view) {
-            onNoteListener.OnNoteClick(getLayoutPosition());
-        }
-    }
+            int id = view.getId();
 
-    public interface OnNoteListener{
-        void OnNoteClick(int position);
+            if(id == R.id.cardViewLayout) onNoteListener.OnNoteClick(getLayoutPosition());
+            else if(id == R.id.three_dots) onNoteListener.OnMoreIconClick(getLayoutPosition());
+            else if(id == R.id.topicTags)  onNoteListener.OnMoreTopics(getLayoutPosition());
+        }
     }
 
     public class MyImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -251,8 +188,10 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
         private final CardView  cardViewLayout;
+        private final RelativeLayout topics;
         private final Button moreIcon;
         private final ImageView image;
+
         OnNoteListener onNoteListener;
 
         public MyImageViewHolder(View view, OnNoteListener onNoteListener) {
@@ -264,16 +203,23 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
             moreIcon         = view.findViewById(R.id.three_dots);
-            image = view.findViewById(R.id.imageContent);
-            this.onNoteListener = onNoteListener;
+            cardViewLayout   = view.findViewById(R.id.cardViewLayout);
+            topics = view.findViewById(R.id.topicTags);
+            image  = view.findViewById(R.id.imageContent);
 
-            cardViewLayout = view.findViewById(R.id.cardViewLayout);
+            this.onNoteListener = onNoteListener;
             cardViewLayout.setOnClickListener(this);
+            moreIcon.setOnClickListener(this);
+            topics.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            onNoteListener.OnNoteClick(getLayoutPosition());
+            int id = view.getId();
+
+            if(id == R.id.cardViewLayout) onNoteListener.OnNoteClick(getLayoutPosition());
+            else if(id == R.id.three_dots) onNoteListener.OnMoreIconClick(getLayoutPosition());
+            else if(id == R.id.topicTags)  onNoteListener.OnMoreTopics(getLayoutPosition());
         }
     }
 
@@ -285,33 +231,48 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
         private final CardView  cardViewLayout;
+        private final RelativeLayout topics;
         private final Button moreIcon;
         private final ImageView urlImage;
         private final TextView  urlHeadLine;
         private final TextView  urlSource;
+
         OnNoteListener onNoteListener;
 
         public MyUrlViewHolder(View view, OnNoteListener onNoteListener){
             super(view);
-            // iv_image       = view.findViewById(R.id.postIV);
-            // tv_name        = view.findViewById(R.id.QuestionName);
+            // iv_image      = view.findViewById(R.id.postIV);
+            // tv_name       = view.findViewById(R.id.QuestionName);
             tv_topic         = view.findViewById(R.id.topic);
             tv_question      = view.findViewById(R.id.questionContent);
             tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
             moreIcon         = view.findViewById(R.id.three_dots);
-            urlImage    = view.findViewById(R.id.linkImage);
-            urlHeadLine = view.findViewById(R.id.headLine);
-            urlSource   = view.findViewById(R.id.source);
-            this.onNoteListener = onNoteListener;
+            cardViewLayout   = view.findViewById(R.id.cardViewLayout);
+            topics           = view.findViewById(R.id.topicTags);
+            urlImage         = view.findViewById(R.id.linkImage);
+            urlHeadLine      = view.findViewById(R.id.headLine);
+            urlSource        = view.findViewById(R.id.source);
 
-            cardViewLayout = view.findViewById(R.id.cardViewLayout);
+            this.onNoteListener = onNoteListener;
             cardViewLayout.setOnClickListener(this);
+            moreIcon.setOnClickListener(this);
+            topics.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            onNoteListener.OnNoteClick(getLayoutPosition());
+            int id = view.getId();
+
+            if(id == R.id.cardViewLayout) onNoteListener.OnNoteClick(getLayoutPosition());
+            else if(id == R.id.three_dots) onNoteListener.OnMoreIconClick(getLayoutPosition());
+            else if(id == R.id.topicTags)  onNoteListener.OnMoreTopics(getLayoutPosition());
         }
+    }
+
+    public interface OnNoteListener{
+        void OnNoteClick(int position);
+        void OnMoreIconClick(int position);
+        void OnMoreTopics(int position);
     }
 }

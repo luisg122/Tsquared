@@ -3,11 +3,12 @@ package com.example.tsquared.Models;
 import android.widget.CheckBox;
 
 public class InterestsModel {
-    public String subject = " ";
+    public String subject = "";
     public boolean selectedValue;
 
     public InterestsModel(String subject){
-        this.subject = subject;
+        this.subject  = subject;
+        selectedValue = false;
     }
 
     public String getSubject(){

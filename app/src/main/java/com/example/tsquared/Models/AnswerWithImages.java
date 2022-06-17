@@ -5,24 +5,32 @@ import org.json.JSONObject;
 
 public class AnswerWithImages {
     public boolean isTextExpanded;
-    public int      isAnonymous;
-    public String   name;
-    public String   dateAnswered;
-    public String   answer;
-    public String   profileImage;
-    public int      numberOfImages;
+    public boolean isAnswerUpVoted;
+    public boolean isAnswerDownVoted;
+    public boolean isFollowing;
+
+    public int isAnonymous;
+    public int numberOfVotes;
+    public String name;
+    public String dateAnswered;
+    public String answer;
+    public String profileImage;
+
     public String[] imageUrls;
 
-    public AnswerWithImages(){}
+    public AnswerWithImages() {
+    }
 
-    public AnswerWithImages(String name, String answer, String dateAnswered, String[] imageUrls, int numberOfImages){
+    public AnswerWithImages(String name, String answer, String dateAnswered, String[] imageUrls, int numberOfVotes) {
         this.name = name;
         this.answer = answer;
         this.dateAnswered = dateAnswered;
         this.imageUrls = imageUrls;
-        this.numberOfImages = numberOfImages;
+        this.numberOfVotes  = numberOfVotes;
 
         isTextExpanded = false;
+        isAnswerUpVoted = false;
+        isAnswerDownVoted = false;
     }
 
     public boolean isTextExpanded() {
@@ -33,12 +41,28 @@ public class AnswerWithImages {
         isTextExpanded = textCollapsed;
     }
 
-    public String[] getImageUrls() {
-        return imageUrls;
+    public boolean isUpVoted() {
+        return isAnswerUpVoted;
     }
 
-    public void setImageUrls(String[] imageUrls) {
-        this.imageUrls = imageUrls;
+    public void setUpVoted(boolean isAnswerUpVoted) {
+        this.isAnswerUpVoted = isAnswerUpVoted;
+    }
+
+    public boolean isDownVoted() {
+        return isAnswerDownVoted;
+    }
+
+    public void setDownVoted(boolean isAnswerDownVoted) {
+        this.isAnswerDownVoted = isAnswerDownVoted;
+    }
+
+    public void setFollowing(boolean isFollowing){
+        this.isFollowing = isFollowing;
+    }
+
+    public boolean isFollowing(){
+        return isFollowing;
     }
 
     public String getProfileImage() {
@@ -49,47 +73,38 @@ public class AnswerWithImages {
         this.profileImage = profileImage;
     }
 
-    public static AnswerModel fromJson(JSONObject jsonObject) throws JSONException {
-        AnswerModel answer   = new AnswerModel();
-        answer.isAnonymous   = jsonObject.getInt("isAnonymous");
-        answer.name          = jsonObject.getString("RepliedBy");
-        answer.answer        = jsonObject.getString("Text");
-        answer.dateAnswered  = jsonObject.getString("DateReplied");
-
-        if(answer.isAnonymous == 1){
-            answer.name = "Anonymous";
-        }
-        answer.name  = capitalizeFirstCharOfEveryWordInString(answer.name);
-        return answer;
+    public String[] getImageUrls() {
+        return imageUrls;
     }
 
-    private static String capitalizeFirstCharOfEveryWordInString(String string){
-        char[] ch = string.toCharArray();
-        for(int i = 0; i < string.length(); i++) {
-            // Find first char of a word
-            // Make sure the character does not equal a space
-            if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
-                // If such character is lower-case
-                if (ch[i] >= 'a' && ch[i] <= 'z') {
-                    // simply convert it into upper-case
-                    // refer to the ASCII table to understand this line of code
-                    ch[i] = (char) (ch[i] - 'a' + 'A');
-                }
-            }
-            else if (ch[i] >= 'A' && ch[i] <= 'Z'){
-                ch[i] = (char) (ch[i] + 'a' - 'A');
-            }
-        }
-        return new String(ch);
+    public void setImageUrls(String[] imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
-}
+    public void incrementNumberOfVotes(){
+        numberOfVotes++;
+    }
 
-    /*AnswerModel(String name, String dateAnswered, String answer, Drawable profileImage){
-        this.name = name;
-        this.dateAnswered = dateAnswered;
-        this.answer = answer;
-        this.profileImage = profileImage;
+    public void decrementNumberOfVotes(){
+        numberOfVotes--;
+    }
+
+    public void setIsAnonymous(int isAnonymous) {
+        this.isAnonymous = isAnonymous;
+    }
+
+    public boolean isAnswerAnonymous(int isAnonymous){
+        if(isAnonymous == 1) return true;
+
+        return false;
+    }
+
+    public void setNumberOfVotes(int numberOfVotes) {
+        this.numberOfVotes = numberOfVotes;
+    }
+
+    public int getNumberOfVotes(){
+        return numberOfVotes;
     }
 
     public String getName() {
@@ -116,10 +131,21 @@ public class AnswerWithImages {
         this.answer = answer;
     }
 
-    public Drawable getProfileImage() {
-        return profileImage;
-    }
+    public static AnswerModel fromJson(JSONObject jsonObject) throws JSONException {
+        AnswerModel answer = new AnswerModel();
+        answer.isAnonymous = jsonObject.getInt("isAnonymous");
+        answer.name = jsonObject.getString("RepliedBy");
+        answer.answer = jsonObject.getString("Text");
+        answer.dateAnswered = jsonObject.getString("DateReplied");
 
-    public void setProfileImage(Drawable profileImage) {
-        this.profileImage = profileImage;
-    }*/
+        // must make a server call to determine if answer has been up-voted or down-voted
+        // must make a server call to determine the total number of votes an answer has
+        // must make a server call to retrieve  the images associated with answer
+
+        if (answer.isAnonymous == 1) {
+            answer.name = "Anonymous";
+        }
+
+        return answer;
+    }
+}

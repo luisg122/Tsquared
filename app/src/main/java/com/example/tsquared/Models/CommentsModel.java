@@ -6,15 +6,43 @@ public class CommentsModel {
     private String comment  = "";
     private String imageUrl = "";
     private String replies  = "";
-    private String numberOfUpvotes = "";
+    private int numberOfUpVotes = 0;
+    public boolean  isCommentUpVoted;
+    public boolean  isCommentDownVoted;
 
     public CommentsModel(){}
 
-    public CommentsModel(String name, String date, String comment){
+    public CommentsModel(String name, String date, String comment, int numberOfUpVotes){
         this.name    = name;
         this.date    = date;
         this.comment = comment;
+        this.numberOfUpVotes = numberOfUpVotes;
     }
+
+    public boolean isUpVoted(){
+        return isCommentUpVoted;
+    }
+
+    public void setUpVoted(boolean isAnswerUpVoted){
+        this.isCommentUpVoted = isAnswerUpVoted;
+    }
+
+    public boolean isDownVoted(){
+        return isCommentDownVoted;
+    }
+
+    public void setDownVoted(boolean isAnswerDownVoted){
+        this.isCommentDownVoted = isAnswerDownVoted;
+    }
+
+    public void incrementNumberOfVotes(){
+        numberOfUpVotes++;
+    }
+
+    public void decrementNumberOfVotes(){
+        numberOfUpVotes--;
+    }
+
 
     public String getName() {
         return name;
@@ -56,11 +84,12 @@ public class CommentsModel {
         this.replies = replies;
     }
 
-    public String getNumberOfUpvotes() {
-        return numberOfUpvotes;
+    public int getNumberOfUpVotes() {
+        return numberOfUpVotes;
     }
 
-    public void setNumberOfUpvotes(String numberOfUpvotes) {
-        this.numberOfUpvotes = numberOfUpvotes;
+    public void setNumberOfUpVotes(int numberOfUpvotes) {
+        this.numberOfUpVotes = numberOfUpvotes;
     }
+
 }

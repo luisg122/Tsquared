@@ -16,6 +16,8 @@
         <attr name="textCategoryColor"   format="color"/>
         <attr name="commentsSecColor"    format="color"/>
         <attr name="webViewCardColor"    format="color"/>
+        <attr name="followPromptColor"   format="color"/>
+        <attr name="checkBoxColor"       format="color"/>
 
         <attr name="colorNavigationItem" format="color" />
         <attr name="colorNavigationItemSelected" format="color" />

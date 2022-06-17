@@ -1,6 +1,5 @@
 package com.example.tsquared.Activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,7 +17,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
 import com.example.tsquared.Fragments.QuestionsFragment;
-import com.example.tsquared.Fragments.userQuestions;
+import com.example.tsquared.Fragments.UserAnswersFragment;
+import com.example.tsquared.Fragments.UserArticlesFragment;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
@@ -26,14 +26,12 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
-import org.w3c.dom.Text;
-
 public class Profile extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
-    private Button  following;
-    private Button  followers;
+    private TextView  following;
+    private TextView  followers;
     private Button  settings;
     private TextView collapsedTV;
     private ImageView profilePic;
@@ -60,8 +58,8 @@ public class Profile extends AppCompatActivity {
     private void setViews() {
         toolbar      = (Toolbar) findViewById(R.id.toolbar1);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-        following    = (Button) findViewById(R.id.followingButton);
-        followers    = (Button) findViewById(R.id.followersButton);
+        following    = (TextView) findViewById(R.id.followingButton);
+        followers    = (TextView) findViewById(R.id.followersButton);
         profilePic   = (ImageView) findViewById(R.id.profileImage);
         collapsedTV  = (TextView) findViewById(R.id.collapsedText);
         collapsingToolbar = findViewById(R.id.collapsingToolBar);
@@ -174,9 +172,9 @@ public class Profile extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new QuestionsFragment(), "Questions");
-        adapter.addFragment(new QuestionsFragment(), "Answers");
-        adapter.addFragment(new QuestionsFragment(), "Articles");
-        adapter.addFragment(new QuestionsFragment(), "Likes");
+        adapter.addFragment(new UserAnswersFragment(), "Answers");
+        adapter.addFragment(new UserArticlesFragment(), "Articles");
+
         viewPager.setAdapter(adapter);
     }
 

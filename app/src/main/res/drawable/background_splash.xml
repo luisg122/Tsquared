@@ -2,11 +2,12 @@
 <layer-list xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/mainColor"/>
+    <item android:drawable="@color/darkMainColor"/>
     <item
         android:height="60dp"
         android:width="60dp"
         android:gravity="center"
-        android:drawable="@drawable/ic_tsquared"/>
+        android:drawable="@drawable/ic_tsquared"
+        tools:targetApi="m" />
 
 </layer-list>

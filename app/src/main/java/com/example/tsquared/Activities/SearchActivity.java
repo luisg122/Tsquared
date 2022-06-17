@@ -14,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.tsquared.Adapters.SearchResultsAdapter;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
 import com.example.tsquared.Fragments.SearchQuestionsFragment;
 import com.example.tsquared.Models.QuestionItemTextModel;
@@ -45,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=qKeywords";
 
     RecyclerView mainRv;
-    SearchResultsAdapter adapter;
+    // SearchResultsAdapter adapter;
     ArrayList<QuestionItemTextModel> mArrayList;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -92,9 +91,8 @@ public class SearchActivity extends AppCompatActivity {
     private void setUpViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new SearchQuestionsFragment(), "Questions");
-        adapter.addFragment(new SearchQuestionsFragment(), "Articles");
         adapter.addFragment(new SearchQuestionsFragment(), "People");
-        adapter.addFragment(new SearchQuestionsFragment(), "Interests");
+
         viewPager.setAdapter(adapter);
     }
 
@@ -116,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        //How do we clear the search results when we press on the X (close Icon) button?
+        /*How do we clear the search results when we press on the X (close Icon) button?
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
@@ -124,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
                 adapter = new SearchResultsAdapter(mArrayList, getApplicationContext());
                 return false;
             }
-        });
+        });*/
         return true;
     }
 
@@ -151,7 +149,7 @@ public class SearchActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                adapter.swapData(questionList);
+                // adapter.swapData(questionList);
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {

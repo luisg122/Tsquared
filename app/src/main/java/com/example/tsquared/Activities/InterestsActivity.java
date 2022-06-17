@@ -29,14 +29,12 @@ import java.util.ArrayList;
 
 public class InterestsActivity extends AppCompatActivity implements InterestsAdapter.OnCheckClickListener{
     private ArrayList<InterestsModel> mArrayList;
-    private ArrayList<String> obtainedInterests;
     private RecyclerView mainRv;
     private InterestsAdapter adapter;
+
     private Toolbar toolbar;
     private Handler handler;
     private TextView keepTrackNum;
-    private int counter = 0;
-    private int lastPosition = -1;
     private ArrayList<Integer> numberOfCheckItems;
 
 
@@ -146,23 +144,30 @@ public class InterestsActivity extends AppCompatActivity implements InterestsAda
         mArrayList.add(new InterestsModel("Family"));
     }
 
-    @Override
-    public void finish(){
-        super.finish();
-    }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onCheckedClick(int position, CompoundButton buttonView, boolean isChecked) {
         InterestsModel interests = mArrayList.get(position);
+
+        // save initial button state (meaning was it check or unchecked before)
+        boolean selected = false;
+        if(interests.isSelected()) selected = true;
+
+        // update button state
         interests.setSelected(isChecked);
 
-        // if check button has not been checked before but it is checked NOW, then add to arrayList
-        if(isChecked && !interests.isSelected()) numberOfCheckItems.add(1);
+        // if check button has not been selected before but it is checked NOW, then add to arrayList
+        if(!selected && isChecked) numberOfCheckItems.add(1);
 
         // if check button has been selected before but it is 'unchecked' NOW, then remove from the arrayList
-        if(!isChecked && interests.isSelected()) numberOfCheckItems.remove(numberOfCheckItems.size() - 1);
+        if(selected && !isChecked) numberOfCheckItems.remove(numberOfCheckItems.size() - 1);
 
         keepTrackNum.setText(numberOfCheckItems.size() + "/5");
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
     }
 }

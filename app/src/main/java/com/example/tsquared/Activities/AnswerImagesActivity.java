@@ -1,11 +1,13 @@
 package com.example.tsquared.Activities;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
-import com.example.tsquared.Adapters.DiscoverViewPagerAdapter;
 import com.example.tsquared.Adapters.SliderImagesViewPagerAdapter;
 import com.example.tsquared.Models.SliderImage;
 import com.example.tsquared.R;
+import com.example.tsquared.ViewPagerTransition.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2;
 public class AnswerImagesActivity extends AppCompatActivity {
     private ArrayList<SliderImage> images;
     private ViewPager2 sliderImages;
+    private ImageView close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -23,10 +26,12 @@ public class AnswerImagesActivity extends AppCompatActivity {
         setContentView(R.layout.image_slider);
         setUpViews();
         setUpViewPager();
+        closeWindow();
     }
 
     private void setUpViews(){
         sliderImages = (ViewPager2) findViewById(R.id.imageSlider);
+        close = (ImageView) findViewById(R.id.closeWindow);
     }
 
     private void setUpViewPager(){
@@ -34,6 +39,16 @@ public class AnswerImagesActivity extends AppCompatActivity {
 
         SliderImagesViewPagerAdapter sliderImagesViewPagerAdapter = new SliderImagesViewPagerAdapter(images, getApplicationContext());
         sliderImages.setAdapter(sliderImagesViewPagerAdapter);
+        sliderImages.setPageTransformer(new ZoomOutPageTransformer());
+    }
+
+    private void closeWindow(){
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void dummySliderImages(){

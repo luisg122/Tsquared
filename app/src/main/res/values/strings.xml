@@ -14,4 +14,28 @@
     <string name="upload_file">Upload file</string>
     <string name="uploadImages">Set your image</string>
     <string name="hint">Search for …</string>
+
+    <!-- for botton click animation on bookmark drawable -->
+    <string name="bookmark_empty">
+        M17,3L7,3c-1.1,0 -1.99,0.9 -1.99,2L5,21l7,-3 7,3L19,5c0,-1.1 -0.9,-2 -2,-2zM17,18l-5,-2.18L7,18L7,5h10v13z
+    </string>
+
+    <string name="bookmark_clip_hidden">
+        M18 37 L38 37 L38 37 L18 37 Z
+    </string>
+
+    <string name="bookmark_clip_shown">
+        M0 0 L56 0 L56 56 L0 56 Z
+    </string>
+
+    <string name="bookmark_filled">
+        M17,3H7c-1.1,0 -1.99,0.9 -1.99,2L5,21l7,-3 7,3V5c0,-1.1 -0.9,-2 -2,-2z
+    </string>
+    <string name="Follow">Follow</string>
+    <string name="option_yes">Yes</string>
+    <string name="option_no">No</string>
+    <string name="quit_option_prompt">Do you want to exit the app?</string>
+    <string name="Following">Following</string>
+    <string name="AnswerPrompt">Answer</string>
+    <string name="CommentPrompt">Comment</string>
 </resources>

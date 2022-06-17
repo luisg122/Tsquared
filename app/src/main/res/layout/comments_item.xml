@@ -6,12 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="5dp"
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/threeDots"
-        android:layout_width="21dp"
-        android:layout_height="21dp"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
@@ -23,27 +24,11 @@
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
         app:srcCompat="@drawable/ic_more_vert" />
 
-    <ImageView
-        android:id="@+id/reply"
-        android:layout_width="21dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:scaleType="fitXY"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/threeDots"
-        app:layout_constraintTop_toBottomOf="@+id/commentContent"
-        app:srcCompat="@drawable/ic_reply_24" />
-
 
     <ImageView
         android:id="@+id/upVote"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
@@ -57,8 +42,8 @@
 
     <ImageView
         android:id="@+id/downVote"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_below="@+id/upVote"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
@@ -72,8 +57,8 @@
 
     <ImageView
         android:id="@+id/subComments"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:layout_below="@+id/upVote"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
@@ -95,7 +80,7 @@
         android:layout_marginTop="13dp"
         android:text="3"
         android:textColor="?attr/lightTextColor"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/subComments"
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
         tools:ignore="SmallSp" />
@@ -108,7 +93,7 @@
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
@@ -177,18 +162,30 @@
         app:layout_constraintTop_toBottomOf="@+id/commentContent"
         tools:ignore="SmallSp" />
 
+    <View
+        android:id="@+id/circle_dot"
+        android:layout_width="2dp"
+        android:layout_height="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/circle_dot"
+        app:layout_constraintStart_toEndOf="@+id/commentName"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
     <TextView
         android:id="@+id/commentSubmitted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:text="12/6/2019"
         android:textColor="?attr/lightTextColor"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/circle_dot"
         tools:ignore="SmallSp" />
 
 

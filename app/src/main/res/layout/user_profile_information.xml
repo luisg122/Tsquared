@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?attr/appBarColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isScrollContainer="true"
+        android:scrollbars="none"
+        android:layout_marginTop="?actionBarSize"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginVertical="25dp"
+                    android:src="@mipmap/blank_profile"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/editProfileBubble"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profileImage"
+                    android:layout_centerHorizontal="true"
+                    app:cardBackgroundColor="?attr/bubbleItemColor"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="0dp"
+                    app:contentPadding="6dp">
+
+                    <TextView
+                        android:id="@+id/editPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="Edit"
+                        android:textColor="?attr/textCategoryColor"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/firstNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/editProfileBubble"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp">
+                    <TextView
+                        android:id="@+id/firstNamePrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="First name"
+                        android:textColor="?attr/lightTextColor"/>
+
+                    <EditText
+                        android:id="@+id/firstNameET"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:text="Luis"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="?attr/lightTextColor"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/lastNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/firstNameLayout"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp">
+                    <TextView
+                        android:id="@+id/lastNamePrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Last name"
+                        android:textColor="?attr/lightTextColor"/>
+
+                    <EditText
+                        android:id="@+id/lastNameET"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:text="Gualpa"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="?attr/lightTextColor"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bioLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/lastNameLayout"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp">
+                    <TextView
+                        android:id="@+id/bioPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Short bio"
+                        android:textColor="?attr/lightTextColor"/>
+
+                    <EditText
+                        android:id="@+id/bioET"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:text="Love programming and running"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="?attr/lightTextColor"
+                        android:maxLines="3"
+                        android:ellipsize="end"
+                        android:inputType="textMultiLine"
+                        android:hint="Add a bio"
+                        android:textColorHint="@color/light_gray"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/educationLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/bioLayout"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp">
+                    <TextView
+                        android:id="@+id/educationPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Education"
+                        android:textColor="?attr/lightTextColor"/>
+
+                    <EditText
+                        android:id="@+id/educationET"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:text="CUNY Queens College"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="?attr/lightTextColor"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/employmentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/educationLayout"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp">
+                    <TextView
+                        android:id="@+id/employmentPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Employment"
+                        android:textColor="?attr/lightTextColor"/>
+
+                    <EditText
+                        android:id="@+id/employmentET"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:text="Audible Inc"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="?attr/lightTextColor"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/locationLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/employmentLayout"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp">
+                    <TextView
+                        android:id="@+id/locationPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location"
+                        android:textColor="?attr/lightTextColor"/>
+
+                    <EditText
+                        android:id="@+id/locationET"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:text="New York, NY"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="?attr/lightTextColor"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

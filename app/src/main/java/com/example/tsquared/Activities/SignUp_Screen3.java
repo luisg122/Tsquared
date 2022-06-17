@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,9 @@ public class SignUp_Screen3 extends AppCompatActivity implements View.OnClickLis
         setUpToolBar();
         setUpPassword();
         setButtonViewAndListener();
+        password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        confirmPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
     }
 
     private boolean checkInput() {

@@ -19,9 +19,6 @@
             android:id="@+id/interests"
             android:title="Interests"/>
 
-        <item
-            android:id="@+id/logout"
-            android:title="Log Out"/>
 
     </group>
 

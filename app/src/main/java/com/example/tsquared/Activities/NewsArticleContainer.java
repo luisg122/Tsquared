@@ -11,16 +11,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.tsquared.Adapters.NewsArticleViewPagerAdapter;
-import com.example.tsquared.Adapters.NewsHorizontalScrollAdapter;
 import com.example.tsquared.Models.NewsArticlesViewModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPagerTransition.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
-import java.util.Objects;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class NewsArticleContainer extends AppCompatActivity implements NewsArticleViewPagerAdapter.OnNewsClickListener {
     private ViewPager2 viewpager;

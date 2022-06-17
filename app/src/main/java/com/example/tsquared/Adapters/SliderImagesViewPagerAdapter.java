@@ -1,6 +1,10 @@
 package com.example.tsquared.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.tsquared.Models.SliderImage;
 import com.example.tsquared.R;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -35,10 +40,10 @@ public class SliderImagesViewPagerAdapter extends RecyclerView.Adapter<SliderIma
     @Override
     public void onBindViewHolder(@NonNull SliderImageViewHolder holder, int position) {
         SliderImage sliderImage = images.get(position);
-        Glide.with(context)
-                .load(sliderImage.getImageURL())
-                .centerCrop()
-                .into(holder.imageView);
+
+        Glide.with(holder.imageView.getContext()).
+                load(sliderImage.getImageURL()).
+                into(holder.imageView);
     }
 
     @Override
@@ -46,12 +51,37 @@ public class SliderImagesViewPagerAdapter extends RecyclerView.Adapter<SliderIma
         return images.size();
     }
 
-    public class SliderImageViewHolder extends RecyclerView.ViewHolder{
+    public static class SliderImageViewHolder extends RecyclerView.ViewHolder{
         private final ImageView imageView;
+
         public SliderImageViewHolder(@NonNull View view) {
             super(view);
 
             imageView = (ImageView) view.findViewById(R.id.imageSliderItem);
         }
     }
+
+    /*private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        SubsamplingScaleImageView bmImage;
+
+        public DownloadImageTask(SubsamplingScaleImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap bmp = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bmp = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImage(ImageSource.bitmap(result));
+        }
+    }*/
 }

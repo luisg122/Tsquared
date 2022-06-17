@@ -36,8 +36,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImage"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:src="@mipmap/blank_profile" />
@@ -55,12 +55,58 @@
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+                    <TextView
+                        android:id="@+id/followingButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:text="14 Following"
+                        android:textStyle="normal"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"/>
+
+                    <View
+                        android:id="@+id/circle_dot"
+                        android:layout_width="2dp"
+                        android:layout_height="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginVertical="15dp"
+                        android:background="@drawable/circle_dot_white"
+                        android:layout_toRightOf="@id/followingButton"
+                        android:layout_toEndOf="@id/followingButton"/>
+
+                    <TextView
+                        android:id="@+id/followersButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:text="1.4k Followers"
+                        android:textStyle="normal"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@id/circle_dot"
+                        android:layout_toEndOf="@id/circle_dot"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
                 <TextView
                     android:id="@+id/profileDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="25dp"
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:gravity="start|top"
@@ -71,52 +117,6 @@
                     android:textColor="@color/white"
                     android:textSize="13sp"
                     android:textStyle="normal"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="0dp"
-                    android:orientation="vertical">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@drawable/line_divider" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <Button
-                            android:id="@+id/followingButton"
-                            style="?android:buttonBarButtonStyle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textAllCaps="false"
-                            android:textSize="13sp"
-                            android:text="14 Following"
-                            android:textStyle="normal"
-                            android:textColor="@color/light_gray"/>
-                        <View
-                            android:background="@drawable/line_divider"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginTop="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_width="0.5dp"/>
-
-                        <Button
-                            android:id="@+id/followersButton"
-                            style="?android:buttonBarButtonStyle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textAllCaps="false"
-                            android:textSize="13sp"
-                            android:text="1.4k Followers"
-                            android:textStyle="normal"
-                            android:textColor="@color/light_gray"/>
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <androidx.appcompat.widget.Toolbar
@@ -146,18 +146,24 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar1"
-            android:layout_gravity="bottom"
+            android:layout_below="@+id/toolBar1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/white"
             app:tabMode="scrollable"
+            app:tabBackground="@drawable/tab_selector"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/light_gray"
             app:tabPaddingStart="16dp"
             app:tabPaddingEnd="16dp"
-            app:tabIndicatorHeight="2dp"
-            app:tabTextAppearance="@style/TabLayoutStyle2"/>
+            app:tabIndicatorHeight="0dp"
+            app:tabRippleColor="@null"
+            app:tabTextAppearance="@style/TabLayoutStyle2" />
     </com.google.android.material.appbar.AppBarLayout>
+
     <com.example.tsquared.ViewPager.CustomViewPager
             android:id="@+id/mainViewPager1"
             android:layout_width="match_parent"

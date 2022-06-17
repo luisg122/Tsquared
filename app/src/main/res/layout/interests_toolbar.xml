@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@drawable/toolbar_bg"
+        android:background="?attr/appBarColor"
         app:title="Interests"
         app:titleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,8 +21,9 @@
         android:id="@+id/number_of_interests"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#c5b2d3"
-        app:cardElevation="10dp"
+        app:cardBackgroundColor="@color/darkMainColor"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -59,15 +60,6 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/line_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/number_of_interests"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/interestRV"
@@ -75,6 +67,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="97dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/number_of_interests" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
