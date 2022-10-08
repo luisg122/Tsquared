@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:background="?attr/webViewCardColor"
+        android:background="?attr/appBarColor"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/siteOfNews"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:titleTextColor="?attr/textColor"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            android:layout_height="?android:attr/actionBarSize"
+            app:titleTextColor="@color/white"/>
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -30,94 +26,19 @@
             android:layout_height="10dp"
             android:indeterminate="true"
             android:visibility="visible"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.example.tsquared.CustomWebView
-        android:id="@+id/webView"
-        android:layout_below="@+id/appBarLayout"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:scrollbars="vertical"
+        android:layout_marginTop="?actionBarSize">
+            <com.example.tsquared.NewsWebView.EntryDetailsView
+                android:id="@+id/entry_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+    </androidx.core.widget.NestedScrollView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/buttonsSection"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="30dp"
-        app:cardBackgroundColor="?attr/webViewCardColor"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <FrameLayout
-                android:id="@+id/arrow_back_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true">
-                <Button
-                    android:id="@+id/arrow_back"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="?attr/selectableItemBackground"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_arrow_back"
-                    android:layout_gravity="center"/>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/arrow_next_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/arrow_back_container"
-                android:layout_toRightOf="@+id/arrow_back_container">
-                <Button
-                    android:id="@+id/arrow_next"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="?attr/selectableItemBackground"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_arrow_next"
-                    android:layout_gravity="center"/>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/moreOptionsContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true">
-                <Button
-                    android:id="@+id/more"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="?attr/selectableItemBackground"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_more_vert"
-                    android:layout_gravity="center"/>
-            </FrameLayout>
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

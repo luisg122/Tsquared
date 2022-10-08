@@ -9,14 +9,11 @@ import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.tsquared.Adapters.UserAnswersAdapter;
 import com.example.tsquared.Adapters.UserArticlesAdapter;
 import com.example.tsquared.Fragments.MoreOptionsArticles;
-import com.example.tsquared.Models.MoreNewsModel;
 import com.example.tsquared.Models.UserArticleModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
-import com.example.tsquared.Utils.PreferenceUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -26,12 +23,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserBookMarks extends AppCompatActivity implements UserArticlesAdapter.OnMoreNewsListener {
     public DrawerLayout drawer;

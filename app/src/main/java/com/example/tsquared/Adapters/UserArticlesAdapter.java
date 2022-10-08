@@ -36,7 +36,7 @@ public class UserArticlesAdapter extends RecyclerView.Adapter<UserArticlesAdapte
     @NonNull
     @Override
     public UserArticleVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_article_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_more_item, parent, false);
 
         return new UserArticleVH(view, onMoreNewsListener);
     }

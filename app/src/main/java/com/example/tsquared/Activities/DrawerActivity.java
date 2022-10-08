@@ -37,7 +37,7 @@ import android.widget.TextView;
 
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
-import com.example.tsquared.Fragments.DiscoverFragment;
+import com.example.tsquared.Fragments.DiscoverNewsFragment;
 import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.R;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
@@ -62,7 +62,7 @@ public class DrawerActivity extends AppCompatActivity {
     private Handler mDrawerActionHandler;
     private AlertDialog alertDialog;
     private QuestionsFragment questionsFragment;
-    private DiscoverFragment discoverFragment;
+    private DiscoverNewsFragment discoverNewsFragment;
 
     public static ExtendedFloatingActionButton fab;
     private Runnable runnable;
@@ -84,12 +84,12 @@ public class DrawerActivity extends AppCompatActivity {
         // restore fragment state after changing theme
         if(savedInstanceState != null){
             questionsFragment = (QuestionsFragment) getSupportFragmentManager().getFragment(savedInstanceState, "questionsFragment");
-            discoverFragment  = new DiscoverFragment();
+            discoverNewsFragment = new DiscoverNewsFragment();
         }
 
         else {
             questionsFragment = new QuestionsFragment();
-            discoverFragment  = new DiscoverFragment();
+            discoverNewsFragment = new DiscoverNewsFragment();
         }
 
         setContentView(R.layout.drawer_activity);
@@ -248,7 +248,7 @@ public class DrawerActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(questionsFragment, "Ask");
-        adapter.addFragment(discoverFragment, "Discover");
+        adapter.addFragment(discoverNewsFragment, "Discover");
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
 

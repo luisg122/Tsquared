@@ -32,7 +32,7 @@ import java.util.Timer;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class DiscoverFragment extends Fragment
+public class DiscoverNewsFragment extends Fragment
         implements NewsAdapter.OnMoreNewsListener{
 
     private int saveClickCounter;
@@ -58,7 +58,7 @@ public class DiscoverFragment extends Fragment
     String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showPeople";
 
 
-    public DiscoverFragment() {}
+    public DiscoverNewsFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,7 +130,7 @@ public class DiscoverFragment extends Fragment
         mArrayList.add(new MoreNewsModel("https://abcnews.go.com/International/19-year-break-record-youngest-woman-fly-solo/story?id=82312020", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "The Dow Jones trends negative after opening with small gains", "Washington Post"));
         mArrayList.add(new MoreNewsModel("https://news.yahoo.com/uae-says-missiles-drones-used-134607040.html", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "New York Times"));
         mArrayList.add(new MoreNewsModel("https://www.androidcentral.com/how-does-5g-pose-threat-airline-industry", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "Axios"));
-        mArrayList.add(new MoreNewsModel("https://www.npr.org/2022/01/20/1074046871/the-gilded-age-hbo-julian-fellowes-review", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
+        mArrayList.add(new MoreNewsModel("https://www.smithsonianmag.com/history/new-nicer-nero-history-roman-emperor-180975776/", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
         mArrayList.add(new MoreNewsModel("https://www.theverge.com/2022/1/19/22891256/halo-infinite-multiplayer-big-team-battle-patch-update-problems", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "New York Times"));
         mArrayList.add(new MoreNewsModel("https://www.macrumors.com/2022/01/19/iphone-se-3-april-launch-rumor/", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
         mArrayList.add(new MoreNewsModel("https://www.polygon.com/22891406/wordle-mobile-app-store-ios-creator-charity-donate", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "The Dow Jones trends negative after opening with small gains", "New York Times"));

@@ -23,6 +23,18 @@
         <attr name="colorNavigationItemSelected" format="color" />
         <attr name="navigationColorBackground" format="color"/>
         <attr name="drawableNavigationItemBackground" format="reference" />
+
+        <attr name="colorReadState" format="reference" />
+        <attr name="colorColoredReadState" format="reference" />
+        <attr name="colorBackground" format="reference" />
+        <attr name="colorText" format="reference" />
+        <attr name="colorQuoteBackground" format="reference" />
+        <attr name="colorQuoteLeft" format="reference" />
+        <attr name="colorArticleText" format="reference" />
+        <attr name="colorSubtitle" format="reference" />
+        <attr name="colorSubtitleBorder" format="reference" />
+        <attr name="colorUnreadBadgeBackground" format="reference" />
+        <attr name="colorUnreadBadgeText" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="IndentedLayout">

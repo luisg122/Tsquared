@@ -8,7 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -17,6 +20,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -27,9 +31,13 @@ import androidx.cardview.widget.CardView;
 
 import com.example.tsquared.CustomWebView;
 import com.example.tsquared.Fragments.MoreOptionsArticles;
+import com.example.tsquared.Fragments.TextFormatBottomSheet;
+import com.example.tsquared.Fragments.TopicsBottomSheet;
+import com.example.tsquared.NewsWebView.EntryDetailsView;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
@@ -37,7 +45,7 @@ public class NewsWebView extends AppCompatActivity {
     private int saveClickCounter;
     private Handler handler;
 
-    private CustomWebView webView;
+    private EntryDetailsView webView;
     private ProgressBar progressBar;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
@@ -64,7 +72,7 @@ public class NewsWebView extends AppCompatActivity {
         setToolbarListener();
         loadProgressBar();
         initWebView();
-        setUpButtonListeners();
+        //setUpButtonListeners();
         webViewScrollingBehavior();
     }
 
@@ -76,12 +84,12 @@ public class NewsWebView extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setUpViews(){
-        webView = (CustomWebView) findViewById(R.id.webView);
+        webView = (EntryDetailsView) findViewById(R.id.entry_view);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        toolbar = (Toolbar) findViewById(R.id.siteOfNews);
-        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         bottomBar = (CardView) findViewById(R.id.buttonsSection);
-        moreOptions = (Button) findViewById(R.id.more);
+        moreOptions = (Button) findViewById(R.id.more);*/
     }
 
     private void initializeHandler(){
@@ -115,12 +123,11 @@ public class NewsWebView extends AppCompatActivity {
     private void webViewScrollingBehavior(){
         CustomGestureDetector gestureDetector = new CustomGestureDetector();
 
-        webView.setGestureDetector(new GestureDetector(getApplicationContext(), gestureDetector));
+        // webView.setGestureDetector(new GestureDetector(getApplicationContext(), gestureDetector));
     }
 
     private void setUpToolBar() {
-        toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
-
+        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
 
         toolbar.setTitle(getNewsPublisher());
     }
@@ -148,6 +155,7 @@ public class NewsWebView extends AppCompatActivity {
     }
 
     private void setToolbarListener() {
+        setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +164,7 @@ public class NewsWebView extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebView(){
         webView.getSettings().setLoadsImagesAutomatically(true);
@@ -187,7 +196,61 @@ public class NewsWebView extends AppCompatActivity {
             }
 
         });
-        webView.loadUrl(url);
+
+        webView.setEntry(url);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.news_webview_menu, menu);
+
+        // look into why this piece of code cannot be move to overriden method onOptionsItemSelected
+        // menu item that makes use of actionLayout does not work in onOptionsItemSelected when clicked (why?)
+        MenuItem item = menu.findItem(R.id.textFormat);
+        View view = item.getActionView();
+        FloatingActionButton textFormatAccessibility = view.findViewById(R.id.textAccessibility);
+        textFormatAccessibility.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(saveClickCounter++ == 0){
+                    TextFormatBottomSheet bottomSheet = new TextFormatBottomSheet();
+                    bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            saveClickCounter = 0;
+                        }
+                    }, 1000);
+                }
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == R.id.more){
+            if(saveClickCounter++ == 0){
+                TopicsBottomSheet bottomSheet = new TopicsBottomSheet();
+                bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveClickCounter = 0;
+                    }
+                }, 1000);
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -218,7 +281,7 @@ public class NewsWebView extends AppCompatActivity {
 
                         // TODO uncomment this Hide Footer in android when Scrolling
                         // TODO (+toolbar)  plus means  2 view forward ho jaye or not visible to user
-                        bottomBar.animate().translationY(+bottomBar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+                        //bottomBar.animate().translationY(+bottomBar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
 
                         // TODO keshav Hide Also Floatng Button In Android
                         // FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFabButton.getLayoutParams();
@@ -239,7 +302,7 @@ public class NewsWebView extends AppCompatActivity {
                         // appBarLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
 
                         // TODO uncomment this Hide Footer in android when Scrolling
-                        bottomBar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+                        //bottomBar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
                         // mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
 
                         webView.invalidate();

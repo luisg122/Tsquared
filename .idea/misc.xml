@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/circle_dot.xml" value="0.171" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/circle_dot_white.xml" value="0.171" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/ic_accessibility_text.xml" value="0.171" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/ic_add_white_24dp.xml" value="0.2525" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/ic_arrow_back_24dp.xml" value="0.171" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/ic_menu_24dp.xml" value="0.171" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/ic_more.xml" value="0.171" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/ic_more_vert.xml" value="0.171" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/ic_more_vert_white.xml" value="0.252" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_item_question.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_view.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answers_activity_layout.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/app_bar_main.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/news_more_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/news_more_layout.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/news_web_view.xml" value="0.24772313296903462" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/profile_page.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_view.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_with_text_post.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/search_menu_layout.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/text_accessibility_menu_layout.xml" value="0.30885416666666665" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/text_accessibility_modal.xml" value="0.30885416666666665" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/topic_item.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/topics.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/user_article_item.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/menu/finish_sign_up_toolbar.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/menu/main_menu_search.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/menu/menu_main.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/menu/menu_scrolling.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/menu/nav_drawer_menu.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/menu/news_webview_menu.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/menu/profile_menu.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/xml/file_paths.xml" value="0.13854166666666667" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
@@ -144,7 +183,7 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
