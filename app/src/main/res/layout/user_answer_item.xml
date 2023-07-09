@@ -11,6 +11,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
         app:cardElevation="0dp"
         app:cardCornerRadius="0dp"
         app:cardBackgroundColor="?attr/cardBackgroundColor">
@@ -102,7 +103,7 @@
                 android:singleLine="false"
                 android:text="Scrum is an agile process framework for managing complex knowledge work in Software Development, Scrum is an agile process framework for managing complex knowledge work in Software Development"
                 android:textColor="?attr/textColor"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:autoLink="web"
                 android:linksClickable="true"
                 android:requiresFadingEdge="vertical"

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="?attr/cardBackgroundColor">
+
+    <RelativeLayout
+        android:id="@+id/blogToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:padding="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/ic_close_black_24dp" />
+
+        <ImageView
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="8dp"
+            android:layout_toLeftOf="@+id/undo"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_done_24" />
+
+        <ImageView
+            android:id="@+id/undo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="8dp"
+            android:layout_toLeftOf="@+id/redo"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_undo_24" />
+
+        <ImageView
+            android:id="@+id/redo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="25dp"
+            android:layout_toLeftOf="@+id/publishPrompt"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_redo_24" />
+
+        <TextView
+            android:id="@+id/publishPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Publish"
+            android:textColor="?attr/fabColor"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/blogScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:layout_marginBottom="?actionBarSize"
+        app:layout_constraintBottom_toTopOf="@+id/richContentFeatures"
+        app:layout_constraintTop_toBottomOf="@id/blogToolBar">
+        <EditText
+            android:id="@+id/blogPost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="55dp"
+            android:background="@color/transparent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Write or share anything ..."
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="?attr/textColor"
+            android:textColorHighlight="@color/mainButton"
+            android:textColorHint="?attr/lightTextColor"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="18sp" />
+    </ScrollView>
+
+    <include
+        layout="@layout/rich_content_bar"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/writePrompt"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:cardBackgroundColor="?attr/cardBackgroundColor"
+        app:cardElevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/ic_create_24dp"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

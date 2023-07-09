@@ -20,7 +20,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.tsquared.Activities.NewsWebView;
 import com.example.tsquared.Adapters.NewsAdapter;
-import com.example.tsquared.Fragments.MoreOptionsArticles;
 import com.example.tsquared.Models.DiscoverImageModel;
 import com.example.tsquared.Models.MoreNewsModel;
 import com.example.tsquared.R;
@@ -32,7 +31,7 @@ import java.util.Timer;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class DiscoverNewsFragment extends Fragment
+public class NewsFragment extends Fragment
         implements NewsAdapter.OnMoreNewsListener{
 
     private int saveClickCounter;
@@ -58,7 +57,7 @@ public class DiscoverNewsFragment extends Fragment
     String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showPeople";
 
 
-    public DiscoverNewsFragment() {}
+    public NewsFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class DiscoverNewsFragment extends Fragment
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.discover_list, container, false);
+        view = inflater.inflate(R.layout.news_item_list, container, false);
         setUpViews();
         initializeHandler();
         //invokeLinkBottomSheet();
@@ -83,7 +82,7 @@ public class DiscoverNewsFragment extends Fragment
     }
 
     private void setUpViews() {
-        newsRecyclerView       = (RecyclerView)     view.findViewById(R.id.newsRV);
+        newsRecyclerView  = (RecyclerView)  view.findViewById(R.id.newsRV);
         // discoverCardImages     = (ViewPager2)       view.findViewById(R.id.discoverCardVP);
         // nestedScrollView       = (NestedScrollView) view.findViewById(R.id.nestedScrollView                                                                                               );
         // cardView               = (CardView)   view.findViewById(R.id.shareLink);
@@ -119,6 +118,8 @@ public class DiscoverNewsFragment extends Fragment
 
         // lastly, setup the data for today's headlines
         mArrayList.add(new MoreNewsModel("https://www.cnbc.com/2021/06/12/bitcoin-taproot-upgrade-what-it-means.html", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Washington Post"));
+        mArrayList.add(new MoreNewsModel("https://iamalexmathers.medium.com/14-things-i-wish-i-knew-at-25-now-that-im-38-b9796e9ba574", "https://miro.medium.com/max/1400/1*UC4VIARbLk5E6nnghg-IAA.jpeg", "14 things I wish I knew at 25 (now that I’m 38)", "Medium"));
+        mArrayList.add(new MoreNewsModel("https://engineering.linkedin.com/blog/2022/linkedin-s-graphql-journey-for-integrations-and-partnerships", "https://engineering.linkedin.com/content/dam/engineering/site-assets/images/blog/posts/2022/10/graphql/GraphQLimage1.png", "LinkedIn Engineering", "Linkedin Blog"));
         mArrayList.add(new MoreNewsModel("https://abcnews.go.com/Politics/psaki-harris-refute-bidens-suggestion-2022-election-results/story?id=82373409", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3SNUtxps-1p637RF_g3IguGd5paXVVvjk7A&usqp=CAU", "The Dow Jones trends negative after opening with small gains", "New York Times"));
         mArrayList.add(new MoreNewsModel("https://www.theguardian.com/culture/2022/jan/20/stephen-colbert-donald-trump-late-night-tv", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW8-rM0YtkaGvM2qOMlf3j14jYmlL-rbe3Rw&usqp=CAU", "Today the dow has suffered a bloodshed when job reporting had turned out to be lower than expected", "Axios"));
         mArrayList.add(new MoreNewsModel("https://www.cnn.com/2022/01/20/politics/biden-russia-putin-ukraine-incursion/index.html", "https://www.thenation.com/wp-content/uploads/2021/07/biden-executive-order-monopoly-gty.jpg", "The Dow Jones trends negative after opening with small gains", "Washington Post"));

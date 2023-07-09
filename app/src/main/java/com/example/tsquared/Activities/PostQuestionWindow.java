@@ -85,6 +85,7 @@ public class PostQuestionWindow extends AppCompatActivity {
                 hideKeyboard(PostQuestionWindow.this);
 
                 String question = questionEditText.getText().toString().trim();
+
                 if(question.isEmpty()) {
                     Snackbar snackbar = Snackbar.make(submitQuestion, "Cannot leave fields empty", Snackbar.LENGTH_SHORT);
                     snackbar.setAction("Action", null);

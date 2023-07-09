@@ -84,7 +84,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestsAda
 
     private void setUpInterestsRecyclerView() {
         dummyInterests();
-        mainRv     = findViewById(R.id.interestRV);
+        mainRv = findViewById(R.id.interestRV);
         mainRv.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
                 RecyclerView.VERTICAL, false);

@@ -43,19 +43,41 @@
                 android:layout_gravity="center"/>
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/responseNum"
+        <RelativeLayout
+            android:id="@+id/answersBlock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
+            android:background="@drawable/border_transparent_background"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="10dp"
-            android:text="50 Answers"
-            android:textColor="?attr/lightTextColor"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/forumImage"
-            app:layout_constraintTop_toBottomOf="@+id/linkUrlView" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linkUrlView">
+
+            <TextView
+                android:id="@+id/responseNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50 answers"
+                android:textSize="13sp"
+                android:textColor="?attr/lightTextColor" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/numberOfViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="?attr/lightTextColor"
+            android:text="300 views"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/answersBlock"
+            app:layout_constraintTop_toBottomOf="@+id/linkUrlView"/>
 
         <TextView
             android:id="@+id/questionContent"
@@ -105,7 +127,7 @@
                     android:id="@+id/linkImage"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/headLine"
@@ -164,20 +186,6 @@
                     android:layout_marginBottom="20dp"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/forumImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linkUrlView"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_forum_24dp" />
 
         <RelativeLayout
             android:id="@+id/topicTags"

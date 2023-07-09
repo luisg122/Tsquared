@@ -28,11 +28,38 @@
                 android:textSize="15sp"
                 android:textColor="?attr/lightTextColor"/>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp">
+
+                <TextView
+                    android:id="@+id/numberOfAnswers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:text="20 answers"
+                    android:textColor="?attr/lightTextColor"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/numberOfViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/numberOfAnswers"
+                    android:text="300 views"
+                    android:textColor="?attr/lightTextColor"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
@@ -59,6 +86,46 @@
                 android:layout_marginVertical="0dp"/>
 
             <RelativeLayout
+                android:id="@+id/authorOfQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="15dp"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="5dp"
+                android:background="?attr/bubbleItemColor">
+
+                <TextView
+                    android:id="@+id/dateOfQuestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:text="asked July 7"
+                    android:textSize="12sp"
+                    android:textColor="?attr/lightTextColor"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/authorIV"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/dateOfQuestion"
+                    android:src="@mipmap/blank_profile" />
+
+                <TextView
+                    android:id="@+id/authorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dateOfQuestion"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@+id/authorIV"
+                    android:text="Juan Valdez"
+                    android:textColor="?attr/lightTextColor"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
@@ -68,13 +135,13 @@
                     android:id="@+id/numberOfAnswers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
+                    android:layout_weight="1"
                     android:text="20 Answers"
-                    android:textSize="13sp"
-                    android:textColor="?attr/lightTextColor"/>
+                    android:textColor="?attr/lightTextColor"
+                    android:textSize="13sp" />
 
                 <FrameLayout
                     android:layout_width="wrap_content"

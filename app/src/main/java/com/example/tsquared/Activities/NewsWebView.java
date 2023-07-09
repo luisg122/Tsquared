@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.webkit.WebView;
@@ -28,6 +30,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import com.example.tsquared.CustomWebView;
 import com.example.tsquared.Fragments.MoreOptionsArticles;
@@ -73,7 +76,6 @@ public class NewsWebView extends AppCompatActivity {
         loadProgressBar();
         initWebView();
         //setUpButtonListeners();
-        webViewScrollingBehavior();
     }
 
     private void getUrlFromIntent(){
@@ -120,42 +122,13 @@ public class NewsWebView extends AppCompatActivity {
         });
     }
 
-    private void webViewScrollingBehavior(){
-        CustomGestureDetector gestureDetector = new CustomGestureDetector();
-
-        // webView.setGestureDetector(new GestureDetector(getApplicationContext(), gestureDetector));
-    }
-
     private void setUpToolBar() {
         toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
-
-        toolbar.setTitle(getNewsPublisher());
-    }
-
-    private String getNewsPublisher(){
-        // Typically urls have a similar form, like https://www.bbc.com, we wish to find the index positions of the two dots
-        // such that the character after our first dot is the beginning of our publisher name
-        // and the character prior to our second dot is the ending of our publisher name
-
-        int firstIndex = -1, secondIndex = -1;
-
-        for(int i = 0; i < url.length(); i++){
-            if(url.charAt(i) == '.' && firstIndex == -1) {
-                firstIndex = i + 1;
-            }
-
-            else if(url.charAt(i) == '.' && firstIndex != -1){
-                secondIndex = i;
-                break;
-            }
-        }
-
-        // java substrings [first index, second Index), where the second parameter is not inclusive
-        return url.substring(firstIndex, secondIndex);
     }
 
     private void setToolbarListener() {
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,8 +143,8 @@ public class NewsWebView extends AppCompatActivity {
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setSupportZoom(false);
+        webView.getSettings().setBuiltInZoomControls(false);
         webView.getSettings().setDisplayZoomControls(false);
         //webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         //webView.setWebViewClient(new WebViewClient());
@@ -263,57 +236,5 @@ public class NewsWebView extends AppCompatActivity {
     public void finish(){
         super.finish();
         overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
-    }
-
-    private class CustomGestureDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if(e1 == null || e2 == null) return false;
-            if(e1.getPointerCount() > 1 || e2.getPointerCount() > 1) return false;
-
-            else {
-                try {
-                    if(e1.getY() - e2.getY() > 20 ) {
-                        // Hide Toolbar
-
-                        // TODO (-toolbar)  plus means  2 view above ho jaye or not visible to user
-                        //appBarLayout.animate().translationY(-appBarLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-
-                        // TODO uncomment this Hide Footer in android when Scrolling
-                        // TODO (+toolbar)  plus means  2 view forward ho jaye or not visible to user
-                        //bottomBar.animate().translationY(+bottomBar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-
-                        // TODO keshav Hide Also Floatng Button In Android
-                        // FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFabButton.getLayoutParams();
-                        // int fabBottomMargin = lp.bottomMargin;
-                        // mFabButton.animate().translationY(mFabButton.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
-                        // TODO keshav Hide Also Floatng Button In Android
-
-
-                        // TODO uncomment this Hide Footer in android when Scrolling
-                        // toolbar_bottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-                        // mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-
-                        webView.invalidate();
-                        return false;
-                    }
-                    else if (e2.getY() - e1.getY() > 20 ) {
-                        // Show Actionbar
-                        // appBarLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-
-                        // TODO uncomment this Hide Footer in android when Scrolling
-                        //bottomBar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-                        // mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-
-                        webView.invalidate();
-                        return false;
-                    }
-
-                } catch (Exception e) {
-                    webView.invalidate();
-                }
-                return false;
-            }
-        }
     }
 }

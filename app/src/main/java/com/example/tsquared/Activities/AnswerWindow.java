@@ -23,6 +23,7 @@ import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 
 import com.example.tsquared.R;
@@ -33,7 +34,6 @@ public class AnswerWindow extends AppCompatActivity{
     private Toolbar toolbar;
     private EditText answerEditText;
     private ScrollView scrollView;
-    private LinearLayout rootView;
     private Handler handler;
     private Button submit;
 
@@ -73,7 +73,6 @@ public class AnswerWindow extends AppCompatActivity{
     }
 
     private void setViews() {
-        rootView        = (LinearLayout) findViewById(R.id.linearLayout);
         scrollView      = (ScrollView) findViewById(R.id.scrollView);
         toolbar         = (Toolbar)  findViewById(R.id.toolbar);
         answerEditText  = (EditText) findViewById(R.id.answerToQuestion);

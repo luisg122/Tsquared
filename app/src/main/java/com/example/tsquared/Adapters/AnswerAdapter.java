@@ -180,15 +180,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    /*public void updateAnswersListItems(List<Object> mArrayList) {
-        final AnswersDiffCallback diffCallback = new AnswersDiffCallback(this.mArrayList, mArrayList);
-        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-
-        this.mArrayList.clear();
-        this.mArrayList.addAll(1, mArrayList);
-        diffResult.dispatchUpdatesTo(this);
-    }*/
-
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         Object item = mArrayList.get(position);
@@ -264,7 +255,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         else if (holder.getItemViewType() == -1){
             final NoViewHolder noViewHolder = (NoViewHolder) holder;
             // presumably bad programming practice
-            String firstName = DrawerActivity.firstNameofUser;
+            String firstName = "John";
             noViewHolder.promptUser.setText("Hey " + firstName +"! Be the first to answer this question");
         }
     }

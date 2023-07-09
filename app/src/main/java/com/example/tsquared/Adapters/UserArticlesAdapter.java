@@ -1,6 +1,5 @@
 package com.example.tsquared.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.example.tsquared.Models.InterestsModel;
-import com.example.tsquared.Models.MoreNewsModel;
 import com.example.tsquared.Models.UserArticleModel;
 import com.example.tsquared.R;
 
@@ -36,7 +33,7 @@ public class UserArticlesAdapter extends RecyclerView.Adapter<UserArticlesAdapte
     @NonNull
     @Override
     public UserArticleVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_more_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item, parent, false);
 
         return new UserArticleVH(view, onMoreNewsListener);
     }

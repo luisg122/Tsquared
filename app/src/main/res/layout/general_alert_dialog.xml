@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dialogColor"
     android:padding="0dp">
 
     <TextView
@@ -22,8 +21,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="Do you want to stop creating an account?"
-        android:textColor="@color/white"
+        android:textColor="?attr/textColor"
         android:textStyle="bold"
         android:textSize="20sp" />
 
@@ -42,7 +40,7 @@
         android:background="@drawable/line_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Quitprompt"
+        app:layout_constraintTop_toBottomOf="@+id/titlePrompt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -60,8 +58,6 @@
         android:background="@drawable/dialog_select"
         android:text="Ok"
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
-
+        android:textColor="?attr/textColor"
+        android:textSize="16sp"/>
 </RelativeLayout>

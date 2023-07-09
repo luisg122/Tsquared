@@ -44,7 +44,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> /
         }
 
         else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_more_item, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item, parent, false);
             return new MoreNewsViewHolder(view, onMoreNewsListener);
         }
     }
@@ -59,7 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> /
             dataHolder.headlinePrompt.setText(headline);
         }
 
-        else if(holder.getItemViewType() == R.layout.news_more_item){
+        else if(holder.getItemViewType() == R.layout.news_item){
             assert holder instanceof MoreNewsViewHolder;
             MoreNewsViewHolder dataHolder = (MoreNewsViewHolder) holder;
 
@@ -82,7 +82,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> /
             return R.layout.discover_headline;
         }
 
-        if(obj instanceof MoreNewsModel) return R.layout.news_more_item;
+        if(obj instanceof MoreNewsModel) return R.layout.news_item;
 
         return -1;
     }

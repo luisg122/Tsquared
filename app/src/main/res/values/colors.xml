@@ -27,8 +27,8 @@
     <color name="darkWindowBackground">#232e3d</color>
     <color name="darkBubbleColor">#1c242e</color>
     <color name="darkCardBackground">#263449</color>
-    <color name="ideasPrompt">#fbf6f5</color>
-    <color name="ideasPromptDark">#4f314f</color>
+    <color name="ideasPrompt">#f7edeb</color>
+    <color name="ideasPromptDark">#222b4a</color>
     <color name="DarkLineDivider">#333333</color>
     <color name="moonColorYellow">#ffbf00</color>
     <color name="DarkTopicColor">#1e5262</color>

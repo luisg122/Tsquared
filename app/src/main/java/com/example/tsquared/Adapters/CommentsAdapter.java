@@ -67,9 +67,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(viewType == R.layout.comment_prompt){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_prompt, parent, false);
             return new CreateCommentPrompt(view, onReplyListener, commentBottomSheet);
-        }
-
-        else{
+        } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comments_item, parent, false);
             return new CommentsViewHolder(view, onReplyListener);
         }

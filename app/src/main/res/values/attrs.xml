@@ -9,7 +9,7 @@
         <attr name="appBarColor"         format="color"/>
         <attr name="bottomSheetColor"    format="color"/>
         <attr name="lineDividerColor"    format="color"/>
-        <attr name="ideasPrompt"         format="color"/>
+        <attr name="blogPromptColor"     format="color"/>
         <attr name="tintDrawableColor"   format="color"/>
         <attr name="moonColor"           format="color"/>
         <attr name="bubbleItemColor"     format="color"/>

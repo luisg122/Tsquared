@@ -33,7 +33,7 @@
         <item name="iconLayoutColor">@color/tabSelectedDark</item>
         <item name="appBarColor">@color/darkMainColor</item>
         <item name="lineDividerColor">@color/light_gray</item>
-        <item name="ideasPrompt">@color/ideasPrompt</item>
+        <item name="blogPromptColor">@color/ideasPrompt</item>
         <item name="tintDrawableColor">@color/dark_gray</item>
         <item name="moonColor">@color/dark_gray</item>
         <item name="bubbleItemColor">@color/light_gray</item>
@@ -47,6 +47,7 @@
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
 
         <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
+        <item name="android:alertDialogStyle">@style/CustomAlertDialog</item>
     </style>
 
     <!-- Night Mode -->
@@ -68,7 +69,7 @@
         <item name="appBarColor">@color/darkMainColor</item>
         <item name="iconLayoutColor">@color/tabSelectedDark</item>
         <item name="lineDividerColor">@color/darkCommentsCardColor</item>
-        <item name="ideasPrompt">@color/ideasPromptDark</item>
+        <item name="blogPromptColor">@color/ideasPromptDark</item>
         <item name="tintDrawableColor">@color/white</item>
         <item name="moonColor">@color/moonColorYellow</item>
         <item name="bubbleItemColor">@color/darkBubbleColor</item>
@@ -83,6 +84,7 @@
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
 
         <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
+        <item name="android:alertDialogStyle">@style/CustomAlertDialog</item>
     </style>
 
     <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
@@ -256,6 +258,8 @@
         <item name="colorPrimaryDark">@color/darkMainColor</item>
         <item name="android:windowBackground">@color/darkMainColor</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="cardBackgroundColor">@color/darkCardBackground</item>
+        <item name="textColor">@color/white</item>
     </style>
 
     <!-- This will set the fade in animation on all your activities by default -->

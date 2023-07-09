@@ -25,12 +25,15 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.util.AttributeSet
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider.getUriForFile
 import com.example.tsquared.Constants.Constants
+import com.example.tsquared.Fragments.TextFormatBottomSheet
 import com.example.tsquared.R
 import net.dankito.readability4j.Article
 import okhttp3.Call
@@ -51,8 +54,10 @@ import net.dankito.readability4j.extended.Readability4JExtended
 
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : WebView(context, attrs, defStyleAttr){
+class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
+                                                 defStyleAttr: Int = 0) : WebView(context, attrs, defStyleAttr), TextFormatBottomSheet.TextFormatChangeListener {
 
+    private var value: Float = 0.0F;
     private val TEXT_HTML = "text/html"
     private val HTML_IMG_REGEX = "(?i)<[/]?[ ]?img(.|\n)*?>"
     private val BACKGROUND_COLOR = colorString(R.attr.cardBackgroundColor)
@@ -64,6 +69,9 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val CSS = "<head><style type='text/css'> " +
             "body {max-width: 100%; padding: 30px 15px; font-family: sans-serif-light; color: " + TEXT_COLOR + "; background-color:" + BACKGROUND_COLOR + "; line-height: 150%} " +
             "* {max-width: 100%; word-break: break-word}" +
+            "table {display: table; border-collapse: separate; box-sizing: border-box; text-indent: initial; border-spacing: 0; border-color: grey; border: 1px solid #DFE1E3; font-size: 14px;}" +
+            "tr {display: table-row; vertical-align: inherit; border-color: inherit;}" +
+            "tbody, td {border: 1px solid #DFE1E3; font-size: 14px;}" +
             "h1, h2 {font-weight: normal; line-height: 130%} " +
             "h1 {font-size: 170%; margin-bottom: 0.1em} " +
             "h2 {font-size: 140%} " +
@@ -96,17 +104,14 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
         settings.allowFileAccess = true
 
+        if(value!!.toInt() != 0)
+            settings.textZoom = 150 * value!!.toInt() + 20;
+
         @SuppressLint("SetJavaScriptEnabled")
         settings.javaScriptEnabled = true
 
         // For color
         setBackgroundColor(Color.parseColor(BACKGROUND_COLOR))
-
-        // Text zoom level from preferences
-        val fontSize = context.getPrefString(Constants.FONT_SIZE, "0")!!.toInt()
-        if (fontSize != 0) {
-            settings.textZoom = 150 + fontSize * 20
-        }
 
         webViewClient = object : WebViewClient() {
 
@@ -164,6 +169,7 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
                     .append(BODY_END)
                     .toString()
 
+
                 loadDataWithBaseURL(url, html, TEXT_HTML, UTF8, null)
 
                 // display top of article
@@ -212,5 +218,13 @@ class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: Attrib
     private fun colorString(resourceInt: Int): String {
         val color = context.colorAttr(resourceInt)
         return String.format("#%06X", 0xFFFFFF and color)
+    }
+
+    override fun changeTextSize(value: Float) {
+        this.value = value;
+    }
+
+    override fun changeTextFont() {
+
     }
 }

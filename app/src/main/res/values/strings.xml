@@ -31,10 +31,13 @@
     <string name="bookmark_filled">
         M17,3H7c-1.1,0 -1.99,0.9 -1.99,2L5,21l7,-3 7,3V5c0,-1.1 -0.9,-2 -2,-2z
     </string>
+
     <string name="Follow">Follow</string>
     <string name="option_yes">Yes</string>
     <string name="option_no">No</string>
     <string name="quit_option_prompt">Do you want to exit the app?</string>
+    <string name="save_as_draft">Do you want to save as draft?</string>
+    <string name="quite_creating_account">Do you want to stop creating an account?</string>
     <string name="Following">Following</string>
     <string name="AnswerPrompt">Answer</string>
     <string name="CommentPrompt">Comment</string>

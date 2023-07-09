@@ -113,13 +113,6 @@ public class QuestionsFragment extends Fragment
         });*/
     }
 
-    private void loadNameAndCollege(){
-        DrawerActivity activity = (DrawerActivity) getActivity();
-        assert activity != null;
-        fullName = activity.getFullName();
-        college  = activity.getCollege();
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpRecyclerView(){
         dummyData();
@@ -152,15 +145,15 @@ public class QuestionsFragment extends Fragment
         mArrayList  = new ArrayList<>();
         for(int i = 0; i < 20; i++){
             QuestionItemTextModel questionItem   = new QuestionItemTextModel("Mathematics", "What are polynomials and why are they important?",
-                    "September 09 2020", "5");
+                    "Sept 09 2020", "5");
             mArrayList.add(questionItem);
 
             QuestionItemImageModel questionItem1 = new QuestionItemImageModel("Mathematics", "What are polynomials and why are they important?",
-                    "September 09 2020", "5", "profileUrlImage", "imageUrl");
+                    "Sept 09 2020", "5", "profileUrlImage", "imageUrl");
             mArrayList.add(questionItem1);
 
             QuestionItemUrlModel questionItem2 = new QuestionItemUrlModel("Mathematics", "Are the 2020 Tokyo Olympics going to have spectators or no?",
-                    "September 09 2020", "5", "profileUrlImage", "imageUrl", "Tokyo covid levels rises", "BBC.com");
+                    "Sept 09 2020", "5", "profileUrlImage", "imageUrl", "Tokyo covid levels rises", "BBC.com");
 
             mArrayList.add(questionItem2);
         }
@@ -311,19 +304,17 @@ public class QuestionsFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-        // savedInstanceState.putParcelableArrayList("questions", mArrayList);
-    }
-
-    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            ((DrawerActivity) requireActivity()).setListener(this);
+            ((DrawerActivity) requireActivity()).setLoadNewQuestionListener(this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
     }
 }

@@ -35,9 +35,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.example.tsquared.Fragments.BlogsFragment;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
-import com.example.tsquared.Fragments.DiscoverNewsFragment;
+import com.example.tsquared.Fragments.NewsFragment;
 import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.R;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
@@ -47,25 +48,18 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class DrawerActivity extends AppCompatActivity {
-    NavigationView navigationView;
-    TextView profileName;
-    String fullName, college;
-    static String email;
-    public static String firstNameofUser;
     public DrawerLayout drawer;
+    private NavigationView navigationView;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private CustomViewPager viewPager;
     private SwitchCompat switchToggle;
     private Handler mDrawerActionHandler;
     private AlertDialog alertDialog;
-    private QuestionsFragment questionsFragment;
-    private DiscoverNewsFragment discoverNewsFragment;
-
     public static ExtendedFloatingActionButton fab;
-    private Runnable runnable;
 
     LoadNewQuestionListener loadNewQuestionListener;
 
@@ -80,18 +74,6 @@ public class DrawerActivity extends AppCompatActivity {
         }
 
         super.onCreate(savedInstanceState);
-
-        // restore fragment state after changing theme
-        if(savedInstanceState != null){
-            questionsFragment = (QuestionsFragment) getSupportFragmentManager().getFragment(savedInstanceState, "questionsFragment");
-            discoverNewsFragment = new DiscoverNewsFragment();
-        }
-
-        else {
-            questionsFragment = new QuestionsFragment();
-            discoverNewsFragment = new DiscoverNewsFragment();
-        }
-
         setContentView(R.layout.drawer_activity);
         setUpViews();
 
@@ -100,7 +82,6 @@ public class DrawerActivity extends AppCompatActivity {
         }
         setUpDarkModeSwitch();
         setupFloatingButtonAction();
-        // setProfileName(navigationView);
         viewProfileListener();
 
         viewPagerInit();
@@ -145,11 +126,8 @@ public class DrawerActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                // loadNameAndCollege();
                 Intent questionWindow = new Intent(getApplicationContext(), PostQuestionWindow.class);
                 questionWindow.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                // questionWindow.putExtra("Full Name", fullName);
-                // questionWindow.putExtra("College", college);
                 activityResultLauncher.launch(questionWindow);
 
                 // Slide activity upwards
@@ -158,22 +136,29 @@ public class DrawerActivity extends AppCompatActivity {
         });
     }
 
-    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+    /** Performing IO in non-blocking back-ground thread
+     * This method allows for us to post newly created question by the user
+     * as well as save newly created post
+     */
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // Here, no request code
-                        Intent data = result.getData();
+                        Intent intent = result.getData();
 
-                        if(loadNewQuestionListener != null)
-                            loadNewQuestionListener.insertNewQuestion(data);
+                        assert intent != null;
+                        Set<String> intentKeys = intent.getExtras().keySet();
+                        boolean isQuestionPosted = intentKeys.contains("Question");
+
+                        if(loadNewQuestionListener != null && isQuestionPosted)
+                            loadNewQuestionListener.insertNewQuestion(intent);
                     }
                 }
             });
 
-    public void setListener(LoadNewQuestionListener loadNewQuestionListener) {
+    public void setLoadNewQuestionListener(LoadNewQuestionListener loadNewQuestionListener) {
         this.loadNewQuestionListener = loadNewQuestionListener;
     }
 
@@ -247,8 +232,9 @@ public class DrawerActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(questionsFragment, "Ask");
-        adapter.addFragment(discoverNewsFragment, "Discover");
+        adapter.addFragment(new QuestionsFragment(), "Ask");
+        adapter.addFragment(new BlogsFragment(), "Discover");
+        // adapter.addFragment(discoverNewsFragment, "News");
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
 
@@ -306,8 +292,7 @@ public class DrawerActivity extends AppCompatActivity {
     public void openDialog(){
         // Change from AlertDialog to Dialog for more compact features
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialog);
-        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
-        View view2 = layoutInflaterAndroid.inflate(R.layout.alert_dialog, null);
+        View view2 = LayoutInflater.from(this).inflate(R.layout.alert_dialog, null);
         TextView textView = (TextView) view2.findViewById(R.id.Quitprompt);
 
         textView.setText(R.string.quit_option_prompt);
@@ -355,46 +340,6 @@ public class DrawerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static String getEmail() {
-        return email;
-    }
-
-    public static String getFirstName() {
-        return firstNameofUser;
-    }
-
-    public String getFullName(){
-        return fullName;
-    }
-
-    public String getCollege(){
-        return college;
-    }
-
-    // getting data from either two activities 'UserRegister' or 'LoginActivity'and inserting it into
-    // DrawerActivity
-    private void setProfileName(NavigationView navigationView) {
-        Intent intent = getIntent();
-        if(intent.hasExtra("map")){
-            HashMap<String, String> hashMap;
-            hashMap = (HashMap<String, String>)intent.getSerializableExtra("map");
-            String firstName = hashMap.get("First Name");
-            String lastName  = hashMap.get("Last Name");
-            college          = hashMap.get("College");
-            email            = hashMap.get("Email");
-            firstNameofUser  = firstName;
-
-            assert firstName != null;
-            assert lastName  != null;
-            fullName = firstName + " " + lastName;
-
-            View headerView = navigationView.getHeaderView(0);
-            profileName = (TextView) headerView.findViewById(R.id.profileName);
-            profileName.setText(fullName);
-        }
-    }
-
-
     private void viewProfileListener(){
         View headerView = navigationView.getHeaderView(0);
         Button viewProfile = (Button) headerView.findViewById(R.id.checkOutProfile);
@@ -420,8 +365,6 @@ public class DrawerActivity extends AppCompatActivity {
         });
     }
 
-    // when logging out, change the values of user credentials, so as to avoid keeping
-    // user logged in
     @SuppressLint("NonConstantResourceId")
     public void selectDrawerItem(MenuItem menuItem) {
         int id = menuItem.getItemId();
@@ -467,24 +410,7 @@ public class DrawerActivity extends AppCompatActivity {
         }
     }
 
-    public interface LoadNewQuestionListener{
+    public interface LoadNewQuestionListener {
         void insertNewQuestion(Intent questionData);
-    }
-
-    // This callback is called only when there is a saved instance that is previously saved by using
-    // onSaveInstanceState(). We restore some state in onCreate(), while we can optionally restore
-    // other state here, possibly usable after onStart() has completed.
-    // The savedInstanceState Bundle is same as the one used in onCreate().
-    @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    // saving state of fragments when dark mode is applied
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-        getSupportFragmentManager().putFragment(savedInstanceState, "questionsFragment", questionsFragment);
     }
 }

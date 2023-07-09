@@ -99,7 +99,7 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
             openDialog();
             return true;
         }
@@ -108,11 +108,13 @@ public class SignUp_Screen1 extends AppCompatActivity implements View.OnClickLis
 
     public void openDialog(){
         // Change from AlertDialog to Dialog for more compact features
-        AlertDialog.Builder builder = new AlertDialog.Builder(SignUp_Screen1.this, R.style.CustomAlertDialog);
-        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(SignUp_Screen1.this);
-        View view2 = layoutInflaterAndroid.inflate(R.layout.alert_dialog, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialog);
+        View view2 = LayoutInflater.from(this).inflate(R.layout.alert_dialog, null);
+        TextView textView = (TextView) view2.findViewById(R.id.Quitprompt);
 
-        builder.setView(view2);
+        textView.setText(R.string.quite_creating_account);
+
+        builder.setCustomTitle(view2);
         builder.setCancelable(false);
 
         alertDialog = builder.create();
