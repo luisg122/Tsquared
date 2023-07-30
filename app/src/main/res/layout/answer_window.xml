@@ -23,6 +23,29 @@
             android:layout_marginStart="90dp"
             android:layout_marginLeft="90dp">
 
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:layout_toLeftOf="@+id/submitAnswer"
+                android:layout_toStartOf="@+id/submitAnswer"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                tools:ignore="RtlSymmetry">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:elevation="0dp"
+                    app:backgroundTint="?attr/iconLayoutColor"
+                    app:fabSize="mini"
+                    app:rippleColor="@color/light_gray"
+                    app:srcCompat="@drawable/ic_anon_icon"/>
+            </FrameLayout>
+
             <Button
                 android:id="@+id/submitAnswer"
                 android:layout_width="wrap_content"
@@ -58,38 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:isScrollContainer="true"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="?attr/cardBackgroundColor"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="0dp">
-                <TextView
-                    android:id="@+id/questionAnswerPage2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/lightTextColor"
-                    android:textSize="16sp"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:minLines="1"
-                    android:maxLines="5"
-                    android:ellipsize="end"
-                    android:singleLine="false"
-                    android:text="What is the idea behind scrum and how is it efficiently applied?"
-                    app:fontFamily="sans-serif"/>
-            </androidx.cardview.widget.CardView>
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

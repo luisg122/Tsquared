@@ -89,6 +89,7 @@
             android:maxLines="2"
             android:padding="3dp"
             android:singleLine="false"
+            android:lineSpacingExtra="5dp"
             android:text="Come to work with me as I try to finish up a project, drink coffee and needlessly stress about the little things in life. Let's apply some CSS and Javascript"
             android:textColor="?attr/lightTextColor"
             android:textSize="13sp"

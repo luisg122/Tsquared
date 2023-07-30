@@ -17,21 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/questionForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:text="[Question]"
-                android:textSize="15sp"
-                android:textColor="?attr/lightTextColor"/>
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="20dp">
+                android:layout_marginVertical="30dp">
 
                 <TextView
                     android:id="@+id/numberOfAnswers"
@@ -95,7 +84,7 @@
                 android:layout_marginTop="15dp"
                 android:paddingHorizontal="25dp"
                 android:paddingVertical="5dp"
-                android:background="?attr/bubbleItemColor">
+                android:background="@drawable/background_topic_round">
 
                 <TextView
                     android:id="@+id/dateOfQuestion"
@@ -131,17 +120,7 @@
                 android:layout_marginVertical="5dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/numberOfAnswers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:text="20 Answers"
-                    android:textColor="?attr/lightTextColor"
-                    android:textSize="13sp" />
+                <include layout="@layout/like_dislike_section" />
 
                 <FrameLayout
                     android:layout_width="wrap_content"

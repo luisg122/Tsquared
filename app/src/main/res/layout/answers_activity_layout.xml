@@ -18,26 +18,8 @@
                 android:id="@+id/toolbar1"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/collapsedText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginRight="15dp"
-                        android:text="What is the idea behind scrum and how is it efficiently applied?"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:visibility="invisible"/>
-                </RelativeLayout>
-
-            </androidx.appcompat.widget.Toolbar>
+                app:titleTextColor="@color/white"
+                app:layout_collapseMode="pin"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

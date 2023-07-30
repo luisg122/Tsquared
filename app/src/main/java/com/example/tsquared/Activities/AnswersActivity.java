@@ -65,7 +65,6 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
     private ArrayList<Object> mArrayList;
     private AnswerAdapter adapter;
     private Toolbar toolbar;
-    private TextView collapsedText;
     private ExtendedFloatingActionButton fab;
     private TextView loadWindowQuestion;
     private boolean hasScrolled;
@@ -125,7 +124,6 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         fab = (ExtendedFloatingActionButton) findViewById(R.id.answerButton);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         mainRv = (RecyclerView) findViewById(R.id.answersRV);
-        collapsedText = (TextView) findViewById(R.id.collapsedText);
     }
 
     private void initializeHandler(){
@@ -177,31 +175,9 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
         mainRv.setAdapter(adapter);
 
         mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            int currPos = 0;
-
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
-                // detect if recyclerview has reached the top
-                currPos += dy;
-                if(currPos == 0){
-                    collapsedText.setVisibility(INVISIBLE);
-                }
-
-                else{
-                    if (dy > 0) {
-                        // Scrolled Downwards
-                        fab.shrink();
-                        collapsedText.setVisibility(VISIBLE);
-                    }
-
-                    else if (dy < 0) {
-                        // Scrolled Upwards
-                        fab.extend();
-                        collapsedText.setVisibility(VISIBLE);
-                    }
-                }
             }
         });
     }
@@ -268,6 +244,7 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
     private void setUpToolBar() {
         //setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+        toolbar.setTitle(R.string.question);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

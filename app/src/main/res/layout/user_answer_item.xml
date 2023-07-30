@@ -136,7 +136,7 @@
                     android:focusable="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/up_vote_vec" />
+                    app:srcCompat="@drawable/up_vote_vec_outline" />
 
                 <TextView
                     android:id="@+id/numberOfUpVotes"
@@ -177,7 +177,7 @@
                     android:focusable="true"
                     app:layout_constraintStart_toEndOf="@+id/verticalLine"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/down_vote_vec" />
+                    app:srcCompat="@drawable/down_vote_vec_outline" />
 
                 <FrameLayout
                     android:layout_width="wrap_content"

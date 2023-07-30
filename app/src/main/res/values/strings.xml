@@ -41,4 +41,5 @@
     <string name="Following">Following</string>
     <string name="AnswerPrompt">Answer</string>
     <string name="CommentPrompt">Comment</string>
+    <string name="question">Question</string>
 </resources>

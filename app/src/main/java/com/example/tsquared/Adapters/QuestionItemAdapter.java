@@ -85,7 +85,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             QuestionItemTextModel question = (QuestionItemTextModel) item;
             dataViewHolder.tv_topic.setText(question.topic);
             dataViewHolder.tv_question.setText(question.question);
-            dataViewHolder.tv_dateSubmitted.setText(question.dateSubmitted);
             dataViewHolder.tv_responses.setText(question.responseNum);
             Log.d("MyAdapter", "position: " + position);
         }
@@ -100,7 +99,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             QuestionItemImageModel question = (QuestionItemImageModel) item;
             dataViewHolder.tv_topic.setText(question.topic);
             dataViewHolder.tv_question.setText(question.question);
-            dataViewHolder.tv_dateSubmitted.setText(question.dateSubmitted);
             dataViewHolder.tv_responses.setText(question.responseNum);
             Log.d("MyAdapter", "position: " + position);
         }
@@ -117,7 +115,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             dataViewHolder.tv_question.setText(question.question);
             dataViewHolder.urlHeadLine.setText(question.headline);
             dataViewHolder.urlSource.setText(question.source);
-            dataViewHolder.tv_dateSubmitted.setText(question.dateSubmitted);
             dataViewHolder.tv_responses.setText(question.responseNum);
             Log.d("MyAdapter", "position: " + position);
         }
@@ -145,7 +142,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         // private final TextView  tv_name;
         private final TextView  tv_topic;
         private final TextView  tv_question;
-        private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
         private final CardView  cardViewLayout;
         private final RelativeLayout topics;
@@ -159,7 +155,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             // tv_name        = view.findViewById(R.id.QuestionName);
             tv_topic         = view.findViewById(R.id.topic);
             tv_question      = view.findViewById(R.id.questionContent);
-            tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
             moreIcon         = view.findViewById(R.id.three_dots);
             cardViewLayout   = view.findViewById(R.id.cardViewLayout);
@@ -185,7 +180,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         // private final TextView  tv_name;
         private final TextView  tv_topic;
         private final TextView  tv_question;
-        private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
         private final CardView  cardViewLayout;
         private final RelativeLayout topics;
@@ -200,7 +194,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             // tv_name        = view.findViewById(R.id.QuestionName);
             tv_topic         = view.findViewById(R.id.topic);
             tv_question      = view.findViewById(R.id.questionContent);
-            tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
             moreIcon         = view.findViewById(R.id.three_dots);
             cardViewLayout   = view.findViewById(R.id.cardViewLayout);
@@ -228,7 +221,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         // private final TextView  tv_name;
         private final TextView  tv_topic;
         private final TextView  tv_question;
-        private final TextView  tv_dateSubmitted;
         private final TextView  tv_responses;
         private final CardView  cardViewLayout;
         private final RelativeLayout topics;
@@ -245,7 +237,6 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             // tv_name       = view.findViewById(R.id.QuestionName);
             tv_topic         = view.findViewById(R.id.topic);
             tv_question      = view.findViewById(R.id.questionContent);
-            tv_dateSubmitted = view.findViewById(R.id.dateSubmitted);
             tv_responses     = view.findViewById(R.id.responseNum);
             moreIcon         = view.findViewById(R.id.three_dots);
             cardViewLayout   = view.findViewById(R.id.cardViewLayout);
