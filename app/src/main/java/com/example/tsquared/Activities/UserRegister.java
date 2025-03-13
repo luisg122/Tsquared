@@ -15,12 +15,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tsquared.Activities.login.LoginActivity;
 import com.example.tsquared.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.testfairy.TestFairy;
 
 import org.json.JSONObject;
 

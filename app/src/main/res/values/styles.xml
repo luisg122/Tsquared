@@ -17,12 +17,12 @@
 
     <!-- Theme of the toolbar mostly used in all activities of the app -->
     <style name="AppTheme.NoActionBar">
-        <item name="colorPrimaryDark">@color/darkMainColor</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/white</item>
         <item name="cardBackgroundColor">@color/white</item>
         <item name="commentsSecColor">@color/lightCommentsCardColor</item>
         <item name="webViewCardColor">@color/lightCardColor</item>
@@ -31,7 +31,7 @@
         <item name="fabColor">@color/mainColor</item>
         <item name="bottomSheetColor">@color/mainColor</item>
         <item name="iconLayoutColor">@color/tabSelectedDark</item>
-        <item name="appBarColor">@color/darkMainColor</item>
+        <item name="appBarColor">@color/white</item>
         <item name="lineDividerColor">@color/light_gray</item>
         <item name="blogPromptColor">@color/ideasPrompt</item>
         <item name="tintDrawableColor">@color/dark_gray</item>
@@ -40,25 +40,26 @@
         <item name="textCategoryColor">@color/DarkTopicColor</item>
         <item name="followPromptColor">@color/blue</item>
         <item name="checkBoxColor">@color/mainButton</item>
-
         <item name="colorNavigationItem">@color/menu_item_color_state</item>
         <item name="colorNavigationItemSelected">@color/white</item>
         <item name="navigationColorBackground">@color/navigationDark</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
-
         <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
         <item name="android:alertDialogStyle">@style/CustomAlertDialog</item>
+        <item name="hotTrendTagBackgroundColor">@color/hotTagTrendColor</item>
+        <item name="newPostTagBackgroundColor">@color/newTagPostColor</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyleLightMode</item>
     </style>
 
-    <!-- Night Mode -->
+    <!-- Dark Mode -->
     <style name="DarkTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimaryDark">@color/darkMainColor</item>
+        <item name="colorPrimaryDark">@color/darkCardBackground</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/darkWindowBackground</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/darkCardBackground</item>
         <item name="cardBackgroundColor">@color/darkCardBackground</item>
         <item name="commentsSecColor">@color/darkCommentsCardColor</item>
         <item name="webViewCardColor">@color/darkCardBackground</item>
@@ -66,7 +67,7 @@
         <item name="lightTextColor">@color/light_gray</item>
         <item name="fabColor">@color/mainColor</item>
         <item name="bottomSheetColor">@color/darkMainColor</item>
-        <item name="appBarColor">@color/darkMainColor</item>
+        <item name="appBarColor">@color/darkCardBackground</item>
         <item name="iconLayoutColor">@color/tabSelectedDark</item>
         <item name="lineDividerColor">@color/darkCommentsCardColor</item>
         <item name="blogPromptColor">@color/ideasPromptDark</item>
@@ -76,15 +77,23 @@
         <item name="textCategoryColor">@color/light_gray</item>
         <item name="followPromptColor">@color/lightBlue</item>
         <item name="checkBoxColor">@color/lightBlue</item>
-
-
         <item name="colorNavigationItem">@color/menu_item_color_state</item>
         <item name="colorNavigationItemSelected">@color/white</item>
         <item name="navigationColorBackground">@color/navigationDark</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
-
         <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
         <item name="android:alertDialogStyle">@style/CustomAlertDialog</item>
+        <item name="hotTrendTagBackgroundColor">@color/darkHotTagTrendColor</item>
+        <item name="newPostTagBackgroundColor">@color/darkNewTagPostColor</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyleDarkMode</item>
+    </style>
+
+    <style name="DrawerArrowStyleLightMode" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/black</item>
+    </style>
+
+    <style name="DrawerArrowStyleDarkMode" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/white</item>
     </style>
 
     <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
@@ -151,8 +160,8 @@
 
     <!-- Styling/customizing the searchView -->
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
-        <item name="android:editTextColor">@color/white</item>
-        <item name="android:textColorHint">@color/light_gray</item>
+        <item name="android:editTextColor">?attr/textColor</item>
+        <item name="android:textColorHint">?attr/lightTextColor</item>
         <item name="android:textCursorDrawable">@drawable/cursor_color_white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:textSize">18sp</item>
@@ -163,13 +172,11 @@
         <item name="android:windowBackground">@drawable/round_border</item>
     </style>
 
-    <style name="AppBottomSheetDialogTheme"
-        parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
-    <style name="AppModalStyle"
-        parent="Widget.Design.BottomSheet.Modal">
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_background</item>
     </style>
 
@@ -239,18 +246,8 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <!--<style name="MyCheckBox" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/dark_gray</item>
-        <item name="colorControlActivated">@color/mainButton</item>
-    </style>-->
-
     <style name="error_appearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/mainButton</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="error_appearance1" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/crimsonRed</item>
         <item name="android:textSize">12sp</item>
     </style>
 

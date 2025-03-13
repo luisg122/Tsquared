@@ -2,26 +2,30 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/questionAuthorDate"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="3dp">
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginRight="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/authorIV"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@mipmap/blank_profile"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_toStartOf="@+id/authorTV"/>
 
     <TextView
+        android:id="@+id/authorTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Juan asked Jul 07 2013"
         android:textSize="12sp"
         android:textColor="?attr/lightTextColor"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/authorIV"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

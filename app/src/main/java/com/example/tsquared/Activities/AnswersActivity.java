@@ -242,7 +242,6 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
             });
 
     private void setUpToolBar() {
-        //setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         toolbar.setTitle(R.string.question);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -344,15 +343,7 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
                 Log.i("ws", "---->>onFailure" + throwable.toString());
             }
         });
-    }*/
-
-    private void loadWindowQuestion(View view) {
-        Intent intent = getIntent();
-        String question = intent.getStringExtra("question");
-        toWhatQuestion = question;
-        loadWindowQuestion = view.findViewById(R.id.questionAnswerPage2);
-        loadWindowQuestion.setText(question);
-    }
+    }*s/
 
     /*private void loadListOfAnswers() {
         params = new RequestParams();

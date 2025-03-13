@@ -46,25 +46,23 @@
             <RelativeLayout
                 android:id="@+id/passwordSection"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/passwordLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
-                    android:layout_marginTop="100dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginHorizontal="15dp"
                     android:theme="@style/MyEditTextTheme"
                     android:textColorHint="@color/white"
                     app:endIconMode="password_toggle"
                     app:endIconTint="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:errorTextAppearance="@style/error_appearance"
-                    app:errorEnabled="true">
+                    app:errorEnabled="true"
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/registerPassword"
@@ -80,10 +78,7 @@
                     android:id="@+id/confirmPasswordLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="30dp"
                     android:hint="Confirm password"
                     android:textColorHint="@color/white"
@@ -98,9 +93,9 @@
                         android:id="@+id/confirmRegisterPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>

@@ -52,7 +52,6 @@ public class BlogWindow extends AppCompatActivity {
     private AlertDialog alertDialog;
     private ScrollView scrollView;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if(DarkSharedPref.isDark){
@@ -65,7 +64,6 @@ public class BlogWindow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blog_create_window);
         setUpViews();
-        setStatusBarColor();
         initializeHandler();
         setListeners();
         showSoftKeyboard();
@@ -81,27 +79,6 @@ public class BlogWindow extends AppCompatActivity {
         richContentFeatures = (CardView) findViewById(R.id.richContentFeatures);
         writePrompt = (CardView) findViewById(R.id.writePrompt);
         scrollView = (ScrollView) findViewById(R.id.blogScrollView);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void setStatusBarColor() {
-        if(Build.VERSION.SDK_INT >= 21) {
-            // status bar or the time bar at the top
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
-            return;
-        }
-
-        Window window = getWindow();
-
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-        // finally change the color
-        window.setStatusBarColor(getResources().getColor(R.color.transparent));
-
     }
 
     private void initializeHandler() {
@@ -244,11 +221,9 @@ public class BlogWindow extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent();
-                        intent.putExtra("savedItemBlog", getBlogContent());
-                        setResult(RESULT_OK, intent);
+
                     }
-                }, 180);
+                }, 200);
 
                 alertDialog.dismiss();
                 finish();

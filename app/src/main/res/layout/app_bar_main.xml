@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:background="?attr/appBarColor"
         app:layout_scrollFlags="scroll|enterAlways">
         <androidx.appcompat.widget.Toolbar
@@ -20,7 +19,7 @@
             android:layout_height="?actionBarSize"
             app:title="Home"
             app:titleTextAppearance="@style/Toolbar.TitleText"
-            app:titleTextColor="@color/white"
+            app:titleTextColor="?attr/textColor"
             app:titleMarginStart="15dp"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
@@ -31,16 +30,17 @@
             android:layout_below="@+id/searchToolBar"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="0dp"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/white"
             app:tabMode="scrollable"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/light_gray"
+            app:tabSelectedTextColor="?attr/textColor"
+            app:tabTextColor="?attr/lightTextColor"
+            app:tabIndicator="?attr/textColor"
+            app:tabIconTint="?attr/textColor"
+            app:tabIndicatorColor="?attr/textColor"
             app:tabPaddingStart="16dp"
             app:tabPaddingEnd="16dp"
-            app:tabIndicatorHeight="0dp"
+            app:tabIndicatorHeight="2dp"
             app:tabRippleColor="@null"
             app:tabTextAppearance="@style/TabLayoutStyle"/>
     </com.google.android.material.appbar.AppBarLayout>

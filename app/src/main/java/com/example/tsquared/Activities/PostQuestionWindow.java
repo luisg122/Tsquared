@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -29,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class PostQuestionWindow extends AppCompatActivity {
     private Toolbar  toolbar;
+    private EditText questionTitleText;
     private EditText questionEditText;
     private TextView countCharacters;
     private Handler handler;
@@ -56,6 +55,7 @@ public class PostQuestionWindow extends AppCompatActivity {
 
     private void setViews() {
         toolbar = findViewById(R.id.toolbar);
+        questionTitleText = findViewById(R.id.postTitle);
         questionEditText = findViewById(R.id.topicPost);
         countCharacters  = findViewById(R.id.charactersLeftPrompt);
         submitQuestion = findViewById(R.id.addButton);
@@ -84,9 +84,10 @@ public class PostQuestionWindow extends AppCompatActivity {
             public void onClick(View view) {
                 hideKeyboard(PostQuestionWindow.this);
 
-                String question = questionEditText.getText().toString().trim();
+                final String postTitle = questionTitleText.getText().toString().trim();
+                final String postInformation = questionEditText.getText().toString().trim();
 
-                if(question.isEmpty()) {
+                if(postTitle.isEmpty()) {
                     Snackbar snackbar = Snackbar.make(submitQuestion, "Cannot leave fields empty", Snackbar.LENGTH_SHORT);
                     snackbar.setAction("Action", null);
                     View snackBarView = snackbar.getView();
@@ -94,7 +95,7 @@ public class PostQuestionWindow extends AppCompatActivity {
                     snackbar.show();
                 }
 
-                else if(question.length() > 250){
+                else if(postTitle.length() > 250){
                     Snackbar snackbar = Snackbar.make(submitQuestion, "Question cannot have more than 250 characters", Snackbar.LENGTH_SHORT);
                     snackbar.setAction("Action", null);
                     View snackBarView = snackbar.getView();
@@ -107,7 +108,8 @@ public class PostQuestionWindow extends AppCompatActivity {
                         @Override
                         public void run() {
                             Intent intent = new Intent();
-                            intent.putExtra("Question", question);
+                            intent.putExtra("PostTitle", postTitle);
+                            intent.putExtra("PostInformation", postInformation);
                             setResult(RESULT_OK, intent);
                             finish();
                         }
@@ -123,8 +125,6 @@ public class PostQuestionWindow extends AppCompatActivity {
 
         @SuppressLint("SetTextI18n")
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // This sets a textview to the current length
-
             if(s.length() < 225) countCharacters.setVisibility(View.INVISIBLE);
 
             else {
@@ -149,35 +149,37 @@ public class PostQuestionWindow extends AppCompatActivity {
     };
 
     private void countCharactersMethod(){
-        questionEditText.addTextChangedListener(mTextEditorWatcher);
+        questionTitleText.addTextChangedListener(mTextEditorWatcher);
     }
 
     private void showSoftKeyboard() {
-        questionEditText.requestFocus();
+        questionTitleText.requestFocus();
 
-        questionEditText.setInputType(InputType.TYPE_CLASS_TEXT |
+        questionTitleText.setInputType(InputType.TYPE_CLASS_TEXT |
                 InputType.TYPE_TEXT_FLAG_MULTI_LINE |
                 InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        imm.showSoftInput(questionEditText, InputMethodManager.SHOW_IMPLICIT);
+        imm.showSoftInput(questionTitleText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
+        // Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
+
+        // If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
             view = new View(activity);
         }
+
+        final InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void setUpToolBar() {
-        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
-        toolbar.setTitle("New Question");
+        toolbar.setNavigationIcon(R.drawable.ic_close_drawable_24dp);
+        toolbar.setTitle("New Post");
         setSupportActionBar(toolbar);
     }
 

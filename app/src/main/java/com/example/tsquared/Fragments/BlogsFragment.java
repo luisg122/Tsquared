@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +45,10 @@ public class BlogsFragment extends Fragment implements BlogsAdapter.BlogItemList
     private RecyclerView blogsRecyclerView;
     private BlogsAdapter blogsAdapter;
     private ArrayList<Object> mArrayList;
+    private Handler handler;
     private ConstraintLayout createBlogPromptView;
+    private int saveClickCounter;
+
 
     public BlogsFragment(){}
 
@@ -53,9 +58,15 @@ public class BlogsFragment extends Fragment implements BlogsAdapter.BlogItemList
         view = inflater.inflate(R.layout.blog_item_list, container, false);
 
         setUpViews();
+        initializeHandler();
         setUpRecyclerView();
         return view;
     }
+
+    private void initializeHandler(){
+        handler = new Handler(Looper.getMainLooper());
+    }
+
 
     private void setUpViews(){
         blogsRecyclerView = (RecyclerView) view.findViewById(R.id.blogsRV);
@@ -95,22 +106,25 @@ public class BlogsFragment extends Fragment implements BlogsAdapter.BlogItemList
     public void createBlog(int position) {
         Intent intent = new Intent(getApplicationContext(), BlogWindow.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        activityResultLauncher.launch(intent);
+        startActivity(intent );
         requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
     }
 
-    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
+    @Override
+    public void OnMoreIconClick(int position) {
+        if(saveClickCounter++ == 0){
+            MoreOptionsQuestions bottomSheet = new MoreOptionsQuestions();
+            bottomSheet.show(requireActivity().getSupportFragmentManager(), bottomSheet.getTag());
+
+            handler.postDelayed(new Runnable() {
                 @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_CANCELED) {
-                        Intent intent = result.getData();
-                        Snackbar.make(view, "Blog Draft Saved", Snackbar.LENGTH_SHORT).show();
-                    }
+                public void run() {
+                    saveClickCounter = 0;
                 }
-            });
+            }, 1000);
+        }
+
+    }
 
     @Override
     public void clickOnBlogItem(int position) {

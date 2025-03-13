@@ -98,7 +98,6 @@ public class UserInterests extends AppCompatActivity implements InterestsAdapter
             }
         };
 
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
@@ -136,11 +135,6 @@ public class UserInterests extends AppCompatActivity implements InterestsAdapter
                 home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(home);
                 finish();
-                break;
-
-            case R.id.bookmarks:
-                Intent bookmarks = new Intent(UserInterests.this, UserBookMarks.class);
-                startActivity(bookmarks);
                 break;
         }
     }

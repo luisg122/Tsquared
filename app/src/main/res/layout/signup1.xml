@@ -50,22 +50,21 @@
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/firstNameLayout"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 android:layout_marginBottom="15dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginLeft="25dp"
-                android:hint="First name"
+                android:layout_marginHorizontal="20dp"
                 android:textColorHint="@color/white"
                 android:theme="@style/MyEditTextTheme"
+                android:hint="First name"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/white"
-                app:errorTextAppearance="@style/error_appearance"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/error_appearance">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/registerFirstName"
@@ -79,18 +78,16 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lastNameLayout"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="20dp"
                 android:hint="Last name"
                 android:textColorHint="@color/white"
                 android:theme="@style/MyEditTextTheme"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/firstNameLayout"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/white"
                 app:errorTextAppearance="@style/error_appearance"
@@ -111,17 +108,18 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="80dp"
             app:layout_constraintTop_toBottomOf="@+id/userFullName">
+
             <Button
                 android:id="@+id/signUpButton1"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:height="0dp"
                 android:background="@drawable/post_button_round_light"
                 android:text="Next"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:height="0dp"/>
+                android:textSize="18sp" />
         </RelativeLayout>
     </LinearLayout>
     </ScrollView>

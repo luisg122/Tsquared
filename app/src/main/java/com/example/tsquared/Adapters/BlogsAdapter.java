@@ -5,10 +5,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -114,11 +116,14 @@ public class BlogsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public class BlogsItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private ImageView image;
-        private TextView  title;
-        private TextView firstFewLines;
-        private TextView name;
+    public class BlogsItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final ImageView image;
+        private final TextView  title;
+        private final TextView firstFewLines;
+        private final TextView name;
+        private final Button moreIcon;
+        private final CardView cardViewLayout;
+
         BlogItemListener blogItemListener;
 
         public BlogsItemViewHolder(@NonNull View view, BlogItemListener onNewsClickListener) {
@@ -126,19 +131,28 @@ public class BlogsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             image = (ImageView) view.findViewById(R.id.blogImage);
             title = (TextView)  view.findViewById(R.id.title);
             name  = (TextView)  view.findViewById(R.id.name);
+            moreIcon = view.findViewById(R.id.three_dots);
             firstFewLines = (TextView) view.findViewById(R.id.firstFewLines);
+            cardViewLayout = (CardView) view.findViewById(R.id.blogItem);
 
             this.blogItemListener = onNewsClickListener;
+            cardViewLayout.setOnClickListener(this);
+            moreIcon.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v) {
-            BlogsAdapter.this.blogItemListener.clickOnBlogItem(getLayoutPosition());
+        public void onClick(View view) {
+            int id = view.getId();
+
+            if(id == R.id.blogItem) blogItemListener.clickOnBlogItem(getLayoutPosition());
+            else if(id == R.id.three_dots) blogItemListener.OnMoreIconClick(getLayoutPosition());
+
         }
     }
 
     public interface BlogItemListener {
         void clickOnBlogItem(int position);
         void createBlog(int position);
+        void OnMoreIconClick(int position);
     }
 }

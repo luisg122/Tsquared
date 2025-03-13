@@ -16,7 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.tsquared.Adapters.ViewPagerAdapter;
 import com.example.tsquared.Fragments.SearchQuestionsFragment;
-import com.example.tsquared.Models.QuestionItemTextModel;
+import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.google.android.material.tabs.TabLayout;
@@ -37,7 +37,7 @@ import static java.util.Objects.requireNonNull;
 public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView imageView;
-    private ArrayList<QuestionItemTextModel> questionList;
+    private ArrayList<QuestionItemModel> questionList;
     private View background;
     private RequestParams params;
     private AsyncHttpClient client;
@@ -45,7 +45,7 @@ public class SearchActivity extends AppCompatActivity {
 
     RecyclerView mainRv;
     // SearchResultsAdapter adapter;
-    ArrayList<QuestionItemTextModel> mArrayList;
+    ArrayList<QuestionItemModel> mArrayList;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -138,12 +138,11 @@ public class SearchActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
                 Log.e("Keywords Found In ", response.toString());
-                ArrayList<QuestionItemTextModel> questionList = new ArrayList<>();
+                ArrayList<QuestionItemModel> questionList = new ArrayList<>();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject object = response.getJSONObject(i);
-                        QuestionItemTextModel question = QuestionItemTextModel.fromJson(object);
-                        question.setProfileImage(R.mipmap.blank_profile);
+                        QuestionItemModel question = QuestionItemModel.fromJson(object);
                         questionList.add(question);
                     } catch (JSONException e) {
                         e.printStackTrace();

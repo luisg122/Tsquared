@@ -54,4 +54,9 @@
     <color name="green">#32CD32</color>
     <color name="navigationLight">#9aa4f5</color>
     <color name="navigationDark">#3e5d66</color>
+
+    <color name="hotTagTrendColor">#d04145</color>
+    <color name="darkHotTagTrendColor">#df8083</color>
+    <color name="newTagPostColor">#6a97b1</color>
+    <color name="darkNewTagPostColor">#78a1b8</color>
 </resources>

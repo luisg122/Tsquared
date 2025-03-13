@@ -2,7 +2,6 @@ package com.example.tsquared.Activities;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -48,7 +47,7 @@ public class GeneralWebView extends AppCompatActivity {
     }
 
     private void setUpToolbar(){
-        toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_close_drawable_24dp);
         toolbar.setTitle(title);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

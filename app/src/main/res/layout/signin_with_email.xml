@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.LoginActivity">
+    tools:context=".Activities.login.LoginActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarEmail"
@@ -93,14 +93,11 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="40dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
                         android:theme="@style/LogInActivateLine"
                         android:textColorHint="@color/dark_gray"
-                        app:errorTextAppearance="@style/error_appearance1"
+                        app:errorTextAppearance="@style/error_appearance"
                         app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -125,16 +122,13 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
                         android:theme="@style/LogInActivateLine"
                         android:textColorHint="@color/dark_gray"
                         app:endIconMode="password_toggle"
                         app:endIconTint="@color/black"
-                        app:errorTextAppearance="@style/error_appearance1"
+                        app:errorTextAppearance="@style/error_appearance"
                         app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText

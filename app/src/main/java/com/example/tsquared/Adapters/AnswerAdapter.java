@@ -2,9 +2,11 @@ package com.example.tsquared.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -193,7 +196,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if(value.equals("QuestionItemImageModel")){
                 Glide.with(dataHolder.questionImage.getContext())
                         .load("https://cdn.nextgov.com/media/img/cd/2020/10/19/NGspace20201019/860x394.jpg?1618395239")
-                        .transform(new CenterCrop(), new RoundedCorners(20))
+                        .transform(new CenterCrop())
                         .into(dataHolder.questionImage);
             }
 
@@ -325,12 +328,14 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 // check the type of question
                 if (value.equals("QuestionItemImageModel")) {
+                    setMargins(0);
                     viewStub.setLayoutResource(R.layout.answer_item_image_view);
                     viewStub.inflate();
 
                     questionImage = view.findViewById(R.id.imageContent);
 
                 } else if (value.equals("QuestionItemUrlModel")) {
+                    setMargins(20);
                     viewStub.setLayoutResource(R.layout.answer_item_url_view);
                     viewStub.inflate();
 
@@ -342,6 +347,23 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             this.onCommentsClickListener = onCommentsClickListener;
             moreOptions.setOnClickListener(this);
+        }
+
+        private void setMargins(int marginDP) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            Resources resource = viewStub.getContext().getResources();
+            int px = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    marginDP,
+                    resource.getDisplayMetrics()
+            );
+
+            params.setMargins(px, 0, px, 0);
+            viewStub.setLayoutParams(params);
         }
 
         @Override

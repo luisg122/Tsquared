@@ -35,6 +35,9 @@
         <attr name="colorSubtitleBorder" format="reference" />
         <attr name="colorUnreadBadgeBackground" format="reference" />
         <attr name="colorUnreadBadgeText" format="reference" />
+
+        <attr name="hotTrendTagBackgroundColor" format="color" />
+        <attr name="newPostTagBackgroundColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="IndentedLayout">

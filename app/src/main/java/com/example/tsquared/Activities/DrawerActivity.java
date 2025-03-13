@@ -35,10 +35,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.example.tsquared.Activities.profiles.Profile;
 import com.example.tsquared.Fragments.BlogsFragment;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
 import com.example.tsquared.ViewPager.CustomViewPager;
-import com.example.tsquared.Fragments.NewsFragment;
 import com.example.tsquared.Fragments.QuestionsFragment;
 import com.example.tsquared.R;
 import com.example.tsquared.Adapters.ViewPagerAdapter;
@@ -47,7 +47,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.HashMap;
 import java.util.Set;
 
 public class DrawerActivity extends AppCompatActivity {
@@ -63,7 +62,6 @@ public class DrawerActivity extends AppCompatActivity {
 
     LoadNewQuestionListener loadNewQuestionListener;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
          if(DarkSharedPref.loadNightModeState(this)){
@@ -80,6 +78,7 @@ public class DrawerActivity extends AppCompatActivity {
         if(DarkSharedPref.loadNightModeState(this)){
             switchToggle.setChecked(true);
         }
+
         setUpDarkModeSwitch();
         setupFloatingButtonAction();
         viewProfileListener();
@@ -88,6 +87,15 @@ public class DrawerActivity extends AppCompatActivity {
         setUpDrawer();
         initializeHandler();
         setupDrawerContent(navigationView);
+    }
+
+    private void setUpViews(){
+        navigationView  = findViewById(R.id.navView);
+        toolbar         = findViewById(R.id.searchToolBar);
+        drawer          = findViewById(R.id.drawer_layout);
+        viewPager       = findViewById(R.id.mainViewPager);
+        fab             = findViewById(R.id.FAB);
+        switchToggle    = findViewById(R.id.darkThemeSwitch);
     }
 
     private void setUpDarkModeSwitch(){
@@ -110,14 +118,6 @@ public class DrawerActivity extends AppCompatActivity {
         });
     }
 
-    private void setUpViews(){
-        navigationView  = findViewById(R.id.navView);
-        toolbar         = findViewById(R.id.searchToolBar);
-        drawer          = findViewById(R.id.drawer_layout);
-        viewPager       = findViewById(R.id.mainViewPager);
-        fab             = findViewById(R.id.FAB);
-        switchToggle    = findViewById(R.id.darkThemeSwitch);
-    }
 
     private void setupFloatingButtonAction() {
         fab.setClickable(true);
@@ -144,13 +144,13 @@ public class DrawerActivity extends AppCompatActivity {
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
-                public void onActivityResult(ActivityResult result) {
+                public void onActivityResult(final ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent intent = result.getData();
 
                         assert intent != null;
-                        Set<String> intentKeys = intent.getExtras().keySet();
-                        boolean isQuestionPosted = intentKeys.contains("Question");
+                        final Set<String> intentKeys = intent.getExtras().keySet();
+                        boolean isQuestionPosted = intentKeys.contains("PostTitle");
 
                         if(loadNewQuestionListener != null && isQuestionPosted)
                             loadNewQuestionListener.insertNewQuestion(intent);
@@ -158,7 +158,7 @@ public class DrawerActivity extends AppCompatActivity {
                 }
             });
 
-    public void setLoadNewQuestionListener(LoadNewQuestionListener loadNewQuestionListener) {
+    public void setLoadNewQuestionListener(final LoadNewQuestionListener loadNewQuestionListener) {
         this.loadNewQuestionListener = loadNewQuestionListener;
     }
 
@@ -218,7 +218,6 @@ public class DrawerActivity extends AppCompatActivity {
             }
         };
 
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
@@ -232,8 +231,8 @@ public class DrawerActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new QuestionsFragment(), "Ask");
-        adapter.addFragment(new BlogsFragment(), "Discover");
+        adapter.addFragment(new QuestionsFragment(), "Discover");
+        adapter.addFragment(new BlogsFragment(), "Learn");
         // adapter.addFragment(discoverNewsFragment, "News");
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
@@ -369,11 +368,6 @@ public class DrawerActivity extends AppCompatActivity {
     public void selectDrawerItem(MenuItem menuItem) {
         int id = menuItem.getItemId();
         switch (id) {
-            case R.id.bookmarks:
-                Intent bookmarks = new Intent(DrawerActivity.this, UserBookMarks.class);
-                startActivity(bookmarks);
-                break;
-
             case R.id.interests:
                 Intent interests = new Intent(DrawerActivity.this, UserInterests.class);
                 startActivity(interests);

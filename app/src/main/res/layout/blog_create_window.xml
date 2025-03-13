@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            app:srcCompat="@drawable/ic_close_black_24dp" />
+            app:srcCompat="@drawable/ic_close_drawable_24dp" />
 
         <ImageView
             android:id="@+id/done"

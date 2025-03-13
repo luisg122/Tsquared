@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,8 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.tsquared.Activities.AnswersActivity;
 import com.example.tsquared.Activities.DrawerActivity;
 import com.example.tsquared.Adapters.QuestionItemAdapter;
-import com.example.tsquared.Models.QuestionItemImageModel;
-import com.example.tsquared.Models.QuestionItemTextModel;
+import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.Models.NewsHorizontalModel;
-import com.example.tsquared.Models.QuestionItemUrlModel;
 import com.example.tsquared.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.loopj.android.http.AsyncHttpClient;
@@ -44,7 +43,7 @@ public class QuestionsFragment extends Fragment
 
     private View view;
     private RecyclerView mainRv;
-    private ArrayList<Object> mArrayList;
+    private ArrayList<QuestionItemModel> mArrayList;
     private Handler handler;
     private QuestionItemAdapter adapter;
 
@@ -116,14 +115,17 @@ public class QuestionsFragment extends Fragment
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpRecyclerView(){
         dummyData();
-        mainRv = view.findViewById(R.id.question_list_rv);
-        mainRv.setHasFixedSize(false);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
                 RecyclerView.VERTICAL, false);
+
+        mainRv = view.findViewById(R.id.question_list_rv);
         mainRv.setLayoutManager(layoutManager);
+        mainRv.setHasFixedSize(false);
 
         adapter = new QuestionItemAdapter(mArrayList, getApplicationContext(), this);
         mainRv.setAdapter(adapter);
+
         // design to expand and shrink the extended fab button
         mainRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -143,17 +145,28 @@ public class QuestionsFragment extends Fragment
 
     private void dummyData(){
         mArrayList  = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
-            QuestionItemTextModel questionItem   = new QuestionItemTextModel("Mathematics", "What are polynomials and why are they important?",
-                    "Sept 09 2020", "5");
+        for(int i = 0; i < 10; i++){
+            QuestionItemModel questionItem = new QuestionItemModel(
+                    "Science", "What has happened to Opportunity in Mars, and are there other explorers out there as well?",
+                    "I understand Opportunity is a Rover set out to explore Mars, but how many of them are there exactly is what" +
+                            "I wish to know, I also imagine the cost to manufacture these rovers are quite costly",
+                    "Jan 02 2024", "5", "profileImage", "profileName",
+                    null, null, null, null);
             mArrayList.add(questionItem);
 
-            QuestionItemImageModel questionItem1 = new QuestionItemImageModel("Mathematics", "What are polynomials and why are they important?",
-                    "Sept 09 2020", "5", "profileUrlImage", "imageUrl");
+            QuestionItemModel questionItem1 = new QuestionItemModel(
+                    "Politics", "How well televised was the last Winter's Olympics?",
+                    null, "Jan 09 2024", "7", "profileUrlImage", "profileName",
+                    null, "imageUrl", "headline", "source");
+
             mArrayList.add(questionItem1);
 
-            QuestionItemUrlModel questionItem2 = new QuestionItemUrlModel("Mathematics", "Are the 2020 Tokyo Olympics going to have spectators or no?",
-                    "Sept 09 2020", "5", "profileUrlImage", "imageUrl", "Tokyo covid levels rises", "BBC.com");
+            QuestionItemModel questionItem2 = new QuestionItemModel(
+                    "Mathematics", "Is One Piece mid? How does it compare to Naruto in terms of character development?",
+                    "I acknowledge that One Piece is not indeed mid, but other people are calling it so. I personally on the fence about it" +
+                            "I think if the anime consists of character with personal growth, then it's an anime worth watching.",
+                    "Jan 21 2024", "13", "profileImage", "profileName",
+                    "https://platform.polygon.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25132508/one_piece_luffy_new_season.jpg?quality=90&strip=all&crop=0,3.4613147178592,100,93.077370564282", null, null, null);
 
             mArrayList.add(questionItem2);
         }
@@ -220,38 +233,14 @@ public class QuestionsFragment extends Fragment
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(mArrayList.get(position) instanceof QuestionItemTextModel){
-                    QuestionItemTextModel item = (QuestionItemTextModel) mArrayList.get(position);
+                if(mArrayList.get(position) instanceof QuestionItemModel){
+                    QuestionItemModel item = (QuestionItemModel) mArrayList.get(position);
                     Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("questionId", "1234");
-                    intent.putExtra("question", item.getQuestion());
+                    intent.putExtra("question", item.getPostTitle());
                     intent.putExtra("numberOfAnswers", item.getResponseNum());
                     intent.putExtra("type", "QuestionItemTextModel");
-                    startActivity(intent);
-                    requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                }
-
-                else if(mArrayList.get(position) instanceof  QuestionItemImageModel){
-                    QuestionItemImageModel item = (QuestionItemImageModel) mArrayList.get(position);
-                    Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.putExtra("questionId", "1234");
-                    intent.putExtra("question", item.getQuestion());
-                    intent.putExtra("numberOfAnswers", item.getResponseNum());
-                    intent.putExtra("type", "QuestionItemImageModel");
-                    startActivity(intent);
-                    requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                }
-
-                else {
-                    QuestionItemUrlModel item = (QuestionItemUrlModel) mArrayList.get(position);
-                    Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.putExtra("questionId", "1234");
-                    intent.putExtra("question", item.getQuestion());
-                    intent.putExtra("numberOfAnswers", item.getResponseNum());
-                    intent.putExtra("type", "QuestionItemUrlModel");
                     startActivity(intent);
                     requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
@@ -291,12 +280,20 @@ public class QuestionsFragment extends Fragment
     }
 
     @Override
-    public void insertNewQuestion(Intent questionData) {
-        if(mArrayList == null || adapter == null) return;
+    public void insertNewQuestion(final Intent postData) {
+        if(mArrayList == null || adapter == null) {
+            return;
+        }
 
-        assert questionData != null;
-        String question = questionData.getStringExtra("Question");
-        QuestionItemTextModel questionItem = new QuestionItemTextModel("Music", question, "Oct 30 2021", "5");
+        assert postData != null;
+        final String postTitle = postData.getStringExtra("PostTitle");
+        final String postInformation = postData.getStringExtra("PostInformation");
+
+        final QuestionItemModel questionItem = new QuestionItemModel(
+                "Music", postTitle, postInformation, "Oct 30 2021",
+                "5", "profileImage" , "Luis Gualpa",
+                null, null, null, null);
+
         mArrayList.add(0, questionItem);
         adapter.notifyItemInserted(0);
 

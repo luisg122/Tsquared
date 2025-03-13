@@ -1,0 +1,97 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/postHeader"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="25dp"
+    android:orientation="horizontal"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <RelativeLayout
+        android:id="@+id/topicTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/trendingTag"
+        android:layout_toLeftOf="@+id/trendingTag">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/topicTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="?attr/bubbleItemColor"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
+            app:contentPadding="10dp">
+
+            <TextView
+                android:id="@+id/topic"
+                android:layout_width="wrap_content"
+                android:maxWidth="185dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="Programming"
+                android:textColor="?attr/lightTextColor"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/numTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_toEndOf="@+id/topicTag"
+            android:layout_toRightOf="@+id/topicTag"
+            app:cardBackgroundColor="?attr/bubbleItemColor"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
+            app:contentPadding="10dp">
+
+            <TextView
+                android:id="@+id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:text="+6"
+                android:textColor="?attr/lightTextColor"
+                android:textStyle="bold"
+                android:singleLine="false"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/trendingTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/trendTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="?attr/hotTrendTagBackgroundColor"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
+            app:contentPadding="10dp">
+
+            <TextView
+                android:id="@+id/trendStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="hot"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:singleLine="false"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>

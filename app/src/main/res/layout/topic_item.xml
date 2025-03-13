@@ -9,7 +9,7 @@
     app:cardBackgroundColor="?attr/bubbleItemColor"
     app:cardCornerRadius="6dp"
     app:cardElevation="0dp"
-    app:contentPadding="6dp"
+    app:contentPadding="10dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
     <TextView

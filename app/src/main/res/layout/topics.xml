@@ -20,7 +20,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/ic_close_black_24dp"/>
+            app:srcCompat="@drawable/ic_close_drawable_24dp"/>
 
         <TextView
             android:id="@+id/promptOptions"
