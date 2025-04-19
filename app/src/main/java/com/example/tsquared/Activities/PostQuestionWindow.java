@@ -15,24 +15,30 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class PostQuestionWindow extends AppCompatActivity {
     private Toolbar  toolbar;
     private EditText questionTitleText;
     private EditText questionEditText;
+    private EditText linkText;
     private TextView countCharacters;
+    private ImageView imageContent;
     private Handler handler;
     private Button submitQuestion;
-
+    private FloatingActionButton imageButton;
+    private FloatingActionButton linkButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -59,6 +65,10 @@ public class PostQuestionWindow extends AppCompatActivity {
         questionEditText = findViewById(R.id.topicPost);
         countCharacters  = findViewById(R.id.charactersLeftPrompt);
         submitQuestion = findViewById(R.id.addButton);
+        imageButton = findViewById(R.id.imageButton);
+        linkButton = findViewById(R.id.linkButton);
+        linkText = findViewById(R.id.linkText);
+        imageContent = findViewById(R.id.imageContent);
     }
 
     private void initializeHandler() {
@@ -117,6 +127,8 @@ public class PostQuestionWindow extends AppCompatActivity {
                 }
             }
         });
+
+        addQuestionMedia();
     }
 
     private final TextWatcher mTextEditorWatcher = new TextWatcher() {
@@ -125,17 +137,17 @@ public class PostQuestionWindow extends AppCompatActivity {
 
         @SuppressLint("SetTextI18n")
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(s.length() < 225) countCharacters.setVisibility(View.INVISIBLE);
-
-            else {
-                if(s.length() > 250)
-                    countCharacters.setTextColor((Integer) getResources().getColor(R.color.crimsonRed));
-
-                else {
+            if (s.length() < 200) {
+                countCharacters.setVisibility(View.INVISIBLE);
+            } else {
+                if(s.length() > 250) {
+                    countCharacters.setTextColor((Integer) getResources()
+                            .getColor(R.color.crimsonRed));
+                } else {
                     TypedValue typedValue = new TypedValue();
                     getTheme().resolveAttribute(R.attr.lightTextColor, typedValue, true);
-                    int color = ContextCompat.getColor(getApplicationContext(), typedValue.resourceId);
-
+                    int color = ContextCompat.getColor(getApplicationContext(),
+                            typedValue.resourceId);
                     countCharacters.setTextColor(color);
                 }
 
@@ -175,6 +187,29 @@ public class PostQuestionWindow extends AppCompatActivity {
 
         final InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void addQuestionMedia() {
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageContent.setVisibility(View.VISIBLE);
+                linkText.setVisibility(View.GONE);
+
+                Glide.with(imageContent.getContext())
+                        .load("https://stillmed.olympics.com/media/Images/OlympicOrg/News/2021/02/19/2021-02-19-tokyo-thumbnail.jpg")
+                        .error(R.drawable.ic_link)
+                        .into(imageContent);
+            }
+        });
+
+        linkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageContent.setVisibility(View.GONE);
+                linkText.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void setUpToolBar() {

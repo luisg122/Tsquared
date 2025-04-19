@@ -20,117 +20,60 @@
             android:id="@+id/imageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="200dp"
             android:padding="0dp"
             app:srcCompat="@drawable/ic_tsquared" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cV"
+        <TextView
+            android:id="@+id/appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_below="@+id/imageView"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="50dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/white">
+            android:layout_centerHorizontal="true"
+            android:text="TSquared"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/facebookSignIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/facebook_login"
-                    android:text="Continue with Facebook"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff"
-                    android:textSize="13sp" />
+        <TextView
+            android:id="@+id/appMoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Learn, share and discover"
+            android:textColor="@color/light_gray"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
 
-                <Button
-                    android:id="@+id/googleSignIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/facebookSignIn"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/google_login"
-                    android:text="Continue with Google"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff"
-                    android:textSize="13sp" />
+        <Button
+            android:id="@+id/SignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/logInWithEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/signup_button"
+            android:text="Create account"
+            android:textAllCaps="false" />
 
-                <Button
-                    android:id="@+id/logInWithEmail"
-                    android:layout_width="310dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/googleSignIn"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/post_button_round"
-                    android:text="Continue with Email"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff" />
-
-                <Button
-                    android:id="@+id/SignUp"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/logInWithEmail"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/signup_button"
-                    android:gravity="center"
-                    android:text="No Account Yet? Sign Up"
-                    android:textAllCaps="false"
-                    android:textColor="#3F51B5"
-                    android:textSize="13sp" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/logInWithEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/post_button_round"
+            android:text="Continue with Email"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

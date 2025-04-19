@@ -41,6 +41,7 @@
     <color name="black">#ff000000</color>
     <color name="transparent">#00000000</color>
     <color name="dark_gray">#515151</color>
+    <color name="light_gray">#a8a8a8</color>
     <color name="veryDarkGray">#191919</color>
     <color name="beautifulBackground">#b8b9c7</color>
 

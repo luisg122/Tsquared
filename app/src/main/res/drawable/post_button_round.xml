@@ -14,7 +14,7 @@
         android:state_focused="true">
         <shape>
             <solid
-                android:color="@color/black"/>
+                android:color="@color/darkWindowBackground"/>
             <corners
                 android:radius="5dp"/>
         </shape>

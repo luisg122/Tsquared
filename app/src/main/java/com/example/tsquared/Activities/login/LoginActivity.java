@@ -32,11 +32,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final int RC_SIGN_IN = 101;
     private Button login  = null;
     private Button signUp = null;
-    private Button FB_Login     = null;
-    private Button Google_Login = null;
     private EditText email;
     private EditText password;
     private String emailString;
@@ -61,65 +58,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_main);
         setViews();
         setListeners();
-        setUpFaceBookLogin();
-        setUpGoogleLogin();
 
-    }
 
-    /*private void updateUI(GoogleSignInAccount account){
-        Intent intent = new Intent(this, DrawerActivity.class);
-        intent.putExtra("Google Account", account);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        finish();
-    }*/
-
-    private void setUpGoogleLogin() {
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestProfile()
-                .build();
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);*/
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        /*GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account != null){
-            Toast.makeText(this, "Already logged in", Toast.LENGTH_SHORT).show();
-            updateUI(account);
-        }
-        else {
-            Log.d("TAG", "Not logged in");
-        }*/
     }
 
-    private void setUpFaceBookLogin() {
-        mCallbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(mCallbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.d("Success", "Login");
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(LoginActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
     // required boiler-plate code for FB sign-in
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -127,21 +74,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(mCallbackManager.onActivityResult(requestCode, resultCode, data)) {
             return;
         }
-
-        /*if(requestCode == RC_SIGN_IN){
-            try {
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                updateUI(account);
-            } catch (ApiException e) {
-                e.printStackTrace();
-            }
-        }*/
     }
 
     private void setViews() {
-        FB_Login     = (Button) findViewById(R.id.facebookSignIn);
-        Google_Login = (Button) findViewById(R.id.googleSignIn);
         email    = (EditText) findViewById(R.id.email);
         login    = (Button) findViewById(R.id.logInWithEmail);
         signUp   = (Button) findViewById(R.id.SignUp);
@@ -168,8 +103,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void setListeners() {
         login.setOnClickListener(this);
         signUp.setOnClickListener(this);
-        FB_Login.setOnClickListener(this);
-        Google_Login.setOnClickListener(this);
     }
 
     @Override
@@ -190,15 +123,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(register);
                 break;
-
-            case R.id.facebookSignIn:
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
-                break;
-
-            /*case R.id.googleSignIn:
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-             */
         }
     }
 }
