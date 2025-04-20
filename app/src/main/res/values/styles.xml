@@ -32,7 +32,7 @@
         <item name="bottomSheetColor">@color/mainColor</item>
         <item name="iconLayoutColor">@color/tabSelectedDark</item>
         <item name="appBarColor">@color/white</item>
-        <item name="lineDividerColor">@color/light_gray</item>
+        <item name="lineDividerColor">@color/lightLineDividerColor</item>
         <item name="blogPromptColor">@color/ideasPrompt</item>
         <item name="tintDrawableColor">@color/dark_gray</item>
         <item name="moonColor">@color/dark_gray</item>
@@ -69,7 +69,7 @@
         <item name="bottomSheetColor">@color/darkMainColor</item>
         <item name="appBarColor">@color/darkCardBackground</item>
         <item name="iconLayoutColor">@color/tabSelectedDark</item>
-        <item name="lineDividerColor">@color/darkCommentsCardColor</item>
+        <item name="lineDividerColor">@color/darkLineDividerColor</item>
         <item name="blogPromptColor">@color/ideasPromptDark</item>
         <item name="tintDrawableColor">@color/white</item>
         <item name="moonColor">@color/moonColorYellow</item>

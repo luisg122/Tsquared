@@ -80,7 +80,7 @@ public class AnswerWindow extends AppCompatActivity{
     }
 
     private void setUpToolBar() {
-        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_close_drawable_24dp);
         setSupportActionBar(toolbar);
     }
 
