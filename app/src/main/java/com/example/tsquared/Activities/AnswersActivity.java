@@ -178,6 +178,14 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0 && fab != null) {
+                    // Scrolled Downwards
+                    fab.shrink();
+                } else if (dy < 0 && fab != null) {
+                    // Scrolled Upwards
+                    fab.extend();
+                }
             }
         });
     }

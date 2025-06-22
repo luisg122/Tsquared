@@ -17,38 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="30dp">
-
-                <TextView
-                    android:id="@+id/numberOfAnswers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_weight="1"
-                    android:text="20 answers"
-                    android:textColor="?attr/lightTextColor"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/numberOfViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toRightOf="@+id/numberOfAnswers"
-                    android:text="300 views"
-                    android:textColor="?attr/lightTextColor"
-                    android:textSize="13sp" />
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
@@ -73,75 +47,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="0dp"/>
 
-            <RelativeLayout
-                android:id="@+id/authorOfQuestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="15dp"
-                android:paddingHorizontal="25dp"
-                android:paddingVertical="5dp"
-                android:background="@drawable/background_topic_round">
+            <include
+                layout="@layout/question_author_date"/>
 
-                <TextView
-                    android:id="@+id/dateOfQuestion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="7dp"
-                    android:text="asked July 7"
-                    android:textSize="12sp"
-                    android:textColor="?attr/lightTextColor"/>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/authorIV"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@+id/dateOfQuestion"
-                    android:src="@mipmap/blank_profile" />
-
-                <TextView
-                    android:id="@+id/authorName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dateOfQuestion"
-                    android:layout_marginStart="10dp"
-                    android:layout_toRightOf="@+id/authorIV"
-                    android:text="Juan Valdez"
-                    android:textColor="?attr/lightTextColor"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp">
-
-                    <Button
-                        android:id="@+id/three_dots"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="?attr/selectableItemBackground" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_more" />
-                </FrameLayout>
-            </RelativeLayout>
+            <include
+                layout="@layout/question_footer_layout"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

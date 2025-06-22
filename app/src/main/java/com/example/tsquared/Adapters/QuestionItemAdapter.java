@@ -53,17 +53,16 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     public void onBindViewHolder(@NonNull final QuestionItemAdapter.QuestionViewHolder viewHolder, int position) {
         final QuestionItemModel question = data.get(position);
 
-        performResetForRecycledViews(viewHolder, question);
+        performResetForRecycledViews(viewHolder);
 
+        // Default View information, should be shown in every Post
         viewHolder.tv_topic.setText(question.topic);
         viewHolder.tv_question.setText(question.postTitle);
         viewHolder.tv_responses.setText(question.responseNum);
 
-        if(viewHolder.tv_information != null) {
-            viewHolder.tv_information.setVisibility(View.VISIBLE);
-            viewHolder.tv_information.setText(question.postPreviewInformation);
+        if(hasPreviewInformation(question)) {
+            showPostPreviewInformation(viewHolder, question);
         }
-
         if (hasUrlContent(question)) {
             Log.i("MyAdapter", "Rendering view for URL Content at position: " + (position + 1));
             inflateUrlView(viewHolder, question);
@@ -75,7 +74,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         Log.d("MyAdapter", "Current View Position: " + (position + 1));
     }
 
-    private void performResetForRecycledViews(final QuestionViewHolder viewHolder, final QuestionItemModel question) {
+    private void performResetForRecycledViews(final QuestionViewHolder viewHolder) {
         if (viewHolder.imageContentImageView != null) {
             viewHolder.imageContentImageView.setVisibility(View.GONE);
             Glide.with(viewHolder.imageContentImageView.getContext())
@@ -91,12 +90,24 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         }
     }
 
+    private boolean hasPreviewInformation(final QuestionItemModel question) {
+        return question.postPreviewInformation != null;
+    }
+
+    private void showPostPreviewInformation(final QuestionViewHolder viewHolder,
+                                            final QuestionItemModel question) {
+        if (viewHolder.tv_information != null) {
+            viewHolder.tv_information.setVisibility(View.VISIBLE);
+            viewHolder.tv_information.setText(question.postPreviewInformation);
+        }
+    }
+
     private boolean hasImageContent(final QuestionItemModel question) {
        return question.imageContent != null;
     }
 
     private void showImageContent(final QuestionViewHolder viewHolder, final QuestionItemModel question) {
-        if(viewHolder.imageContentImageView != null) {
+        if (viewHolder.imageContentImageView != null) {
             viewHolder.imageContentImageView.setVisibility(View.VISIBLE);
             setMargins(viewHolder.imageContentImageView, 0, 20, 0, 20);
             Glide.with(viewHolder.imageContentImageView.getContext())

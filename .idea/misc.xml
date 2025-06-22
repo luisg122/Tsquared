@@ -6,6 +6,7 @@
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable-v21/post_button_round.xml" value="0.191" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable-v21/post_button_round_light.xml" value="0.222" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable-v21/signup_button.xml" value="0.222" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/border_transparent_background.xml" value="0.126" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/circle_dot.xml" value="0.171" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/circle_dot_white.xml" value="0.171" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/down_vote_vec_outline.xml" value="0.1" />
@@ -22,21 +23,27 @@
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/drawable/up_vote_vec_outline.xml" value="0.1" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/activity_detail.xml" value="0.42083333333333334" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/activity_main.xml" value="0.42083333333333334" />
-        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_item_question.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_item_image_view.xml" value="0.28489583333333335" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_item_question.xml" value="0.3" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_item_url_view.xml" value="0.28489583333333335" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_view.xml" value="0.268" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_view_with_images.xml" value="0.296875" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answer_window.xml" value="0.20277777777777778" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/answers_activity_layout.xml" value="0.3098958333333333" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/app_bar_main.xml" value="0.3098958333333333" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/blog_create_window.xml" value="0.296875" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/comments.xml" value="0.296875" />
-        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/comments_item.xml" value="0.1" />
-        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/like_dislike_section.xml" value="0.6" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/comments_item.xml" value="0.3" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/like_dislike_section.xml" value="0.1" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/news_more_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/news_more_layout.xml" value="0.3098958333333333" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/news_web_view.xml" value="0.24772313296903462" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/options_questions.xml" value="0.28489583333333335" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/profile_page.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_author_date.xml" value="0.3" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_footer_layout.xml" value="0.28489583333333335" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_header_layout.xml" value="0.296875" />
-        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_post.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_post.xml" value="0.4" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_url_content.xml" value="0.20277777777777778" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_view.xml" value="0.3098958333333333" />
         <entry key="..\:/Users/luisg/StudioProjects/Tsquared/app/src/main/res/layout/question_window.xml" value="0.16666666666666666" />

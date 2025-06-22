@@ -56,9 +56,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private void loadQuestionData(Question dataHolder) {
         String question = intent.getStringExtra("question");
-        String numberOfAns = intent.getStringExtra("numberOfAnswers");
         dataHolder.question.setText(question);
-        dataHolder.numberOfAnswers.setText(numberOfAns);
     }
 
     private void checkForLikeOrDislike(Object answerObj, Object dataHolderObj){
@@ -304,7 +302,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public class Question extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView question;
-        private final TextView numberOfAnswers;
         private final Button moreOptions;
         private final ViewStub viewStub;
 
@@ -317,7 +314,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public Question(View view, OnCommentsClickListener onCommentsClickListener){
             super(view);
             question = view.findViewById(R.id.question);
-            numberOfAnswers = view.findViewById(R.id.numberOfAnswers);
             moreOptions = view.findViewById(R.id.three_dots);
             viewStub = view.findViewById(R.id.questionView_stub);
 
