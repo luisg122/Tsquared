@@ -2,7 +2,6 @@ package com.example.tsquared.Fragments;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.app.Activity;
 import android.content.Context;
@@ -75,8 +74,8 @@ public class BlogsFragment extends Fragment implements BlogsAdapter.BlogItemList
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setUpRecyclerView(){
         dummyDataSetUp();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
-        blogsAdapter = new BlogsAdapter(mArrayList, getApplicationContext(), this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        blogsAdapter = new BlogsAdapter(mArrayList, getContext(), this);
         blogsRecyclerView.setLayoutManager(layoutManager);
 
         blogsRecyclerView.setAdapter(blogsAdapter);
@@ -104,7 +103,7 @@ public class BlogsFragment extends Fragment implements BlogsAdapter.BlogItemList
 
     @Override
     public void createBlog(int position) {
-        Intent intent = new Intent(getApplicationContext(), BlogWindow.class);
+        Intent intent = new Intent(getContext(), BlogWindow.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent );
         requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);

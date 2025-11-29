@@ -45,7 +45,6 @@ import com.example.tsquared.Models.AnswerModel;
 import com.example.tsquared.Models.AnswerWithImages;
 import com.example.tsquared.R;
 import com.example.tsquared.SharedPreference.DarkSharedPref;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -82,7 +81,6 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
     private TextView promptCreateQuestion;
     private ImageView promptCreateImage;
     //private ViewStub stub;
-    private ShimmerFrameLayout shimmerFrameLayout;
     private View view;
 
     private boolean isAnon;
@@ -138,7 +136,6 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
     private void setLayout() {
         stub.setLayoutResource(R.layout.activity_detail);
         stub.inflate();
-        shimmerFrameLayout = findViewById(R.id.shimmer_view_container1);
         setUpRecyclerView();
         loadQuestionData();
         //loadListOfAnswers();
@@ -376,8 +373,6 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
                         e.printStackTrace();
                     }
                 }
-                shimmerFrameLayout.stopShimmer();
-                shimmerFrameLayout.setVisibility(View.GONE);
                 adapter.swapData(answerList);
                 mainRv.setAdapter(adapter);
                 swipeContainer.setRefreshing(false);
@@ -399,14 +394,12 @@ public class AnswersActivity extends AppCompatActivity implements AnswerAdapter.
     public void onResume() {
         super.onResume();
         fab.show();
-        //shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         fab.hide();
-        //shimmerFrameLayout.stopShimmer();
     }
 
     @Override

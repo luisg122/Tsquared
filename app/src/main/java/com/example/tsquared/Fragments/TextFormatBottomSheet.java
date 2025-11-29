@@ -29,8 +29,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 public class TextFormatBottomSheet extends BottomSheetDialogFragment {
     private View view;
     private ImageView cancel_IV;
@@ -93,7 +91,7 @@ public class TextFormatBottomSheet extends BottomSheetDialogFragment {
     private void setUpRecyclerView(){
         dummyData();
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
 
         recyclerView.setLayoutManager(layoutManager);
         fontsAdapter = new FontsAdapter(fonts);

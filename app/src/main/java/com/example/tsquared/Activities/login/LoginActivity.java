@@ -12,13 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tsquared.Activities.DrawerActivity;
 import com.example.tsquared.Activities.signUp.SignUp_Screen1;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.example.tsquared.Utils.PreferenceUtils;
 import com.example.tsquared.R;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 /*import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -45,7 +40,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String college;
     private String description;
 
-    private CallbackManager mCallbackManager;
     // private GoogleSignInClient mGoogleSignInClient;
 
     RequestParams params;
@@ -71,9 +65,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(mCallbackManager.onActivityResult(requestCode, resultCode, data)) {
-            return;
-        }
     }
 
     private void setViews() {

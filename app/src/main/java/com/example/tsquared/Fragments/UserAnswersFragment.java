@@ -31,8 +31,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 public class UserAnswersFragment extends Fragment implements UserAnswersAdapter.OnUserAnswerClickListener {
     private View view;
 
@@ -70,8 +68,8 @@ public class UserAnswersFragment extends Fragment implements UserAnswersAdapter.
 
     private void setUpRecyclerView(){
         dummyDataSetUp();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
-        answersAdapter = new UserAnswersAdapter(mArrayList, getApplicationContext(), this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        answersAdapter = new UserAnswersAdapter(mArrayList, getContext(), this);
         answersRV.setLayoutManager(layoutManager);
 
 
@@ -156,7 +154,7 @@ public class UserAnswersFragment extends Fragment implements UserAnswersAdapter.
 
     @Override
     public void onCommentsClick(int position) {
-        Intent intent = new Intent(getApplicationContext(), AnswerCommentsSection.class);
+        Intent intent = new Intent(getContext(), AnswerCommentsSection.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 

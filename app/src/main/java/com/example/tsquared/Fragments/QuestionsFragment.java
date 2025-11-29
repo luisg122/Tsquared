@@ -25,13 +25,10 @@ import com.example.tsquared.Adapters.QuestionItemAdapter;
 import com.example.tsquared.Models.QuestionItemModel;
 import com.example.tsquared.Models.NewsHorizontalModel;
 import com.example.tsquared.R;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class QuestionsFragment extends Fragment
         implements QuestionItemAdapter.OnNoteListener, DrawerActivity.LoadNewQuestionListener{
@@ -60,8 +57,6 @@ public class QuestionsFragment extends Fragment
 
     private String fullName;
     private String college;
-
-    private ShimmerFrameLayout shimmerFrameLayout;
     private RequestParams params, params1;
     private AsyncHttpClient client, client1;
     private String URL = "http://207.237.59.117:8080/TSquared/platform?todo=showQuestions";
@@ -88,7 +83,6 @@ public class QuestionsFragment extends Fragment
     }
 
     private void setUpViews(){
-        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
     }
 
     private void initializeHandler(){
@@ -116,14 +110,14 @@ public class QuestionsFragment extends Fragment
     private void setUpRecyclerView(){
         dummyData();
 
-        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 RecyclerView.VERTICAL, false);
 
         mainRv = view.findViewById(R.id.question_list_rv);
         mainRv.setLayoutManager(layoutManager);
         mainRv.setHasFixedSize(false);
 
-        adapter = new QuestionItemAdapter(mArrayList, getApplicationContext(), this);
+        adapter = new QuestionItemAdapter(mArrayList, getContext(), this);
         mainRv.setAdapter(adapter);
 
         // design to expand and shrink the extended fab button
@@ -186,15 +180,13 @@ public class QuestionsFragment extends Fragment
                     try {
                         JSONObject object = response.getJSONObject(i);
                         QuestionItemModel question = QuestionItemModel.fromJson(object);
-                        Drawable image = ContextCompat.getDrawable(requireNonNull(getApplicationContext()), R.drawable.blank_profile);
+                        Drawable image = ContextCompat.getDrawable(requireNonNull(getContext()), R.drawable.blank_profile);
                         question.setProfileImage(image);
                         questionList.add(question);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                shimmerFrameLayout.stopShimmer();
-                shimmerFrameLayout.setVisibility(View.GONE);
                 adapter.swapData(questionList);
                 swipeContainer.setRefreshing(false);
             }
@@ -213,13 +205,11 @@ public class QuestionsFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        // shimmerFrameLayout.startShimmer();
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        // shimmerFrameLayout.stopShimmer();
     }
 
     @Override
@@ -235,7 +225,7 @@ public class QuestionsFragment extends Fragment
             public void run() {
                 if(mArrayList.get(position) instanceof QuestionItemModel){
                     QuestionItemModel item = (QuestionItemModel) mArrayList.get(position);
-                    Intent intent = new Intent(getApplicationContext(), AnswersActivity.class);
+                    Intent intent = new Intent(getContext(), AnswersActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("questionId", "1234");
                     intent.putExtra("question", item.getPostTitle());
