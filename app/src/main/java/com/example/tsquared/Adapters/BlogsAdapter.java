@@ -130,7 +130,7 @@ public class BlogsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             super(view);
             image = (ImageView) view.findViewById(R.id.blogImage);
             title = (TextView)  view.findViewById(R.id.title);
-            name  = (TextView)  view.findViewById(R.id.name);
+            name  = (TextView)  view.findViewById(R.id.authorTV);
             moreIcon = view.findViewById(R.id.three_dots);
             firstFewLines = (TextView) view.findViewById(R.id.firstFewLines);
             cardViewLayout = (CardView) view.findViewById(R.id.blogItem);

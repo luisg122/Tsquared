@@ -33,9 +33,9 @@
             <TextView
                 android:id="@+id/topic"
                 android:layout_width="wrap_content"
-                android:maxWidth="185dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
+                android:maxWidth="185dp"
                 android:text="Programming"
                 android:textColor="?attr/lightTextColor"
                 android:textStyle="bold" />

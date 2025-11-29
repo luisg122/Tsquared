@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/time_to_read_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        app:cardBackgroundColor="?attr/bubbleItemColor"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="0dp"
+        app:contentPaddingTop="3dp"
+        app:contentPaddingBottom="3dp"
+        app:contentPaddingLeft="25dp"
+        app:contentPaddingRight="25dp">
+        <TextView
+            android:id="@+id/time_to_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/circle_dot"
+            android:padding="5dp"
+            android:text="8 minutes"
+            android:textColor="?attr/lightTextColor"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/time_to_read_bubble"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_heart_shape_outline" />
+
+    <TextView
+        android:id="@+id/heartCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@+id/heart"
+        android:padding="5dp"
+        android:text="27"
+        android:textColor="?attr/lightTextColor"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/heartCount"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_comment_outlined" />
+
+    <TextView
+        android:id="@+id/commentCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@+id/comment"
+        android:padding="5dp"
+        android:text="8"
+        android:textColor="?attr/lightTextColor"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp">
+
+        <Button
+            android:id="@+id/three_dots"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?attr/selectableItemBackground" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_more" />
+    </FrameLayout>
+</RelativeLayout>

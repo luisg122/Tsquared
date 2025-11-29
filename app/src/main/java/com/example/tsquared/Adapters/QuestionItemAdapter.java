@@ -53,55 +53,77 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
     public void onBindViewHolder(@NonNull final QuestionItemAdapter.QuestionViewHolder viewHolder, int position) {
         final QuestionItemModel question = data.get(position);
 
-        performResetForRecycledViews(viewHolder, question);
+        performResetForRecycledViews(viewHolder);
 
+        // Default View information, should be shown in every Post
         viewHolder.tv_topic.setText(question.topic);
         viewHolder.tv_question.setText(question.postTitle);
         viewHolder.tv_responses.setText(question.responseNum);
 
-        if(viewHolder.tv_information != null) {
-            viewHolder.tv_information.setVisibility(View.VISIBLE);
-            viewHolder.tv_information.setText(question.postPreviewInformation);
+        if(hasPreviewInformation(question)) {
+            showPostPreviewInformation(viewHolder, question);
         }
-
-        if (containsUrlContent(question)) {
-            Log.i("MyAdapter", "Inflating ViewStub for view for URL VIew at position: " + (position + 1));
+        if (hasUrlContent(question)) {
+            Log.i("MyAdapter", "Rendering view for URL Content at position: " + (position + 1));
             inflateUrlView(viewHolder, question);
-        } else if (containsImageContent(viewHolder, question)) {
-            Log.i("MyAdapter", "Inflating ViewStub for view for Image View at position: " + (position + 1));
+        } else if (hasImageContent(question)) {
+            Log.i("MyAdapter", "Rendering View for Image Content at position: " + (position + 1));
             showImageContent(viewHolder, question);
         }
 
         Log.d("MyAdapter", "Current View Position: " + (position + 1));
     }
 
-    private boolean containsUrlContent(final QuestionItemModel question) {
-        return question.headline != null && question.source != null && question.urlImage != null;
-    }
-
-    private boolean containsImageContent(final QuestionViewHolder viewHolder, final QuestionItemModel question) {
-        if (question.imageContent != null && viewHolder.imageContentImageView.getVisibility() == View.VISIBLE) {
-            return true;
-        } else if (question.imageContent != null && viewHolder.imageContentImageView.getVisibility() == View.GONE) {
-            viewHolder.imageContentImageView.setVisibility(View.VISIBLE);
-            return true;
-        }
-
-        return false;
-    }
-
-    private void performResetForRecycledViews(final QuestionViewHolder viewHolder, final QuestionItemModel question) {
-        if(question.imageContent == null) {
+    private void performResetForRecycledViews(final QuestionViewHolder viewHolder) {
+        if (viewHolder.imageContentImageView != null) {
             viewHolder.imageContentImageView.setVisibility(View.GONE);
+            Glide.with(viewHolder.imageContentImageView.getContext())
+                    .clear(viewHolder.imageContentImageView);
         }
 
-        if(!containsUrlContent(question) && viewHolder.urlContentCardView != null) {
+        if (viewHolder.urlContentCardView != null) {
             viewHolder.urlContentCardView.setVisibility(View.GONE);
         }
+
+        if (viewHolder.tv_information != null) {
+            viewHolder.tv_information.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean hasPreviewInformation(final QuestionItemModel question) {
+        return question.postPreviewInformation != null;
+    }
+
+    private void showPostPreviewInformation(final QuestionViewHolder viewHolder,
+                                            final QuestionItemModel question) {
+        if (viewHolder.tv_information != null) {
+            viewHolder.tv_information.setVisibility(View.VISIBLE);
+            viewHolder.tv_information.setText(question.postPreviewInformation);
+        }
+    }
+
+    private boolean hasImageContent(final QuestionItemModel question) {
+       return question.imageContent != null;
+    }
+
+    private void showImageContent(final QuestionViewHolder viewHolder, final QuestionItemModel question) {
+        if (viewHolder.imageContentImageView != null) {
+            viewHolder.imageContentImageView.setVisibility(View.VISIBLE);
+            setMargins(viewHolder.imageContentImageView, 0, 20, 0, 20);
+            Glide.with(viewHolder.imageContentImageView.getContext())
+                    .load(question.imageContent)
+                    .transform(new CenterCrop())
+                    .into(viewHolder.imageContentImageView);
+        }
+    }
+
+    private boolean hasUrlContent(final QuestionItemModel question) {
+        return question.headline != null && question.source != null && question.urlImage != null;
     }
     
-    private void inflateUrlView(final QuestionViewHolder viewHolder, final QuestionItemModel question) {
-        if(viewHolder.viewStub != null) {
+    private void inflateUrlView(final QuestionViewHolder viewHolder,
+                                final QuestionItemModel question) {
+        if (viewHolder.viewStub != null) {
             viewHolder.viewStub.setLayoutResource(R.layout.question_url_content);
             final View inflatedRootView = viewHolder.viewStub.inflate();
 
@@ -109,7 +131,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
             viewHolder.headline = inflatedRootView.findViewById(R.id.headLine);
             viewHolder.source   = inflatedRootView.findViewById(R.id.source);
             viewHolder.urlImage = inflatedRootView.findViewById(R.id.linkImage);
-            viewHolder.viewStub = null;
+            viewHolder.viewStub = null; // Important: Set ViewStub to null after inflating
         } else {
             final View rootView = viewHolder.linearLayout;
 
@@ -119,25 +141,22 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
             viewHolder.urlImage = rootView.findViewById(R.id.linkImage);
         }
 
-
-        viewHolder.urlContentCardView.setVisibility(View.VISIBLE);
-        setMargins(viewHolder.urlContentCardView, 20, 20, 20, 20);
-        viewHolder.headline.setText(question.headline);
-        viewHolder.source.setText(question.source);
-        viewHolder.source.setText(question.source);
-        Glide.with(viewHolder.urlImage.getContext())
-                .load("https://stillmed.olympics.com/media/Images/OlympicOrg/News/2021/02/19/2021-02-19-tokyo-thumbnail.jpg")
-                .error(R.drawable.ic_link)
-                .into(viewHolder.urlImage);
-
-    }
-
-    private void showImageContent(final QuestionViewHolder viewHolder, final QuestionItemModel question) {
-        setMargins(viewHolder.imageContentImageView, 0, 20, 0, 20);
-        Glide.with(viewHolder.imageContentImageView.getContext())
-                .load(question.imageContent)
-                .transform(new CenterCrop())
-                .into(viewHolder.imageContentImageView);
+        if (viewHolder.urlContentCardView != null) {
+            viewHolder.urlContentCardView.setVisibility(View.VISIBLE);
+            setMargins(viewHolder.urlContentCardView, 20, 20, 20, 20);
+        }
+        if (viewHolder.headline != null) {
+            viewHolder.headline.setText(question.headline);
+        }
+        if (viewHolder.source != null) {
+            viewHolder.source.setText(question.source);
+        }
+        if (viewHolder.urlImage != null) {
+            Glide.with(viewHolder.urlImage.getContext())
+                    .load("https://stillmed.olympics.com/media/Images/OlympicOrg/News/2021/02/19/2021-02-19-tokyo-thumbnail.jpg")
+                    .error(R.drawable.ic_link)
+                    .into(viewHolder.urlImage);
+        }
     }
 
     private void setMargins(final View view, int leftMarginDP, int topMarginDP, int rightMarginDP, int bottomMarginDP) {
