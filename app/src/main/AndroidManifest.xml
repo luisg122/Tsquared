@@ -77,7 +77,8 @@
             android:name=".Activities.login.LoginActivity"
             android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="adjustResize">
         </activity>
 
         <activity
@@ -96,16 +97,19 @@
             android:name=".Activities.signUp.SignUp_Screen1"
             android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.signUp.SignUp_Screen2"
             android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.signUp.SignUp_Screen3"
             android:theme="@style/backgroundColorForSignIn"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".Activities.profiles.Profile"

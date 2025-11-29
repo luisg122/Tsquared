@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".Activities.login.LoginActivity">
 
     <RelativeLayout
@@ -69,7 +69,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="75dp"
             android:background="@drawable/post_button_round"
             android:text="Continue with Email"
             android:textAllCaps="false"

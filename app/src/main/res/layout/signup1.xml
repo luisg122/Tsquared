@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    tools:context=".Activities.signUp.SignUp_Screen1">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarSignUp"
@@ -15,39 +15,34 @@
         android:background="@drawable/toolbar_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <View
         android:id="@+id/tile_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="?actionBarSize"
         android:background="@drawable/line_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarSignUp"/>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
+        android:layout_height="0dp"
         android:isScrollContainer="true"
         android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tile_divider">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:id="@+id/userFullName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/firstNameLayout"
                 android:layout_width="match_parent"
@@ -58,9 +53,9 @@
                 android:textColorHint="@color/white"
                 android:theme="@style/MyEditTextTheme"
                 android:hint="First name"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/white"
                 app:errorEnabled="true"
@@ -82,12 +77,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/firstNameLayout"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="20dp"
                 android:hint="Last name"
                 android:textColorHint="@color/white"
                 android:theme="@style/MyEditTextTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/firstNameLayout"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/white"
                 app:errorEnabled="true"
@@ -106,15 +103,18 @@
                 android:id="@+id/signUpButton1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginHorizontal="20dp"
-                android:layout_below="@+id/lastNameLayout"
                 android:background="@drawable/post_button_round_light"
                 android:text="Next"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
-        </RelativeLayout>
-    </LinearLayout>
+                android:textSize="18sp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="150dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastNameLayout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
