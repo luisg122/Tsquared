@@ -14,77 +14,56 @@
     app:cardCornerRadius="0dp"
     app:cardBackgroundColor="?attr/cardBackgroundColor">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp">
-
-        <ImageView
-            android:id="@+id/blogImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:adjustViewBounds="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:scaleType="centerCrop" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/author"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="25dp"
-            android:src="@mipmap/blank_profile" />
-
-        <TextView
-            android:id="@+id/name"
+        android:padding="5dp"
+        android:orientation="vertical">
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="25dp"
-            android:layout_toRightOf="@+id/author"
+            android:layout_height="wrap_content">
 
-            android:padding="5dp"
-            android:text="John Smith"
-            android:textColor="?attr/lightTextColor"
-            android:textSize="13sp"
-            android:textStyle="normal" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="20dp"
+                android:layout_toLeftOf="@+id/blogImage"
+                android:ellipsize="end"
+                android:lineSpacingExtra="5sp"
+                android:maxLines="3"
+                android:padding="5dp"
+                android:singleLine="false"
+                android:text="Life is awesome, no?"
+                android:textColor="?attr/lightTextColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:layout_alignParentLeft="true"
-            android:layout_marginVertical="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@+id/blogImage"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="3dp"
-            android:singleLine="false"
-            android:text="The dow jones has now reversed all of its early gains"
-            android:textColor="?attr/lightTextColor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/blogImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:adjustViewBounds="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:scaleType="centerCrop" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/firstFewLines"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/blogImage"
-            android:layout_alignParentLeft="true"
-            android:layout_marginVertical="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginVertical="15dp"
             android:ellipsize="end"
             android:lineSpacingExtra="5dp"
             android:maxLines="2"
@@ -92,95 +71,23 @@
             android:singleLine="false"
             android:text="Come to work with me as I try to finish up a project, drink coffee and needlessly stress about the little things in life. Let's apply some CSS and Javascript"
             android:textColor="?attr/lightTextColor"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:textStyle="normal" />
 
-        <TextView
-            android:id="@+id/date_blog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/firstFewLines"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:padding="5dp"
-            android:text="Oct 23"
-            android:textColor="?attr/lightTextColor"
-            android:textSize="14sp" />
-
-        <View
-            android:id="@+id/circle_dot"
-            android:layout_width="2dp"
-            android:layout_height="2dp"
-            android:layout_toRightOf="@id/date_blog"
-            android:background="@drawable/circle_dot"
-            android:layout_below="@id/firstFewLines"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="5dp"/>
-
-
-        <TextView
-            android:id="@+id/time_to_read"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/firstFewLines"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_toRightOf="@+id/circle_dot"
-            android:padding="5dp"
-            android:text="8 min read"
-            android:textColor="?attr/lightTextColor"
-            android:textSize="14sp" />
-
-
-        <ImageView
-            android:id="@+id/heart"
+        <include
+            android:id="@+id/authorDateTV"
+            layout="@layout/question_author_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/firstFewLines"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/time_to_read"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_heart_shape_outline" />
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"/>
 
-        <TextView
-            android:id="@+id/heartCount"
+        <include
+            layout="@layout/blog_footer_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/firstFewLines"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_toRightOf="@+id/heart"
-            android:padding="5dp"
-            android:text="27"
-            android:textColor="?attr/lightTextColor"
-            android:textSize="14sp" />
+            android:layout_below="@+id/authorDateTV"/>
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/firstFewLines"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp">
-
-            <Button
-                android:id="@+id/three_dots"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="?attr/selectableItemBackground" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_more" />
-        </FrameLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

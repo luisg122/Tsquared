@@ -418,7 +418,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.onCommentsClickListener = onCommentsClickListener;
             readMore.setOnClickListener(this);
             answer.setOnExpandListener(this);
-            commentsCard.setOnClickListener(this);
             upVote.setOnClickListener(this);
             downVote.setOnClickListener(this);
             followingPrompt.setOnClickListener(this);
@@ -511,7 +510,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.onCommentsClickListener = onCommentsClickListener;
             readMore.setOnClickListener(this);
             answer.setOnExpandListener(this);
-            commentsCard.setOnClickListener(this);
             upVote.setOnClickListener(this);
             downVote.setOnClickListener(this);
             followingPrompt.setOnClickListener(this);

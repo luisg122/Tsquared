@@ -30,7 +30,7 @@
                 android:layout_marginRight="15dp"
                 android:textStyle="bold"
                 android:textColor="?attr/lightTextColor"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:minLines="1"
@@ -39,6 +39,22 @@
                 android:singleLine="false"
                 android:lineSpacingExtra="3dp"
                 android:text="What is the idea behind scrum and how is it efficiently applied?"
+                app:fontFamily="sans-serif"/>
+
+            <TextView
+                android:id="@+id/questionInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/transparent"
+                android:ellipsize="end"
+                android:ems="10"
+                android:gravity="start|top"
+                android:textColor="?attr/lightTextColor"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:visibility="gone"
                 app:fontFamily="sans-serif"/>
 
             <ViewStub
