@@ -107,22 +107,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.logInWithEmail:
-                //emailString = email.getText().toString().trim();
-                //passwordString = password.getText().toString().trim();
-                //tryToLogin(emailString, passwordString);
-                Intent home = new Intent(LoginActivity.this, LoginEmailActivity.class);
-                home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(home);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-                break;
+        int id = v.getId();
 
-            case R.id.SignUp:
-                Intent register = new Intent(LoginActivity.this, SignUp_Screen1.class);
-                register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(register);
-                break;
+        if (id == R.id.logInWithEmail) {
+            //emailString = email.getText().toString().trim();
+            //passwordString = password.getText().toString().trim();
+            //tryToLogin(emailString, passwordString);
+            Intent home = new Intent(LoginActivity.this, LoginEmailActivity.class);
+            home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(home);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+        } else if (id == R.id.SignUp) {
+            Intent register = new Intent(LoginActivity.this, SignUp_Screen1.class);
+            register.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(register);
         }
     }
 }

@@ -118,72 +118,43 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         Intent intent;
         int id = view.getId();
 
-        switch (id) {
-            case R.id.profile_infoTab:
-                intent = new Intent(Settings.this, UserProfileInformation.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-                break;
+        if (id == R.id.profile_infoTab) {
+            intent = new Intent(Settings.this, UserProfileInformation.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+        } else if (id == R.id.account_settingTab) {
+            intent = new Intent(Settings.this, UserAccount.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+        } else if (id == R.id.signOutTab) {
+            PreferenceUtils.savePassword(null, this);
+            PreferenceUtils.saveEmail(null, this);
+            PreferenceUtils.saveLastName(null, this);
+            PreferenceUtils.saveFirstName(null, this);
+            PreferenceUtils.saveCollege(null, this);
 
-            case R.id.account_settingTab:
-                intent = new Intent(Settings.this, UserAccount.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-                break;
+            DarkSharedPref.setNightModeState(false, getApplicationContext());
+            DarkSharedPref.isDark = false;
 
-            case R.id.notifications_tab:
-                break;
-
-            case R.id.signOutTab:
-                PreferenceUtils.savePassword(null, this);
-                PreferenceUtils.saveEmail(null, this);
-                PreferenceUtils.saveLastName(null, this);
-                PreferenceUtils.saveFirstName(null, this);
-                PreferenceUtils.saveCollege(null, this);
-
-                DarkSharedPref.setNightModeState(false, getApplicationContext());
-                DarkSharedPref.isDark = false;
-
-                intent = new Intent(Settings.this, LoginActivity.class);
-                startActivity(intent);
-                ActivityCompat.finishAffinity(Settings.this);
-                break;
-
-            case R.id.rateTab:
-                System.out.println("Saturday");
-                break;
-
-            case R.id.suggestionTab:
-                System.out.println("Sunday");
-                break;
-
-            case R.id.helpTab:
-                System.out.println("Sunday");
-                break;
-
-            case R.id.termsAndServicesTab:
-                intent = new Intent(Settings.this, GeneralWebView.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("url", "https://www.notion.so/Terms-Of-Service-f5b72aba42cb47e5b0d31431994ac40f");
-                intent.putExtra("title", "Terms of Service");
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-                break;
-
-            case R.id.privacyPolicyTab:
-                intent = new Intent(Settings.this, GeneralWebView.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("url", "https://www.notion.so/Privacy-Policy-8c2eedb2fec5422e95a5aa68ee1476fe");
-                intent.putExtra("title", "Privacy Policy");
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
-                break;
-
-            default:
-                throw new IllegalStateException("Unexpected value: " + id);
+            intent = new Intent(Settings.this, LoginActivity.class);
+            startActivity(intent);
+            ActivityCompat.finishAffinity(Settings.this);
+        } else if(id == R.id.termsAndServicesTab) {
+            intent = new Intent(Settings.this, GeneralWebView.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra("url", "https://www.notion.so/Terms-Of-Service-f5b72aba42cb47e5b0d31431994ac40f");
+            intent.putExtra("title", "Terms of Service");
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
+        } else if (id == R.id.privacyPolicyTab) {
+            intent = new Intent(Settings.this, GeneralWebView.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra("url", "https://www.notion.so/Privacy-Policy-8c2eedb2fec5422e95a5aa68ee1476fe");
+            intent.putExtra("title", "Privacy Policy");
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_down);
         }
-
     }
 }

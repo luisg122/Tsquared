@@ -85,26 +85,19 @@ public class MoreOptionsComments extends BottomSheetDialogFragment implements Vi
     public void onClick(View view) {
         int id = view.getId();
 
-        switch (id) {
-            case R.id.cancel_button:
-                dismiss();
-                break;
-
-            case R.id.editComment:
-                break;
-
-            case R.id.replyToComment:
-                bottomSheetPromptListener.replyPromptClick(position);
-                dismiss();
-                break;
-
-            case R.id.report:
-                bottomSheetPromptListener.reportCommentClick(position);
-                dismiss();
-                break;
-
-            default:
-                throw new IllegalStateException("Unexpected value: " + id);
+        if (id == R.id.cancel_button) {
+            dismiss();
+        } else if (id == R.id.editComment) {
+            // Handle edit comment click
+        } else if (id == R.id.replyToComment) {
+            bottomSheetPromptListener.replyPromptClick(position);
+            dismiss();
+        } else if (id == R.id.report) {
+            bottomSheetPromptListener.reportCommentClick(position);
+            dismiss();
+        } else {
+            // It's good practice to have a default case for unexpected IDs
+            throw new IllegalStateException("Unexpected value: " + id);
         }
     }
 

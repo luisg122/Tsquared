@@ -367,11 +367,9 @@ public class DrawerActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     public void selectDrawerItem(MenuItem menuItem) {
         int id = menuItem.getItemId();
-        switch (id) {
-            case R.id.interests:
-                Intent interests = new Intent(DrawerActivity.this, UserInterests.class);
-                startActivity(interests);
-                break;
+        if (id == R.id.interests) {
+            Intent interests = new Intent(DrawerActivity.this, UserInterests.class);
+            startActivity(interests);
         }
     }
 

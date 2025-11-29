@@ -129,13 +129,11 @@ public class UserInterests extends AppCompatActivity implements InterestsAdapter
     @SuppressLint("NonConstantResourceId")
     public void selectDrawerItem(MenuItem menuItem) {
         int id = menuItem.getItemId();
-        switch (id) {
-            case R.id.home:
-                Intent home = new Intent(UserInterests.this, DrawerActivity.class);
-                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(home);
-                finish();
-                break;
+        if (id == R.id.home) {
+            Intent home = new Intent(UserInterests.this, DrawerActivity.class);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(home);
+            finish();
         }
     }
 

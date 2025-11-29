@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
-
+    namespace 'com.example.richcontentviews'
+    compileSdkVersion 36
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 32
+        minSdkVersion 21
+        targetSdkVersion 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

@@ -89,37 +89,35 @@ public class UserRegister extends AppCompatActivity implements View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.reg_button:
+        int id = v.getId();
 
-                if(!isGood()){
-                    Snackbar.make(registerButton, "Sorry, Try Again", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                } else{
-                    takeDataToPost();
-                    firstNameString   = capitalizeFirstCharOfEveryWordInString(firstNameString);
-                    lastNameString    = capitalizeFirstCharOfEveryWordInString(lastNameString);
-                    collegeRegisterString = capitalizeFirstCharOfEveryWordInString(collegeRegisterString);
+        if (id == R.id.reg_button) {
 
-                    HashMap<String, String> userMap = new HashMap<String, String>();
-                    userMap.put("First Name", firstNameString);
-                    userMap.put("Last Name", lastNameString);
-                    userMap.put("College", collegeRegisterString);
-                    userMap.put("Email", emailLoginString);
+            if (!isGood()) {
+                Snackbar.make(registerButton, "Sorry, Try Again", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            } else {
+                takeDataToPost();
+                firstNameString = capitalizeFirstCharOfEveryWordInString(firstNameString);
+                lastNameString = capitalizeFirstCharOfEveryWordInString(lastNameString);
+                collegeRegisterString = capitalizeFirstCharOfEveryWordInString(collegeRegisterString);
 
-                    Intent home = new Intent(UserRegister.this, DrawerActivity.class);
-                    home.putExtra("map1", userMap);
-                    home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(home);
-                    finish();
-                }
-                break;
+                HashMap<String, String> userMap = new HashMap<String, String>();
+                userMap.put("First Name", firstNameString);
+                userMap.put("Last Name", lastNameString);
+                userMap.put("College", collegeRegisterString);
+                userMap.put("Email", emailLoginString);
 
-            case R.id.reg_link:
-                Intent login = new Intent(UserRegister.this, LoginActivity.class);
-                login.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(login);
+                Intent home = new Intent(UserRegister.this, DrawerActivity.class);
+                home.putExtra("map1", userMap);
+                home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(home);
                 finish();
-                break;
+            }
+        } else if (id == R.id.reg_link) {
+            Intent login = new Intent(UserRegister.this, LoginActivity.class);
+            login.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(login);
+            finish();
         }
     }
 
